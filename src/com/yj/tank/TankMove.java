@@ -1,6 +1,6 @@
 package com.yj.tank;
 
-import com.yj.tank.domain.AbstractMilitaryWeapon;
+import com.yj.tank.model.AbstractMilitaryWeapon;
 
 /**
  *

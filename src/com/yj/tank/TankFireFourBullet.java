@@ -2,9 +2,9 @@ package com.yj.tank;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.domain.AbstractMilitaryWeapon;
-import com.yj.tank.domain.TankBullet;
-import com.yj.tank.domain.Tank;
+import com.yj.tank.model.AbstractMilitaryWeapon;
+import com.yj.tank.model.TankBullet;
+import com.yj.tank.model.Tank;
 
 /**
  *

@@ -1,8 +1,7 @@
-package com.yj.tank.domain;
+package com.yj.tank.model;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;

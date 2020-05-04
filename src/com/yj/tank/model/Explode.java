@@ -1,8 +1,7 @@
-package com.yj.tank.domain;
+package com.yj.tank.model;
 
 import java.awt.Graphics;
 
-import com.yj.tank.Audio;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.view.TankFrame;
 

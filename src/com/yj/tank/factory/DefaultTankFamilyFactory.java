@@ -4,12 +4,12 @@ import java.awt.Image;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.domain.AbstractBullet;
-import com.yj.tank.domain.AbstractExplode;
-import com.yj.tank.domain.AbstractMilitaryWeapon;
-import com.yj.tank.domain.Explode;
-import com.yj.tank.domain.Tank;
-import com.yj.tank.domain.TankBullet;
+import com.yj.tank.model.AbstractBullet;
+import com.yj.tank.model.AbstractExplode;
+import com.yj.tank.model.AbstractMilitaryWeapon;
+import com.yj.tank.model.Explode;
+import com.yj.tank.model.Tank;
+import com.yj.tank.model.TankBullet;
 import com.yj.tank.view.TankFrame;
 
 /**

@@ -7,9 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.domain.AbstractMilitaryWeapon;
-import com.yj.tank.domain.Tank;
-import com.yj.tank.factory.TankFactory;
+import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.view.TankFrame;
 
 /**

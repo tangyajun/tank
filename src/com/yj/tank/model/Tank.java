@@ -1,13 +1,8 @@
-package com.yj.tank.domain;
+package com.yj.tank.model;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.Random;
 
-import com.yj.tank.Audio;
 import com.yj.tank.Fire;
-import com.yj.tank.DefaultTankFire;
-import com.yj.tank.TankFireFourBullet;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.ResourceManager;

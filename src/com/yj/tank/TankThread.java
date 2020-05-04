@@ -3,7 +3,7 @@ package com.yj.tank;
 import java.awt.Graphics;
 import java.util.List;
 
-import com.yj.tank.domain.Tank;
+import com.yj.tank.model.Tank;
 
 /**
  *  坦克线程

@@ -5,9 +5,7 @@ import java.util.List;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.domain.AbstractMilitaryWeapon;
-import com.yj.tank.domain.Plane;
-import com.yj.tank.domain.Tank;
+import com.yj.tank.model.Plane;
 import com.yj.tank.view.TankFrame;
 
 /**
