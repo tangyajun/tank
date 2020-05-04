@@ -58,8 +58,7 @@ public class Plane extends AbstractMilitaryWeapon {
 		move();
 	}
 
-	@Override
-	public void move() {
+	private void move() {
 		if (this.moving) {
 			switch (dir) {
 				case LEFT:
@@ -90,6 +89,8 @@ public class Plane extends AbstractMilitaryWeapon {
 						y += speedGood;
 					}
 					break;
+				default:
+					break;
 			}
 			if (random.nextInt(100)>bulletFrequency) {
 				if (this.getGroup()==Group.BAD) {
@@ -103,5 +104,48 @@ public class Plane extends AbstractMilitaryWeapon {
 		}
 	}
 
+	@Override
+	public void fire() {
+		if (live) {
+			//if (this instanceof Plane) {
+			this.tankFrame.getBullets().add(tankFrame.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,tankFrame,this.group,null));
+			//}
+			//this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
+		}
+	}
 
+	private void randomDir() {
+		if (this.dir==Dir.LEFT) {
+			this.dir=dirs[random.nextInt(3)];
+		}
+		if(this.dir==Dir.RIGHT) {
+			this.dir=dirs3[random.nextInt(3)];
+		}
+		if (this.dir==Dir.UP) {
+			this.dir=dirs1[random.nextInt(3)];
+		}
+		if (this.dir==Dir.DOWN) {
+			this.dir=dirs2[random.nextInt(3)];
+		}
+		this.dir=Dir.values()[random.nextInt(4)];
+	}
+
+	public void boundsCheck() {
+		if (this.x<20){
+			x=20;
+			randomDir();
+		}
+		if (this.y<40) {
+			y=40;
+			randomDir();
+		}
+		if (this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) {
+			this.x=TankFrame.GAME_WIDTH-Tank.WIDTH-4;
+			randomDir();
+		}
+		if (this.y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) {
+			this.y=TankFrame.GAME_HEIGHT-Tank.HEIGHT-4;
+			randomDir();
+		}
+	}
 }

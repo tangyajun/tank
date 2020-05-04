@@ -8,9 +8,6 @@ import com.yj.tank.domain.AbstractBullet;
 import com.yj.tank.domain.AbstractExplode;
 import com.yj.tank.domain.AbstractMilitaryWeapon;
 import com.yj.tank.domain.Explode;
-import com.yj.tank.domain.Plane;
-import com.yj.tank.domain.PlaneBullet;
-import com.yj.tank.domain.PlaneExplode;
 import com.yj.tank.domain.Tank;
 import com.yj.tank.domain.TankBullet;
 import com.yj.tank.view.TankFrame;
@@ -18,10 +15,21 @@ import com.yj.tank.view.TankFrame;
 /**
  *
  *  @Description TO DO
- *  @author yang
+ *  @author tangyajun
  *  @create 2020-05-04-20:55
  **/
-public class TankFamilyFactory implements AbstractWeaponFamilyFactory {
+public class DefaultTankFamilyFactory implements AbstractWeaponFamilyFactory {
+
+	private static DefaultTankFamilyFactory INSTRANCE=new DefaultTankFamilyFactory();
+
+	private DefaultTankFamilyFactory() {
+
+	}
+
+	public static DefaultTankFamilyFactory getInstance() {
+		return INSTRANCE;
+	}
+
 	@Override
 	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
 		return new Tank(x,y,dir,tankFrame,group);

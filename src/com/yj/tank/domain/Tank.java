@@ -98,7 +98,6 @@ public class Tank extends AbstractMilitaryWeapon {
 	/**
 	 * 坦克移动
 	 */
-	@Override
 	public void move() {
 		if (moving) {
 			switch (dir) {
@@ -154,7 +153,6 @@ public class Tank extends AbstractMilitaryWeapon {
 	/**
 	 * 边界检查
 	 */
-	@Override
 	public void boundsCheck() {
 		if (this.x<20){
 			x=20;
@@ -177,7 +175,6 @@ public class Tank extends AbstractMilitaryWeapon {
 	/**
 	 * 随机改变方向
 	 */
-	@Override
 	public void randomDir() {
 		if (this.dir==Dir.LEFT) {
 			this.dir=dirs[random.nextInt(3)];
@@ -197,6 +194,7 @@ public class Tank extends AbstractMilitaryWeapon {
 	/**
 	 * 发射子弹
 	 */
+
 	@Override
 	public void fire() {
 		if (live) {

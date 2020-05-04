@@ -95,46 +95,9 @@ public abstract class AbstractBullet {
 		this.rectangle.height=height;
 	}
 
-	public void paint(Graphics graphics) {
-		if (!live) {
-			tankFrame.getBullets().remove(this);
-		}
-		switch (dir) {
-			case DOWN:
-				if (image ==null) {
-					graphics.drawImage(ResourceManager.bulletDownImage, x, y, null);
-				}else {
-					graphics.drawImage(image, x, y, null);
-				}
-				break;
-			case UP:
-				if (image == null) {
-					graphics.drawImage(ResourceManager.bulletUpImage, x, y, null);
-				}else {
-					graphics.drawImage(image, x, y, null);
-				}
-				break;
-			case LEFT:
-				if (image==null) {
-					graphics.drawImage(ResourceManager.bulletLeftImage, x, y, null);
-				}else {
-					graphics.drawImage(image, x, y, null);
-				}
-				break;
-			case RIGHT:
-				if (image==null) {
-					graphics.drawImage(ResourceManager.bulletRightImage,x,y,null);
-				}else {
-					graphics.drawImage(image, x, y, null);
-				}
-				break;
-			default:
-				break;
-		}
-		move();
-	}
+	public abstract void paint(Graphics graphics);
 
-	protected void move() {
+	/*protected void move() {
 		switch (dir) {
 			case LEFT:
 				x-=speed;
@@ -156,13 +119,14 @@ public abstract class AbstractBullet {
 		if (x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT) {
 			live=false;
 		}
-	}
+	}*/
 
+	public abstract void collideWith(AbstractMilitaryWeapon weapon);
 	/**
 	 * 碰撞检测
 	 * @param weapon
 	 */
-	public void collideWith(AbstractMilitaryWeapon weapon) {
+	/*public void collideWith(AbstractMilitaryWeapon weapon) {
 		if (this.group==weapon.getGroup()) {
 			return;
 		}
@@ -186,11 +150,11 @@ public abstract class AbstractBullet {
 				}
 			}
 		}
-	}
+	}*/
 
-	public void die() {
+	public abstract void die(); /*{
 		this.live=false;
-	}
+	}*/
 
 	public int getSpeed() {
 		return speed;

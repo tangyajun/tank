@@ -141,30 +141,7 @@ public abstract class AbstractMilitaryWeapon {
 	/**
 	 * 设备移动
 	 */
-	public abstract void move();
-
-
-	/**
-	 *
-	 * @param
-	 */
-	/*public void collideWith(AbstractMilitaryWeapon tank) {
-		if (this.group==tank.getGroup()) {
-			return;
-		}
-		Rectangle rectangle=new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-		Rectangle rectangle1=new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-		if (rectangle.intersects(rectangle1)) {
-			if (this.group == Group.BAD && tank.getGroup() == Group.GOOD) {
-				die();
-				tank.die();
-			}else if (this.group==Group.GOOD && tank.getGroup()==Group.BAD) {
-				die();
-				tank.die();
-			}
-		}
-
-	}*/
+	//public abstract void move();
 
 	public void die() {
 		this.live=false;
@@ -173,7 +150,7 @@ public abstract class AbstractMilitaryWeapon {
 	/**
 	 * 边界检测
 	 */
-	public void boundsCheck() {
+	/*public void boundsCheck() {
 		if (this.x<20){
 			x=20;
 			randomDir();
@@ -190,9 +167,9 @@ public abstract class AbstractMilitaryWeapon {
 			this.y=TankFrame.GAME_HEIGHT-Tank.HEIGHT-4;
 			randomDir();
 		}
-	}
+	}*/
 
-	public void randomDir() {
+	/*public void randomDir() {
 		if (this.dir==Dir.LEFT) {
 			this.dir=dirs[random.nextInt(3)];
 		}
@@ -206,19 +183,21 @@ public abstract class AbstractMilitaryWeapon {
 			this.dir=dirs2[random.nextInt(3)];
 		}
 		this.dir=Dir.values()[random.nextInt(4)];
-	}
+	}*/
 
 	/**
 	 * 开火
 	 */
-	public void fire() {
+	/*public void fire() {
 		if (live) {
 			//if (this instanceof Plane) {
 			this.tankFrame.getBullets().add(tankFrame.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,tankFrame,this.group,null));
 			//}
 			//this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
 		}
-	}
+	}*/
+
+	public abstract void fire();
 
 	public int getX() {
 		return x;

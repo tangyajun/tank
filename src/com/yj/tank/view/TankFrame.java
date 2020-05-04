@@ -25,11 +25,9 @@ import com.yj.tank.domain.AbstractMilitaryWeapon;
 import com.yj.tank.domain.Plane;
 import com.yj.tank.PlayListener;
 import com.yj.tank.factory.AbstractWeaponFamilyFactory;
-import com.yj.tank.factory.PlaneFactory;
-import com.yj.tank.factory.PlaneFamilyFactory;
 import com.yj.tank.TankTimeTask;
 import com.yj.tank.factory.TankFactory;
-import com.yj.tank.factory.TankFamilyFactory;
+import com.yj.tank.factory.DefaultTankFamilyFactory;
 import com.yj.tank.factory.WeaponFactory;
 
 /**
@@ -43,7 +41,7 @@ public class TankFrame extends Frame{
 	 */
 	TankTimeTask tankTimeTask=new TankTimeTask(this,120);
 
-	AbstractWeaponFamilyFactory abstractWeaponFamilyFactory =new TankFamilyFactory();
+	AbstractWeaponFamilyFactory abstractWeaponFamilyFactory = DefaultTankFamilyFactory.getInstance();
 
 	/**
 	 *我方坦克集合

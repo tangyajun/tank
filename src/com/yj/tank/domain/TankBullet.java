@@ -114,7 +114,12 @@ public class TankBullet extends AbstractBullet {
 	}
 
 	@Override
-	public void move() {
+	public void die() {
+		this.live=false;
+	}
+
+
+	private void move() {
 		switch (dir) {
 			case LEFT:
 				x-=SPEED;

@@ -21,7 +21,6 @@ public class DefaultTankFire implements Fire {
 		int y=tank.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
 		if (tank instanceof Plane) {
 			tank.getTankFrame().getBullets().add(new PlaneBullet(x,y,PlaneBullet.WIDTH,PlaneBullet.HEIGHT, tank.getDir(),PlaneBullet.SPEED,tank.getTankFrame(),tank.getGroup(), null));
-
 		}else if (tank instanceof Tank) {
 			tank.getTankFrame().getBullets().add(new TankBullet(x,y,tank.getDir(),tank.getGroup(),tank.getTankFrame(),null));
 		}
