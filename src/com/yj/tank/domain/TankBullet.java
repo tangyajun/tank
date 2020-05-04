@@ -15,7 +15,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-02-14:00
  **/
-public class Bullet {
+public class TankBullet extends AbstractBullet {
 	/**
 	 * 子弹的速度
 	 */
@@ -26,41 +26,42 @@ public class Bullet {
 	/**
 	 * 子弹的坐标
 	 */
-	private int x,y;
+	/*private int x,y;
 
-	/**
+	*//**
 	 * 子弹的方向
-	 */
+	 *//*
 	private Dir dir;
 
-	/**
+	*//**
 	 * 子弹是否存活
-	 */
+	 *//*
 	boolean live=true;
 
-	/**
+	*//**
 	 *
-	 */
+	 *//*
 	TankFrame tankFrame;
 
-	/**
+	*//**
 	 * 所属分组
-	 */
+	 *//*
 	private Group group=Group.BAD;
 
 	Rectangle rectangle=new Rectangle();
 
-	/**
+	*//**
 	 * 子弹的图片
-	 */
-	private Image image;
+	 *//*
+	private Image image;*/
 
-	public Bullet(int x,int y,Dir dir,Group group,TankFrame tankFrame) {
-		this(tankFrame,x,y,dir,group,null);
+	public TankBullet(int x,int y,Dir dir,Group group,TankFrame tankFrame) {
+		this(x,y,dir,group,tankFrame,null);
 	}
 
-	public Bullet(TankFrame tankFrame,int x,int y,Dir dir,Group group, Image image) {
-		this.tankFrame=tankFrame;
+	public TankBullet(int x,int y,Dir dir,Group group, TankFrame tankFrame,Image image) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,tankFrame,group,image);
+		/*this.tankFrame=tankFrame;
 		this.x=x;
 		this.y=y;
 		this.dir=dir;
@@ -69,9 +70,10 @@ public class Bullet {
 		this.rectangle.x=this.x;
 		this.rectangle.y=this.y;
 		this.rectangle.width=WIDTH;
-		this.rectangle.height=HEIGHT;
+		this.rectangle.height=HEIGHT;*/
 	}
 
+	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
 			tankFrame.getBullets().remove(this);
@@ -111,7 +113,8 @@ public class Bullet {
 		move();
 	}
 
-	private void move() {
+	@Override
+	public void move() {
 		switch (dir) {
 			case LEFT:
 				x-=SPEED;
@@ -139,7 +142,7 @@ public class Bullet {
 	 * 碰撞检测
 	 * @param tank
 	 */
-	public void collideWith(Tank tank) {
+	/*public void collideWith(Tank tank) {
 		if (this.group==tank.getGroup()) {
 			return;
 		}
@@ -147,56 +150,46 @@ public class Bullet {
 			if (this.group == Group.BAD && tank.getGroup() == Group.GOOD) {
 				die();
 				tank.die();
-				this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
+				//this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
 			}else if (this.group==Group.GOOD && tank.getGroup()==Group.BAD) {
 				die();
 				tank.die();
-				this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
+				//this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
 			}
 		}
 
+	}*/
+
+	/**
+	 * 碰撞检测
+	 * @param weapon
+	 */
+	@Override
+	public void collideWith(AbstractMilitaryWeapon weapon) {
+		if (this.group==weapon.getGroup()) {
+			return;
+		}
+		if (this.rectangle.intersects(weapon.getRectangle())) {
+			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
+				die();
+				weapon.die();
+				if (weapon instanceof Plane) {
+					this.tankFrame.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,tankFrame));
+				}else if (weapon instanceof Tank) {
+					this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
+				}
+
+			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
+				die();
+				weapon.die();
+				if (weapon instanceof Plane) {
+					this.tankFrame.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,tankFrame));
+				}else if (weapon instanceof Tank) {
+					this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
+				}
+			}
+		}
 	}
 
-	public void die() {
-		this.live=false;
-	}
-
-	public static int getSPEED() {
-		return SPEED;
-	}
-
-	public static int getWIDTH() {
-		return WIDTH;
-	}
-
-
-	public static int getHEIGHT() {
-		return HEIGHT;
-	}
-
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public Dir getDir() {
-		return dir;
-	}
-
-	public void setDir(Dir dir) {
-		this.dir = dir;
-	}
 
 }

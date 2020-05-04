@@ -1,4 +1,4 @@
-package com.yj.tank;
+package com.yj.tank.factory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,9 +14,22 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-02-17:32
  **/
-public class TankFactory {
+public class TankFactory implements WeaponFactory<Tank> {
+
+	public static TankFactory INSTANCE=new TankFactory();
+
+	private TankFactory() {
+
+	}
+
+	public static TankFactory getInstance() {
+		return INSTANCE;
+	}
+
 	static Dir[] dirs={Dir.UP,Dir.DOWN,Dir.LEFT,Dir.RIGHT};
-	public static Tank createTank(int x,int y,Dir dir, TankFrame tankFrame, Group group) {
+
+	@Override
+	public  Tank createWeapon(int x,int y,Dir dir, TankFrame tankFrame, Group group) {
 		return new Tank(x,y,dir,tankFrame,group);
 	}
 
@@ -31,21 +44,23 @@ public class TankFactory {
 	 * @param y 坦克 y坐标 默认 40
 	 * @return
 	 */
-	public static List<Tank> createTanks(int num,TankFrame tankFrame,Group group, final int distance,Dir dir,int x,int y) {
+	@Override
+	public List<Tank> createWeapons(int num,TankFrame tankFrame,Group group, final int distance,Dir dir,int x,int y) {
 		List<Tank> tanks=new LinkedList<>();
 		for (int i=0;i<num;i++) {
-			tanks.add(createTank(x,y,dir,tankFrame,group));
+			tanks.add(createWeapon(x,y,dir,tankFrame,group));
 			x+=distance;
 		}
 		return tanks;
 	}
 
-	public static List<Tank> createTanks(int num,TankFrame tankFrame,Group group, final int distance,Dir dir) {
+	@Override
+	public List<Tank> createWeapons(int num,TankFrame tankFrame,Group group, final int distance,Dir dir) {
 		List<Tank> tanks=new LinkedList<>();
 		int x=140;
 		int y=40;
 		for (int i=0;i<num;i++) {
-			tanks.add(createTank(x,y,dir,tankFrame,group));
+			tanks.add(createWeapon(x,y,dir,tankFrame,group));
 			x+=distance;
 		}
 		return tanks;

@@ -1,7 +1,10 @@
 package com.yj.tank;
 
 import com.yj.tank.constant.Group;
-import com.yj.tank.domain.Bullet;
+import com.yj.tank.domain.AbstractMilitaryWeapon;
+import com.yj.tank.domain.TankBullet;
+import com.yj.tank.domain.Plane;
+import com.yj.tank.domain.PlaneBullet;
 import com.yj.tank.domain.Tank;
 
 /**
@@ -13,10 +16,15 @@ import com.yj.tank.domain.Tank;
 public class DefaultTankFire implements Fire {
 
 	@Override
-	public void fire(Tank tank) {
-		int x=tank.getX()+(Tank.WIDTH/2)-(Bullet.WIDTH/2);
-		int y=tank.getY()+(Tank.HEIGHT/2)-(Bullet.HEIGHT/2);
-		tank.getTankFrame().getBullets().add(new Bullet(x,y, tank.getDir(), tank.getGroup(), tank.getTankFrame()));
+	public void fire(AbstractMilitaryWeapon tank) {
+		int x=tank.getX()+(Tank.WIDTH/2)-(TankBullet.WIDTH/2);
+		int y=tank.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
+		if (tank instanceof Plane) {
+			tank.getTankFrame().getBullets().add(new PlaneBullet(x,y,PlaneBullet.WIDTH,PlaneBullet.HEIGHT, tank.getDir(),PlaneBullet.SPEED,tank.getTankFrame(),tank.getGroup(), null));
+
+		}else if (tank instanceof Tank) {
+			tank.getTankFrame().getBullets().add(new TankBullet(x,y,tank.getDir(),tank.getGroup(),tank.getTankFrame(),null));
+		}
 		if (tank.getGroup()== Group.GOOD) {
 			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
 		}

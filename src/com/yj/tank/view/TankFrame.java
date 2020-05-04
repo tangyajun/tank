@@ -16,17 +16,21 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.ConfigProperties;
-import com.yj.tank.TankFireFourBullet;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.GameStatus;
 import com.yj.tank.constant.Group;
+import com.yj.tank.domain.AbstractBullet;
+import com.yj.tank.domain.AbstractExplode;
+import com.yj.tank.domain.AbstractMilitaryWeapon;
 import com.yj.tank.domain.Plane;
 import com.yj.tank.PlayListener;
-import com.yj.tank.TankFactory;
+import com.yj.tank.factory.AbstractWeaponFamilyFactory;
+import com.yj.tank.factory.PlaneFactory;
+import com.yj.tank.factory.PlaneFamilyFactory;
 import com.yj.tank.TankTimeTask;
-import com.yj.tank.domain.Bullet;
-import com.yj.tank.domain.Explode;
-import com.yj.tank.domain.Tank;
+import com.yj.tank.factory.TankFactory;
+import com.yj.tank.factory.TankFamilyFactory;
+import com.yj.tank.factory.WeaponFactory;
 
 /**
  * 坦克游戏主界面
@@ -39,21 +43,27 @@ public class TankFrame extends Frame{
 	 */
 	TankTimeTask tankTimeTask=new TankTimeTask(this,120);
 
+	AbstractWeaponFamilyFactory abstractWeaponFamilyFactory =new TankFamilyFactory();
+
 	/**
 	 *我方坦克集合
 	 */
-	static List<Tank> goodTanks=new ArrayList<>();
+	//static List<Tank> goodTanks=new ArrayList<>();
+	static List<AbstractMilitaryWeapon> goodTanks=new ArrayList<>();
 
 	/**
 	 * 坦克
 	 *
 	 */
-	Tank tank;
+	//Tank tank;
+
+	AbstractMilitaryWeapon tank;
 
 	/**
 	 * 子弹集合
 	 */
-	List<Bullet> bullets=new LinkedList<>();
+	//List<Bullet> bullets=new LinkedList<>();
+	List<AbstractBullet> bullets=new LinkedList<>();
 
 	/**
 	 * 窗口宽度
@@ -82,12 +92,14 @@ public class TankFrame extends Frame{
 	/**
 	 * 敌方坦克集合
 	 */
-	List<Tank> tanks=new LinkedList<>();
+	//List<Tank> tanks=new LinkedList<>();
+	List<AbstractMilitaryWeapon> tanks=new LinkedList<>();
 
 	/**
 	 * 爆炸
 	 */
-	List<Explode> explodes=new LinkedList<>();
+	//List<Explode> explodes=new LinkedList<>();
+	List<AbstractExplode> explodes=new LinkedList<>();
 
 	/**
 	 * 飞机集合
@@ -107,6 +119,8 @@ public class TankFrame extends Frame{
 	Container playContainer=new com.yj.tank.ButtonContainer(300,400,play);
 	GameStatus gameStatus= GameStatus.LOADING;
 	String next="NEXT";
+
+	WeaponFactory weaponFactory= TankFactory.getInstance();
 
 	public TankFrame() {
 		/**
@@ -198,7 +212,10 @@ public class TankFrame extends Frame{
 		}else {
 			if (goodTanks.size()>0) {
 				goodTanks.remove(goodTanks.get(0));
-				tank = goodTanks.get(0);
+				//tank = goodTanks.get(0);
+				if (goodTanks.size()>0) {
+					tank = goodTanks.get(0);
+				}
 			}else if(goodTanks.size()<=0 && this.gameStatus== GameStatus.RUNNING){
 				this.gameStatus= GameStatus.OVER;
 			}else if (goodTanks.size()==0 && this.gameStatus== GameStatus.OVER) {
@@ -355,19 +372,21 @@ public class TankFrame extends Frame{
 	}
 
 	/**
-	 * 初始化坦克
+	 * 初始化坦克游戏
 	 */
 	public void init() {
-		this.tanks.addAll(TankFactory.createTanks(TankFrame.TANK_NUM,this, Group.BAD,120,Dir.DOWN));
+
+		this.tanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,this, Group.BAD,120,Dir.DOWN));
 		for (int i=0;i<lifeNum;i++) {
-			goodTanks.add(new Tank(100,400,Dir.DOWN,this,Group.GOOD));
+			//goodTanks.add(new Tank(100,400,Dir.DOWN,this,Group.GOOD));
+			goodTanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
 		}
 		tank=goodTanks.get(0);
 		tank.setMoving(false);
 	}
 
 	/**
-	 * 清楚坦克
+	 * 清除坦克游戏
 	 */
 	public void clear() {
 		if (this.tank!= null) {
@@ -393,27 +412,27 @@ public class TankFrame extends Frame{
 		this.tankTimeTask = tankTimeTask;
 	}
 
-	public static List<Tank> getGoodTanks() {
+	public static List<AbstractMilitaryWeapon> getGoodTanks() {
 		return goodTanks;
 	}
 
-	public static void setGoodTanks(List<Tank> goodTanks) {
+	public static void setGoodTanks(List<AbstractMilitaryWeapon> goodTanks) {
 		TankFrame.goodTanks = goodTanks;
 	}
 
-	public Tank getTank() {
+	public AbstractMilitaryWeapon getTank() {
 		return tank;
 	}
 
-	public void setTank(Tank tank) {
+	public void setTank(AbstractMilitaryWeapon tank) {
 		this.tank = tank;
 	}
 
-	public List<Bullet> getBullets() {
+	public List<AbstractBullet> getBullets() {
 		return bullets;
 	}
 
-	public void setBullets(List<Bullet> bullets) {
+	public void setBullets(List<AbstractBullet> bullets) {
 		this.bullets = bullets;
 	}
 
@@ -433,19 +452,19 @@ public class TankFrame extends Frame{
 		TankFrame.curLevelCount = curLevelCount;
 	}
 
-	public List<Tank> getTanks() {
+	public List<AbstractMilitaryWeapon> getTanks() {
 		return tanks;
 	}
 
-	public void setTanks(List<Tank> tanks) {
+	public void setTanks(List<AbstractMilitaryWeapon> tanks) {
 		this.tanks = tanks;
 	}
 
-	public List<Explode> getExplodes() {
+	public List<AbstractExplode> getExplodes() {
 		return explodes;
 	}
 
-	public void setExplodes(List<Explode> explodes) {
+	public void setExplodes(List<AbstractExplode> explodes) {
 		this.explodes = explodes;
 	}
 
@@ -495,5 +514,21 @@ public class TankFrame extends Frame{
 
 	public void setOffScreenImage(Image offScreenImage) {
 		this.offScreenImage = offScreenImage;
+	}
+
+	public AbstractWeaponFamilyFactory getAbstractWeaponFamilyFactory() {
+		return abstractWeaponFamilyFactory;
+	}
+
+	public void setAbstractWeaponFamilyFactory(AbstractWeaponFamilyFactory abstractWeaponFamilyFactory) {
+		this.abstractWeaponFamilyFactory = abstractWeaponFamilyFactory;
+	}
+
+	public WeaponFactory getWeaponFactory() {
+		return weaponFactory;
+	}
+
+	public void setWeaponFactory(WeaponFactory weaponFactory) {
+		this.weaponFactory = weaponFactory;
 	}
 }

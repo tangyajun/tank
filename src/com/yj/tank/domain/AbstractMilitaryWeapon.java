@@ -5,12 +5,12 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.yj.tank.DefaultTankFire;
+import com.yj.tank.Fire;
 import com.yj.tank.MoveBehavior;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.domain.Bullet;
-import com.yj.tank.domain.Tank;
 import com.yj.tank.view.TankFrame;
 
 /**
@@ -19,7 +19,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tang
  *  @create 2020-05-03-16:59
  **/
-public abstract class AbstractMilitaryEquipment {
+public abstract class AbstractMilitaryWeapon {
 	/**
 	 * 设备的x,y坐标
 	 */
@@ -102,17 +102,34 @@ public abstract class AbstractMilitaryEquipment {
 	 */
 	protected int  bulletFrequency=95;
 
-	private Dir[] dirs={Dir.LEFT,Dir.RIGHT,Dir.UP};
-	private Dir[] dirs1={Dir.RIGHT,Dir.LEFT,Dir.DOWN};
-	private Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
-	private Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
+	protected Rectangle rectangle=new Rectangle();
 
-	public AbstractMilitaryEquipment(int x,int y,Dir dir,TankFrame tankFrame,Group group,MoveBehavior moveBehavior) {
+	/**
+	 *
+	 */
+	protected Fire fire=new DefaultTankFire();
+
+	protected Dir[] dirs={Dir.LEFT,Dir.RIGHT,Dir.UP};
+	protected Dir[] dirs1={Dir.RIGHT,Dir.LEFT,Dir.DOWN};
+	protected Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
+	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
+
+	public AbstractMilitaryWeapon(int x,int y,Dir dir,TankFrame tankFrame,Group group) {
 		this.x=x;
 		this.y=y;
 		this.tankFrame=tankFrame;
 		this.group=group;
-		this.moveBehavior=moveBehavior;
+	}
+
+	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,TankFrame tankFrame,Group group) {
+		this.x=x;
+		this.y=y;
+		this.tankFrame=tankFrame;
+		this.group=group;
+		this.rectangle.x=this.x;
+		this.rectangle.y=this.y;
+		this.rectangle.width=width;
+		this.rectangle.height=height;
 	}
 
 	/**
@@ -129,9 +146,9 @@ public abstract class AbstractMilitaryEquipment {
 
 	/**
 	 *
-	 * @param tank
+	 * @param
 	 */
-	public void collideWith(Tank tank) {
+	/*public void collideWith(AbstractMilitaryWeapon tank) {
 		if (this.group==tank.getGroup()) {
 			return;
 		}
@@ -147,7 +164,7 @@ public abstract class AbstractMilitaryEquipment {
 			}
 		}
 
-	}
+	}*/
 
 	public void die() {
 		this.live=false;
@@ -196,7 +213,10 @@ public abstract class AbstractMilitaryEquipment {
 	 */
 	public void fire() {
 		if (live) {
-			this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
+			//if (this instanceof Plane) {
+			this.tankFrame.getBullets().add(tankFrame.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,tankFrame,this.group,null));
+			//}
+			//this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
 		}
 	}
 
@@ -328,5 +348,11 @@ public abstract class AbstractMilitaryEquipment {
 		this.moveBehavior = moveBehavior;
 	}
 
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
 
+	public void setRectangle(Rectangle rectangle) {
+		this.rectangle = rectangle;
+	}
 }

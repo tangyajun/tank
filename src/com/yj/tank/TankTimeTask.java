@@ -7,7 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
+import com.yj.tank.domain.AbstractMilitaryWeapon;
 import com.yj.tank.domain.Tank;
+import com.yj.tank.factory.TankFactory;
 import com.yj.tank.view.TankFrame;
 
 /**
@@ -81,7 +83,8 @@ public class TankTimeTask {
 		public void run() {
 			if (curTimes.intValue()<total) {
 				if (curLevelCount<3) {
-					List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
+					//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
+					List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,120,Dir.DOWN);
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
@@ -90,7 +93,8 @@ public class TankTimeTask {
 					curTimes.getAndIncrement();
 				}else {
 					if (curTimes.intValue()==1 || curTimes.intValue()==4 || curTimes.intValue() ==7) {
-						List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
+						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
+						List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,120,Dir.DOWN);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
@@ -98,7 +102,8 @@ public class TankTimeTask {
 						System.out.println("ScheduledTask");
 						curTimes.getAndIncrement();
 					}else if (curTimes.intValue()==2 || curTimes.intValue() ==5) {
-						List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,0,120);
+						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,0,120);
+						List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,120,Dir.DOWN);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
@@ -106,7 +111,8 @@ public class TankTimeTask {
 						System.out.println("ScheduledTask");
 						curTimes.getAndIncrement();
 					}else if (curTimes.intValue()==3 || curTimes.intValue()==6) {
-						List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,400,120);
+						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,400,120);
+						List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,distance,Dir.RIGHT,400,200);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});

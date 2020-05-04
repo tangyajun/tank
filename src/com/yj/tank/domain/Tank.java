@@ -19,48 +19,44 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-02-13:18
  **/
-public class Tank {
-	private int x,y;
+public class Tank extends AbstractMilitaryWeapon {
+	/*private int x,y;
 	private Dir dir=Dir.DOWN;
 	public int speedGood=10;
 	public int speedBad=1;
 	private boolean moving=true;
-	TankFrame tankFrame=null;
+	TankFrame tankFrame=null;*/
 	public static final int WIDTH= ResourceManager.goodTankDownImage.getWidth();
 	public static final int HEIGHT=ResourceManager.goodTankDownImage.getHeight();
-	Random random=new Random();
+	/*Random random=new Random();
 	boolean live=true;
 	private Group group=Group.BAD;
 	private Dir[] dirs={Dir.LEFT,Dir.RIGHT,Dir.UP};
 	private Dir[] dirs1={Dir.RIGHT,Dir.LEFT,Dir.DOWN};
 	private Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
-	private Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
+	private Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};*/
 
 	/**
 	 * 子弹发射的频率
 	 */
-	int  bulletFrequency=95;
+	//int  bulletFrequency=95;
 
-	Rectangle rectangle=new Rectangle();
+	//Rectangle rectangle=new Rectangle();
 
 	/**
 	 *
 	 */
-	Fire fire=new DefaultTankFire();
+	//Fire fire=new DefaultTankFire();
 
 	public Tank(int x,int y,Dir dir,TankFrame tankFrame,Group group) {
-		super();
-		this.x=x;
-		this.y=y;
-		this.dir=dir;
-		this.tankFrame=tankFrame;
-		this.group=group;
-		this.rectangle.x=this.x;
-		this.rectangle.y=this.y;
-		this.rectangle.width=WIDTH;
-		this.rectangle.height=HEIGHT;
+		this(x,y,WIDTH,HEIGHT,dir,tankFrame,group);
 	}
 
+	public Tank(int x,int y,int width,int height,Dir dir,TankFrame tankFrame,Group group) {
+		super(x,y,width,height,dir,tankFrame,group);
+	}
+
+	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
 			this.tankFrame.getTanks().remove(this);
@@ -102,7 +98,8 @@ public class Tank {
 	/**
 	 * 坦克移动
 	 */
-	private void move() {
+	@Override
+	public void move() {
 		if (moving) {
 			switch (dir) {
 				case LEFT:
@@ -157,7 +154,8 @@ public class Tank {
 	/**
 	 * 边界检查
 	 */
-	private void boundsCheck() {
+	@Override
+	public void boundsCheck() {
 		if (this.x<20){
 			x=20;
 			randomDir();
@@ -179,7 +177,8 @@ public class Tank {
 	/**
 	 * 随机改变方向
 	 */
-	private void randomDir() {
+	@Override
+	public void randomDir() {
 		if (this.dir==Dir.LEFT) {
 			this.dir=dirs[random.nextInt(3)];
 		}
@@ -198,6 +197,7 @@ public class Tank {
 	/**
 	 * 发射子弹
 	 */
+	@Override
 	public void fire() {
 		if (live) {
 			fire.fire(this);
@@ -210,89 +210,6 @@ public class Tank {
 		}
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public Dir getDir() {
-		return dir;
-	}
-
-	public void setDir(Dir dir) {
-		this.dir = dir;
-	}
-
-	public boolean isMoving() {
-		return moving;
-	}
-
-	public void setMoving(boolean moving) {
-		this.moving = moving;
-	}
-
-	public void die() {
-		this.live=false;
-	}
-
-	public TankFrame getTankFrame() {
-		return tankFrame;
-	}
-
-	public void setTankFrame(TankFrame tankFrame) {
-		this.tankFrame = tankFrame;
-	}
-
-	public boolean isLive() {
-		return live;
-	}
-
-	public void setLive(boolean live) {
-		this.live = live;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
-	public int getSpeedGood() {
-		return speedGood;
-	}
-
-	public void setSpeedGood(int speedGood) {
-		this.speedGood = speedGood;
-	}
-
-	public int getSpeedBad() {
-		return speedBad;
-	}
-
-	public void setSpeedBad(int speedBad) {
-		this.speedBad = speedBad;
-	}
-
-	public Rectangle getRectangle() {
-		return rectangle;
-	}
-
-	public void setRectangle(Rectangle rectangle) {
-		this.rectangle = rectangle;
-	}
 
 	public Fire getFire() {
 		return fire;

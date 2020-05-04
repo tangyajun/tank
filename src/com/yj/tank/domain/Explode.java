@@ -12,7 +12,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-02-22:20
  **/
-public class Explode {
+public class Explode extends AbstractExplode {
 	public static final int WIDTH= ResourceManager.explodes[0].getWidth();
 	private static final int HEIGHT=ResourceManager.explodes[0].getHeight();
 	private int x,y;
@@ -20,12 +20,14 @@ public class Explode {
 	int step=0;
 	TankFrame tankFrame=null;
 	public Explode(int x,int y,TankFrame tankFrame) {
-		this.x=x+(Tank.WIDTH/2)-(WIDTH/2);
+		super(x,y,WIDTH,HEIGHT,tankFrame);
+		/*this.x=x+(Tank.WIDTH/2)-(WIDTH/2);
 		this.y=y+(Tank.HEIGHT/2)-(HEIGHT/2);
 		this.tankFrame=tankFrame;
-		new Thread(() -> new Audio("audio/explode.wav").play()).start();
+		new Thread(() -> new Audio("audio/explode.wav").play()).start();*/
 	}
 
+	@Override
 	public void paint(Graphics graphics) {
 		if (live) {
 			if(step < ResourceManager.explodes.length) {

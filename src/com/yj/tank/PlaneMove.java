@@ -1,6 +1,6 @@
 package com.yj.tank;
 
-import com.yj.tank.domain.AbstractMilitaryEquipment;
+import com.yj.tank.domain.AbstractMilitaryWeapon;
 
 /**
  *
@@ -10,7 +10,7 @@ import com.yj.tank.domain.AbstractMilitaryEquipment;
  **/
 public class PlaneMove implements MoveBehavior {
 	@Override
-	public void move(AbstractMilitaryEquipment abstractMilitaryEquipment) {
+	public void move(AbstractMilitaryWeapon abstractMilitaryWeapon) {
 
 	}
 }

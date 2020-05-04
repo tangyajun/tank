@@ -33,6 +33,12 @@ public class ResourceManager {
 			downLeft45Image,upRight45Image,downRight45Image,left_leftFront45Image,left_rightFront45Image,
 			right_rightFront45Image,right_leftFront45Image;
 
+	/**
+	 * 飞机图片
+	 */
+	public static BufferedImage goodPlaneLeftImage,goodPlaneRightImage,goodPlaneUpImage,goodPlaneDownImage;
+	public static BufferedImage badPlaneLeftImage,badPlaneRightImage,badPlaneUpImage,badPlaneDownImage;
+
 	public static BufferedImage[] explodes=new BufferedImage[16];
 	static {
 		try {
@@ -45,6 +51,16 @@ public class ResourceManager {
 			goodTankLeftImage=ImageUtils.rotateImage(goodTankUpImage,-90);
 			goodTankRightImage=ImageUtils.rotateImage(goodTankUpImage,90);
 			goodTankDownImage=ImageUtils.rotateImage(goodTankUpImage,180);
+
+			goodPlaneUpImage=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/goodPlaneUp.png"));
+			goodPlaneLeftImage=ImageUtils.rotateImage(goodPlaneUpImage,-90);
+			goodPlaneRightImage=ImageUtils.rotateImage(goodPlaneUpImage,90);
+			goodPlaneDownImage=ImageUtils.rotateImage(goodPlaneUpImage,180);
+
+			badPlaneUpImage=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/badPlaneUp.jpg"));
+			badPlaneLeftImage=ImageUtils.rotateImage(badPlaneUpImage,-90);
+			badPlaneRightImage=ImageUtils.rotateImage(badPlaneUpImage,90);
+			badPlaneDownImage=ImageUtils.rotateImage(badPlaneUpImage,180);
 			/*tankRightImage=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
 			tankUpImage=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
 			tankDownImage=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/tankD.gif"));*/

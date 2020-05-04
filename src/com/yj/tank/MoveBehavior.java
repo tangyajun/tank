@@ -1,6 +1,6 @@
 package com.yj.tank;
 
-import com.yj.tank.domain.AbstractMilitaryEquipment;
+import com.yj.tank.domain.AbstractMilitaryWeapon;
 
 /**
  *
@@ -12,5 +12,5 @@ public interface MoveBehavior {
 	/**
 	 *移动
 	 */
-	void move(AbstractMilitaryEquipment abstractMilitaryEquipment);
+	void move(AbstractMilitaryWeapon abstractMilitaryWeapon);
 }

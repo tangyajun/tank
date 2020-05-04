@@ -1,5 +1,6 @@
 package com.yj.tank;
 
+import com.yj.tank.domain.AbstractMilitaryWeapon;
 import com.yj.tank.domain.Tank;
 
 /**
@@ -13,5 +14,5 @@ public interface Fire {
 	 * 发射子弹
 	 * @param tank
 	 */
-	void fire(Tank tank);
+	void fire(AbstractMilitaryWeapon tank);
 }
