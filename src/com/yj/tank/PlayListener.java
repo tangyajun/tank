@@ -17,6 +17,7 @@ import com.yj.tank.view.TankFrame;
  **/
 public class PlayListener  extends MouseAdapter {
 	TankFrame tankFrame;
+	GameModelManager modelManager=GameModelManager.getInstance();
 	public PlayListener(TankFrame tankFrame) {
 		this.tankFrame=tankFrame;
 	}
@@ -28,12 +29,12 @@ public class PlayListener  extends MouseAdapter {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		tankFrame.clear();
+		modelManager.clear();
 		tankFrame.setGameStatus(GameStatus.RUNNING);
-		tankFrame.init();
+		modelManager.init();
 		Button button=(Button) e.getSource();
 		button.setVisible(false);
-		GameModelManager.getInstance().getTankTimeTask().start(15000,GameModelManager.curLevelCount);
+		modelManager.getTankTimeTask().start(15000,GameModelManager.curLevelCount);
 	}
 
 	@Override

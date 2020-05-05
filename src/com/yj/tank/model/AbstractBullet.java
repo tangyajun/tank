@@ -15,7 +15,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-04-16:35
  **/
-public abstract class AbstractBullet {
+public abstract class AbstractBullet extends GameProps {
 	/**
 	 * 子弹的速度
 	 */
@@ -30,11 +30,6 @@ public abstract class AbstractBullet {
 	 * 高度
 	 */
 	protected int height;
-
-	/**
-	 * 子弹的坐标
-	 */
-	protected int x,y;
 
 	/**
 	 * 子弹的方向
@@ -80,6 +75,7 @@ public abstract class AbstractBullet {
 	 */
 	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
 			Group group,Image image) {
+		super(x,y);
 		this.x=x;
 		this.y=y;
 		this.width=width;
@@ -95,7 +91,6 @@ public abstract class AbstractBullet {
 		this.rectangle.height=height;
 	}
 
-	public abstract void paint(Graphics graphics);
 
 	/*protected void move() {
 		switch (dir) {

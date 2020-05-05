@@ -1,12 +1,10 @@
 package com.yj.tank.model;
 
-import java.awt.Graphics;
 import java.awt.Image;
 
 import com.yj.tank.Audio;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
-import com.yj.tank.view.TankFrame;
 
 /**
  * 爆炸抽象类
@@ -14,16 +12,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-04-16:35
  **/
-public abstract class AbstractExplode {
-	/**
-	 * X坐标
-	 */
-	protected int x;
-
-	/**
-	 * y 坐标
-	 */
-	protected int y;
+public abstract class AbstractExplode extends GameProps {
 
 	/**
 	 * 宽度
@@ -36,6 +25,7 @@ public abstract class AbstractExplode {
 	protected int height;
 
 	protected int step=0;
+
 	protected GameModelManager gameModelManager=null;
 
 	/**
@@ -57,8 +47,7 @@ public abstract class AbstractExplode {
 	}
 
 	public AbstractExplode(int x,int y,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
-		this.x=x;
-		this.y=y;
+		super(x,y);
 		this.gameModelManager=gameModelManager;
 		if (images !=null) {
 			this.images = images;
@@ -79,6 +68,7 @@ public abstract class AbstractExplode {
 	}
 
 	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
+		super(x,y);
 		this.x=x;
 		this.y=y;
 		this.width=width;
@@ -94,14 +84,4 @@ public abstract class AbstractExplode {
 		}
 	}
 
-	/**
-	 * 绘制爆炸图片
-	 * @param graphics
-	 */
-	public void paint(Graphics graphics) {
-		if(step < images.length) {
-			graphics.drawImage(images[step++], x, y, null);
-		}
-		gameModelManager.getExplodes().remove(this);
-	}
 }

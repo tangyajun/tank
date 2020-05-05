@@ -3,7 +3,10 @@ package com.yj.tank;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import com.yj.tank.constant.Dir;
+import com.yj.tank.constant.Group;
 import com.yj.tank.factory.AbstractWeaponFamilyFactory;
 import com.yj.tank.factory.DefaultTankFamilyFactory;
 import com.yj.tank.factory.TankFactory;
@@ -12,6 +15,7 @@ import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.Plane;
+import com.yj.tank.view.TankFrame;
 
 /**
  *
@@ -87,12 +91,36 @@ public class GameModelManager {
 		return INSTANCE;
 	}
 
-	public static int getLifeNum() {
-		return lifeNum;
+	/**
+	 * 清除坦克游戏
+	 */
+	public void clear() {
+		if (this.tank!= null) {
+			setTank(null);
+		}
+		if (this.bullets.size()>0) {
+			this.bullets.clear();
+		}
+		if (tanks.size()>0) {
+			tanks.clear();
+		}
+		if (tanks.size()>0) {
+			tanks.clear();
+		}
+		TankTimeTask.setCurTimes(new AtomicInteger(1));
 	}
 
-	public static int getEnemyTankNum() {
-		return enemyTankNum;
+	/**
+	 * 初始化坦克游戏
+	 */
+	public void init() {
+		tanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,this, Group.BAD,120, Dir.DOWN));
+		for (int i=0;i<lifeNum;i++) {
+			//goodTanks.add(new Tank(100,400,Dir.DOWN,this,Group.GOOD));
+			tanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+		}
+		this.tank=tanks.get(0);
+		tank.setMoving(false);
 	}
 
 	public TankTimeTask getTankTimeTask() {

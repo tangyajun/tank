@@ -20,11 +20,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tang
  *  @create 2020-05-03-16:59
  **/
-public abstract class AbstractMilitaryWeapon {
-	/**
-	 * 设备的x,y坐标
-	 */
-	protected int x,y;
+public abstract class AbstractMilitaryWeapon extends GameProps {
 
 	/**
 	 * 设备的方向
@@ -116,15 +112,13 @@ public abstract class AbstractMilitaryWeapon {
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
 	public AbstractMilitaryWeapon(int x,int y,Dir dir, GameModelManager gameModelManager,Group group) {
-		this.x=x;
-		this.y=y;
+		super(x,y);
 		this.gameModelManager=gameModelManager;
 		this.group=group;
 	}
 
 	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group) {
-		this.x=x;
-		this.y=y;
+		super(x,y);
 		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.rectangle.x=this.x;
@@ -132,12 +126,6 @@ public abstract class AbstractMilitaryWeapon {
 		this.rectangle.width=width;
 		this.rectangle.height=height;
 	}
-
-	/**
-	 * 绘制设备
-	 * @param graphics
-	 */
-	public abstract void paint(Graphics graphics);
 
 	/**
 	 * 设备移动

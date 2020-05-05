@@ -1,5 +1,7 @@
 package com.yj.tank.model;
 
+import java.awt.Graphics;
+
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.view.TankFrame;
@@ -15,5 +17,17 @@ public class PlaneExplode extends AbstractExplode {
 	public static final int HEIGHT=ResourceManager.explodes[0].getHeight();
 	public PlaneExplode(int x,int y,int width,int height, GameModelManager gameModelManager) {
 		super(x,y,width,height,gameModelManager);
+	}
+
+	/**
+	 * 绘制爆炸图片
+	 * @param graphics
+	 */
+	@Override
+	public void paint(Graphics graphics) {
+		if(step < images.length) {
+			graphics.drawImage(images[step++], x, y, null);
+		}
+		gameModelManager.getExplodes().remove(this);
 	}
 }

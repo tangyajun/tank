@@ -177,7 +177,7 @@ public class TankFrame extends Frame{
 				graphics.setColor(c);
 				play.setLabel("replay");
 				play.setVisible(true);
-				clear();
+				modelManager.clear();
 			}
 		}
 		paintBullets(graphics);
@@ -330,45 +330,6 @@ public class TankFrame extends Frame{
 		}
 	}
 
-	/**
-	 * 初始化坦克游戏
-	 */
-	public void init() {
-		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
-		WeaponFactory weaponFactory=modelManager.getWeaponFactory();
-		AbstractMilitaryWeapon tank=modelManager.getTank();
-		AbstractWeaponFamilyFactory abstractWeaponFamilyFactory=modelManager.getAbstractWeaponFamilyFactory();
-		tanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,modelManager, Group.BAD,120,Dir.DOWN));
-		for (int i=0;i<GameModelManager.lifeNum;i++) {
-			//goodTanks.add(new Tank(100,400,Dir.DOWN,this,Group.GOOD));
-			GameModelManager.tanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,modelManager,Group.GOOD));
-		}
-		tank=GameModelManager.tanks.get(0);
-		modelManager.setTank(tank);
-		tank.setMoving(false);
-	}
-
-	/**
-	 * 清除坦克游戏
-	 */
-	public void clear() {
-		AbstractMilitaryWeapon tank=modelManager.getTank();
-		List<AbstractBullet> bullets=modelManager.getBullets();
-		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
-		if (tank!= null) {
-			modelManager.setTank(null);
-		}
-		if (bullets.size()>0) {
-			bullets.clear();
-		}
-		if (tanks.size()>0) {
-			tanks.clear();
-		}
-		if (GameModelManager.tanks.size()>0) {
-			GameModelManager.tanks.clear();
-		}
-		TankTimeTask.setCurTimes(new AtomicInteger(1));
-	}
 
 	public Container getPlayContainer() {
 		return playContainer;

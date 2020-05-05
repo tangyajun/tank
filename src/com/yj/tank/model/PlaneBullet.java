@@ -43,7 +43,42 @@ public class PlaneBullet extends AbstractBullet {
 
 	@Override
 	public void paint(Graphics graphics) {
-
+		if (!live) {
+			gameModelManager.getBullets().remove(this);
+		}
+		switch (dir) {
+			case DOWN:
+				if (image ==null) {
+					graphics.drawImage(ResourceManager.bulletDownImage, x, y, null);
+				}else {
+					graphics.drawImage(image, x, y, null);
+				}
+				break;
+			case UP:
+				if (image == null) {
+					graphics.drawImage(ResourceManager.bulletUpImage, x, y, null);
+				}else {
+					graphics.drawImage(image, x, y, null);
+				}
+				break;
+			case LEFT:
+				if (image==null) {
+					graphics.drawImage(ResourceManager.bulletLeftImage, x, y, null);
+				}else {
+					graphics.drawImage(image, x, y, null);
+				}
+				break;
+			case RIGHT:
+				if (image==null) {
+					graphics.drawImage(ResourceManager.bulletRightImage,x,y,null);
+				}else {
+					graphics.drawImage(image, x, y, null);
+				}
+				break;
+			default:
+				break;
+		}
+		move();
 	}
 
 	protected void move() {

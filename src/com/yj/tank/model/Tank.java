@@ -56,12 +56,10 @@ public class Tank extends AbstractMilitaryWeapon {
 	public void paint(Graphics graphics) {
 		if (!live) {
 			this.gameModelManager.getEnemyTanks().remove(this);
-			//this.tankFrame.explodes.add(new Explode(x,y,tankFrame));
 		}
 		if (this.gameModelManager.getTank()!= null) {
 			if (!this.gameModelManager.getTank().isLive()) {
 				this.gameModelManager.setTank(null);
-				//this.tankFrame.explodes.add(new Explode(x, y, tankFrame));
 			}
 		}
 		paintImage(graphics);

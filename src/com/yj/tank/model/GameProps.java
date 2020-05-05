@@ -11,14 +11,10 @@ import java.awt.Graphics;
 public abstract class GameProps {
 	int x;
 	int y;
-	int width;
-	int height;
 
-	public GameProps(int x,int y,int width,int height) {
+	public GameProps(int x,int y) {
 		this.x=x;
 		this.y=y;
-		this.width=width;
-		this.height=height;
 	}
 
 	/**
