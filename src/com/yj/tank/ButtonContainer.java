@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import com.yj.tank.view.TankFrame;
+
 
 /**
  *
@@ -27,7 +29,7 @@ public class ButtonContainer extends Container {
 		setLayout(null);
 		this.setFocusable(true);
 		this.setVisible(true);
-		this.playButton.setBounds(300,400,100,40);
+		this.playButton.setBounds((TankFrame.GAME_WINDOW_WIDTH-WIDTH)/2,(TankFrame.GAME_WINDOW_HEIGHT-HEIGHT)/2,WIDTH,HEIGHT);
 		this.playButton.setFocusable(true);
 		this.playButton.setEnabled(true);
 		this.playButton.setFont(Font.getFont("宋体"));

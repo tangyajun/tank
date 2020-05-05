@@ -17,6 +17,7 @@ public class Main {
 		TankFrame tankFrame=new TankFrame();
 
 		//new Thread(()->new Audio("audio/war1.wav").loop()).start();
+		//new Thread(()->new Audio("audio/start.wav").loop()).start();
 		while (true) {
 			try {
 				Thread.sleep(50);

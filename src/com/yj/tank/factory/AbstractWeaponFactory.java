@@ -10,12 +10,12 @@ import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
 
 /**
- *
+ *  军事武器抽象工厂
  *  @Description TO DO
  *  @author tangyajun
  *  @create 2020-05-04-16:31
  **/
-public interface AbstractWeaponFamilyFactory {
+public abstract class AbstractWeaponFactory {
 	/**
 	 * 创建武器
 	 * @param x 横坐标
@@ -25,7 +25,7 @@ public interface AbstractWeaponFamilyFactory {
 	 * @param group 所属分组
 	 * @return 返回军事武器
 	 */
-	AbstractMilitaryWeapon createWeapon(int x,int y, Dir dir, GameModelManager gameModelManager, Group group);
+	public abstract AbstractMilitaryWeapon createWeapon(int x,int y, Dir dir, GameModelManager gameModelManager, Group group);
 
 	/**
 	 * 创建子弹
@@ -40,7 +40,7 @@ public interface AbstractWeaponFamilyFactory {
 	 * @param image 图片
 	 * @return 返回子弹
 	 */
-	AbstractBullet createBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
+	public abstract AbstractBullet createBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
 			Group group, Image image);
 
 	/**
@@ -52,5 +52,5 @@ public interface AbstractWeaponFamilyFactory {
 	 * @param gameModelManager 游戏模型管理者
 	 * @return 返回爆炸
 	 */
-	AbstractExplode createExplode(int x,int y,int width,int height,GameModelManager gameModelManager);
+	public abstract AbstractExplode createExplode(int x,int y,int width,int height,GameModelManager gameModelManager);
 }

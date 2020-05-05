@@ -1,7 +1,7 @@
 #游戏窗口宽度
-game_window_width=800
+game_window_width=1200
 # 游戏窗口高度
-game_window_height=600
+game_window_height=800
 
 # 初始敌军坦克数量
 initEnemyTankNum=5

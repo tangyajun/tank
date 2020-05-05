@@ -33,7 +33,7 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	/**
 	 * 敌方的速度
 	 */
-	protected int speedBad=1;
+	protected int speedBad=5;
 
 	/**
 	 * 是否移动
@@ -108,17 +108,40 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 		this.fire=fire;
 	}
 
-	/**
-	 * 设备移动
-	 */
-	//public abstract void move();
 
 	public void die() {
 		this.live=false;
 	}
 
-
+	/**
+	 * 发射子弹
+	 */
 	public abstract void fire();
+
+	/**
+	 * 检测敌方坦克是否要撞击自己的坦克，如果快要撞击则改变方向
+	 * @param
+	 */
+	public abstract void enemyBoundCheck();
+
+	/**
+	 * 随机改变方向
+	 */
+	public void randomDir() {
+		if (this.dir==Dir.LEFT) {
+			this.dir=dirs[random.nextInt(3)];
+		}
+		if(this.dir==Dir.RIGHT) {
+			this.dir=dirs3[random.nextInt(3)];
+		}
+		if (this.dir==Dir.UP) {
+			this.dir=dirs1[random.nextInt(3)];
+		}
+		if (this.dir==Dir.DOWN) {
+			this.dir=dirs2[random.nextInt(3)];
+		}
+		this.dir=Dir.values()[random.nextInt(4)];
+	}
 
 	public int getX() {
 		return x;

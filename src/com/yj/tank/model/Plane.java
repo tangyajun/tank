@@ -108,11 +108,17 @@ public class Plane extends AbstractMilitaryWeapon {
 	@Override
 	public void fire() {
 		if (live) {
-			this.gameModelManager.getBullets().add(gameModelManager.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
+			this.gameModelManager.getBullets().add(gameModelManager.getAbstractWeaponFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
 		}
 	}
 
-	private void randomDir() {
+	@Override
+	public void enemyBoundCheck() {
+
+	}
+
+	@Override
+	public void randomDir() {
 		if (this.dir==Dir.LEFT) {
 			this.dir=dirs[random.nextInt(3)];
 		}
@@ -137,12 +143,12 @@ public class Plane extends AbstractMilitaryWeapon {
 			y=40;
 			randomDir();
 		}
-		if (this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) {
-			this.x=TankFrame.GAME_WIDTH-Tank.WIDTH-4;
+		if (this.x>TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH) {
+			this.x=TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH-4;
 			randomDir();
 		}
-		if (this.y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) {
-			this.y=TankFrame.GAME_HEIGHT-Tank.HEIGHT-4;
+		if (this.y>TankFrame.GAME_WINDOW_HEIGHT-Tank.HEIGHT) {
+			this.y=TankFrame.GAME_WINDOW_HEIGHT-Tank.HEIGHT-4;
 			randomDir();
 		}
 	}

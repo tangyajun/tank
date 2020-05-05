@@ -1,31 +1,32 @@
 package com.yj.tank.model;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.util.List;
 
 import com.yj.tank.DefaultTankFire;
-import com.yj.tank.Fire;
 import com.yj.tank.GameModelManager;
+import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.ResourceManager;
 import com.yj.tank.view.TankFrame;
 
 /**
- *  坦克
+ *
  *  @Description TO DO
  *  @author tangyajun
- *  @create 2020-05-02-13:18
+ *  @create 2020-05-05-11:23
  **/
-public class Tank extends AbstractMilitaryWeapon {
+public class SmallTank extends AbstractMilitaryWeapon {
 	/**
 	 * 坦克宽度
 	 */
-	public static final int WIDTH= ResourceManager.goodTankDownImage.getWidth();
+	public static final int WIDTH= ResourceManager.enemySmallTankD.getWidth();
 
 	/**
 	 * 坦克高度
 	 */
-	public static final int HEIGHT=ResourceManager.goodTankDownImage.getHeight();
+	public static final int HEIGHT=ResourceManager.enemySmallTankD.getHeight();
 
 	/**
 	 * 坦克构造函数
@@ -35,7 +36,7 @@ public class Tank extends AbstractMilitaryWeapon {
 	 * @param gameModelManager
 	 * @param group 分组
 	 */
-	public Tank(int x,int y,Dir dir,GameModelManager gameModelManager,Group group) {
+	public SmallTank(int x,int y, Dir dir, GameModelManager gameModelManager, Group group) {
 		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
 	}
 
@@ -49,7 +50,7 @@ public class Tank extends AbstractMilitaryWeapon {
 	 * @param gameModelManager
 	 * @param group 分组
 	 */
-	public Tank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
+	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
 		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire());
 	}
 
@@ -74,16 +75,16 @@ public class Tank extends AbstractMilitaryWeapon {
 	private void paintImage(Graphics graphics) {
 		switch (dir) {
 			case DOWN:
-				graphics.drawImage(this.group==Group.GOOD?ResourceManager.goodTankDownImage:ResourceManager.badTankDownImage,x,y,null);
+				graphics.drawImage(this.group==Group.GOOD?ResourceManager.smallTankD:ResourceManager.enemySmallTankD,x,y,null);
 				break;
 			case UP:
-				graphics.drawImage(this.group==Group.GOOD?ResourceManager.goodTankUpImage:ResourceManager.badTankUpImage,x,y,null);
+				graphics.drawImage(this.group==Group.GOOD?ResourceManager.smallTankU:ResourceManager.enemySmallTankU,x,y,null);
 				break;
 			case LEFT:
-				graphics.drawImage(this.group==Group.GOOD?ResourceManager.goodTankLeftImage:ResourceManager.badTankLeftImage,x,y,null);
+				graphics.drawImage(this.group==Group.GOOD?ResourceManager.smallTankL:ResourceManager.enemySmallTankL,x,y,null);
 				break;
 			case RIGHT:
-				graphics.drawImage(this.group==Group.GOOD?ResourceManager.goodTankRightImage:ResourceManager.badTankRightImage,x,y,null);
+				graphics.drawImage(this.group==Group.GOOD?ResourceManager.smallTankR:ResourceManager.enemySmallTankR,x,y,null);
 				break;
 			default:
 				break;
@@ -136,7 +137,7 @@ public class Tank extends AbstractMilitaryWeapon {
 					fire();
 				}
 			}
-			if (this.y>160 && this.group==Group.BAD && random.nextInt(100)>95) {
+			if (this.y>200 && this.group==Group.BAD && random.nextInt(100)>95) {
 				randomDir();
 			}
 			boundsCheck();
@@ -157,7 +158,7 @@ public class Tank extends AbstractMilitaryWeapon {
 			y=40;
 			randomDir();
 		}
-		if (this.x>TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH) {
+		if (this.x> TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH) {
 			this.x=TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH-4;
 			randomDir();
 		}
@@ -167,25 +168,7 @@ public class Tank extends AbstractMilitaryWeapon {
 		}
 	}
 
-	/**
-	 * 随机改变方向
-	 */
-	@Override
-	public void randomDir() {
-		if (this.dir==Dir.LEFT) {
-			this.dir=dirs[random.nextInt(3)];
-		}
-		if(this.dir==Dir.RIGHT) {
-			this.dir=dirs3[random.nextInt(3)];
-		}
-		if (this.dir==Dir.UP) {
-			this.dir=dirs1[random.nextInt(3)];
-		}
-		if (this.dir==Dir.DOWN) {
-			this.dir=dirs2[random.nextInt(3)];
-		}
-		this.dir=Dir.values()[random.nextInt(4)];
-	}
+
 
 	/**
 	 * 发射子弹
@@ -195,26 +178,50 @@ public class Tank extends AbstractMilitaryWeapon {
 	public void fire() {
 		if (live) {
 			fire.fire(this);
-			/*int x=this.x+(Tank.WIDTH/2)-(Bullet.WIDTH/2);
-			int y=this.y+(Tank.HEIGHT/2)-(Bullet.HEIGHT/2);
-			tankFrame.getBullets().add(new Bullet(x,y, this.dir, this.group, this.tankFrame));
-			if (this.group==Group.GOOD) {
-				new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
-			}*/
 		}
 	}
 
 	@Override
 	public void enemyBoundCheck() {
+		List<AbstractMilitaryWeapon> enemyTanks=gameModelManager.getEnemyTanks();
+		for (int i=0;i<enemyTanks.size();i++) {
+			if (enemyTanks.get(i) != this) {
+				AbstractMilitaryWeapon weapon=enemyTanks.get(i);
+				if (this.x>weapon.getX()) {
+					if (this.x - weapon.getX() < 20) {
+						if (random.nextInt(100)>95) {
+							randomDir();
+						}
+					}
+				}else {
+					if (weapon.getX()-this.x < 20 ) {
+						if (random.nextInt(100)>95) {
+							randomDir();
+						}
+					}
+				}
+				if (this.y>weapon.getY()) {
+					if (this.y - weapon.getY() < 20) {
+						if (random.nextInt(100)>95) {
+							randomDir();
+						}
+					}
+				}else {
+					if (weapon.getY()-this.y< 20) {
+						if (random.nextInt(100)>95) {
+							randomDir();
+						}
+					}
+				}
+				/*if (weapon != null) {
+					if (this.rectangle.intersects(weapon.getRectangle())) {
+						if (random.nextInt(100)>95) {
+							randomDir();
+						}
 
-	}
-
-
-	public Fire getFire() {
-		return fire;
-	}
-
-	public void setFire(Fire fire) {
-		this.fire = fire;
+					}
+				}*/
+			}
+		}
 	}
 }

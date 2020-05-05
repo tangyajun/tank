@@ -2,6 +2,8 @@ package com.yj.tank;
 
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractMilitaryWeapon;
+import com.yj.tank.model.SmallTank;
+import com.yj.tank.model.SmallTankBullet;
 import com.yj.tank.model.TankBullet;
 import com.yj.tank.model.Plane;
 import com.yj.tank.model.PlaneBullet;
@@ -16,16 +18,22 @@ import com.yj.tank.model.Tank;
 public class DefaultTankFire implements Fire {
 
 	@Override
-	public void fire(AbstractMilitaryWeapon tank) {
-		int x=tank.getX()+(Tank.WIDTH/2)-(TankBullet.WIDTH/2);
-		int y=tank.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
-		if (tank instanceof Plane) {
-			tank.getGameModelManager().getBullets().add(new PlaneBullet(x,y,PlaneBullet.WIDTH,PlaneBullet.HEIGHT, tank.getDir(),PlaneBullet.SPEED,tank.getGameModelManager(),tank.getGroup(), null));
-		}else if (tank instanceof Tank) {
-			tank.getGameModelManager().getBullets().add(new TankBullet(x,y,tank.getDir(),tank.getGroup(),tank.getGameModelManager(),null));
+	public void fire(AbstractMilitaryWeapon weapon) {
+		int x=weapon.getX()+(Tank.WIDTH/2)-(TankBullet.WIDTH/2);
+		int y=weapon.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
+		if (weapon instanceof Plane) {
+			weapon.getGameModelManager().getBullets().add(new PlaneBullet(x,y,PlaneBullet.WIDTH,PlaneBullet.HEIGHT, weapon.getDir(),PlaneBullet.SPEED,weapon.getGameModelManager(),weapon.getGroup(), null));
+		}else if (weapon instanceof Tank) {
+			weapon.getGameModelManager().getBullets().add(new TankBullet(x,y,weapon.getDir(),weapon.getGroup(),weapon.getGameModelManager(),null));
+			if (weapon.getGroup()== Group.GOOD) {
+				new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
+			}
+		}else if (weapon instanceof SmallTank) {
+			weapon.getGameModelManager().getBullets().add(new SmallTankBullet(x,y,weapon.getDir(),weapon.getGroup(),weapon.getGameModelManager(),null));
+			if (weapon.getGroup()== Group.GOOD) {
+				new Thread(() -> new Audio("audio/fire.wav").play()).start();
+			}
 		}
-		if (tank.getGroup()== Group.GOOD) {
-			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
-		}
+
 	}
 }

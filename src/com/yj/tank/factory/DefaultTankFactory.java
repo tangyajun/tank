@@ -11,24 +11,23 @@ import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.Explode;
 import com.yj.tank.model.Tank;
 import com.yj.tank.model.TankBullet;
-import com.yj.tank.view.TankFrame;
 
 /**
- *
+ * 默认坦克抽象工厂
  *  @Description TO DO
  *  @author tangyajun
  *  @create 2020-05-04-20:55
  **/
-public class DefaultTankFamilyFactory implements AbstractWeaponFamilyFactory {
+public class DefaultTankFactory extends AbstractWeaponFactory {
 
-	private static DefaultTankFamilyFactory INSTRANCE=new DefaultTankFamilyFactory();
+	private static DefaultTankFactory INSTANCE=new DefaultTankFactory();
 
-	private DefaultTankFamilyFactory() {
+	private DefaultTankFactory() {
 
 	}
 
-	public static DefaultTankFamilyFactory getInstance() {
-		return INSTRANCE;
+	public static DefaultTankFactory getInstance() {
+		return INSTANCE;
 	}
 
 	@Override

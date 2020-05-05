@@ -3,6 +3,10 @@ package com.yj.tank;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.constant.Dir;
@@ -51,10 +55,13 @@ public class TankTimeTask {
 	Dir badTankDir=Dir.DOWN;
 
 	/**
-	 * 定时任务执行的延时时间
+	 * 定时任务执行的延时时间,两次开始执行最小间隔时间
 	 */
-	int delay=10000;
+	int delay=50000;
 
+	//Timer timer=new Timer();
+
+	ScheduledExecutorService scheduledExecutorService= Executors.newSingleThreadScheduledExecutor();
 	public TankTimeTask(GameModelManager gameModelManager,int distance) {
 		this.gameModelManager=gameModelManager;
 		this.distance=distance;
@@ -62,11 +69,11 @@ public class TankTimeTask {
 
 	/**
 	 * 开始定时任务
-	 * @param period 定时任务触发间隔时间
+	 * @param period 经过period时间后再次执行调度
 	 * @param curLevelCount 当前关卡数
 	 */
 	public void start(long period,int curLevelCount) {
-		new Timer("tankTimeTask").schedule(new Task(curLevelCount),delay,period);
+		scheduledExecutorService.scheduleAtFixedRate(new Task(curLevelCount),delay,period, TimeUnit.MICROSECONDS);
 	}
 
 	public class Task extends TimerTask {
@@ -82,7 +89,7 @@ public class TankTimeTask {
 			if (curTimes.intValue()<total) {
 				if (curLevelCount<3) {
 					//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
-					List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,120,Dir.DOWN);
+					List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
@@ -92,7 +99,7 @@ public class TankTimeTask {
 				}else {
 					if (curTimes.intValue()==1 || curTimes.intValue()==4 || curTimes.intValue() ==7) {
 						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
-						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,120,Dir.DOWN);
+						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
@@ -101,7 +108,7 @@ public class TankTimeTask {
 						curTimes.getAndIncrement();
 					}else if (curTimes.intValue()==2 || curTimes.intValue() ==5) {
 						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,0,120);
-						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,120,Dir.DOWN);
+						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
@@ -110,7 +117,7 @@ public class TankTimeTask {
 						curTimes.getAndIncrement();
 					}else if (curTimes.intValue()==3 || curTimes.intValue()==6) {
 						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,400,120);
-						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,distance,Dir.RIGHT,400,200);
+						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,distance,Dir.RIGHT,400,200);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});

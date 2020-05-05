@@ -97,7 +97,7 @@ public class TankBullet extends AbstractBullet {
 		}
 		this.rectangle.x=this.x;
 		this.rectangle.y=this.y;
-		if (x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT) {
+		if (x<0 || y<0 || x>TankFrame.GAME_WINDOW_HEIGHT || y>TankFrame.GAME_WINDOW_HEIGHT) {
 			live=false;
 		}
 	}

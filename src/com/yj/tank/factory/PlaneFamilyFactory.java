@@ -11,7 +11,6 @@ import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.Plane;
 import com.yj.tank.model.PlaneBullet;
 import com.yj.tank.model.PlaneExplode;
-import com.yj.tank.view.TankFrame;
 
 /**
  *  飞机抽象工厂，生产飞机、飞机的子弹、飞机爆炸
@@ -19,7 +18,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-04-17:40
  **/
-public class PlaneFamilyFactory implements AbstractWeaponFamilyFactory {
+public class PlaneFamilyFactory extends AbstractWeaponFactory {
 
 	@Override
 	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {

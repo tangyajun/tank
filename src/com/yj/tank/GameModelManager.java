@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.factory.AbstractWeaponFamilyFactory;
-import com.yj.tank.factory.DefaultTankFamilyFactory;
-import com.yj.tank.factory.TankFactory;
+import com.yj.tank.factory.AbstractWeaponFactory;
+import com.yj.tank.factory.SmallTankFactory;
+import com.yj.tank.factory.SmallTankFamilyFactory;
 import com.yj.tank.factory.WeaponFactory;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
@@ -26,6 +26,8 @@ import com.yj.tank.view.TankFrame;
  *  @create 2020-05-05-6:39
  **/
 public class GameModelManager {
+
+	public static final int ENEMY_TANK_DISTANCE=200;
 
 	private static GameModelManager INSTANCE=new GameModelManager();
 	/**
@@ -51,9 +53,9 @@ public class GameModelManager {
 	 */
 	TankTimeTask tankTimeTask=new TankTimeTask(this,120);
 
-	AbstractWeaponFamilyFactory abstractWeaponFamilyFactory = DefaultTankFamilyFactory.getInstance();
+	AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
 
-	WeaponFactory weaponFactory= TankFactory.getInstance();
+	WeaponFactory weaponFactory= SmallTankFactory.getInstance();
 
 	/**
 	 * 我方坦克集合
@@ -66,8 +68,6 @@ public class GameModelManager {
 	 * 子弹集合
 	 */
 	List<AbstractBullet> bullets=new LinkedList<>();
-
-
 
 	/**
 	 * 敌方坦克
@@ -123,6 +123,9 @@ public class GameModelManager {
 		if (tanks.size()>0) {
 			tanks.clear();
 		}
+		if (enemyTanks.size()>0) {
+			enemyTanks.clear();
+		}
 		TankTimeTask.setCurTimes(new AtomicInteger(1));
 	}
 
@@ -131,10 +134,10 @@ public class GameModelManager {
 	 */
 	public void init() {
 		// 初始化敌军坦克
-		enemyTanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,this, Group.BAD,120, Dir.DOWN));
+		enemyTanks.addAll(weaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this, Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
 		//  初始化我方坦克
 		for (int i=0;i<LIFE_NUM;i++) {
-			tanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			tanks.add(abstractWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
 		}
 		if (tanks.size()>0) {
 			setTank(tanks.get(0));
@@ -150,12 +153,12 @@ public class GameModelManager {
 		this.tankTimeTask = tankTimeTask;
 	}
 
-	public AbstractWeaponFamilyFactory getAbstractWeaponFamilyFactory() {
-		return abstractWeaponFamilyFactory;
+	public AbstractWeaponFactory getAbstractWeaponFactory() {
+		return abstractWeaponFactory;
 	}
 
-	public void setAbstractWeaponFamilyFactory(AbstractWeaponFamilyFactory abstractWeaponFamilyFactory) {
-		this.abstractWeaponFamilyFactory = abstractWeaponFamilyFactory;
+	public void setAbstractWeaponFactory(AbstractWeaponFactory abstractWeaponFactory) {
+		this.abstractWeaponFactory = abstractWeaponFactory;
 	}
 
 	public static List<AbstractMilitaryWeapon> getTanks() {

@@ -6,12 +6,11 @@ import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,18 +18,11 @@ import com.yj.tank.ConfigProperties;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.GameStatus;
-import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
-import com.yj.tank.model.Plane;
 import com.yj.tank.PlayListener;
-import com.yj.tank.factory.AbstractWeaponFamilyFactory;
 import com.yj.tank.TankTimeTask;
-import com.yj.tank.factory.TankFactory;
-import com.yj.tank.factory.DefaultTankFamilyFactory;
-import com.yj.tank.factory.WeaponFactory;
-import com.yj.tank.model.Tank;
 
 /**
  * 坦克游戏主界面
@@ -54,30 +46,40 @@ public class TankFrame extends Frame{
 	/**
 	 * 窗口宽度
 	 */
-	public static final int GAME_WIDTH= ConfigProperties.getInstance().getInteger("game_window_width");
+	public static final int GAME_WINDOW_WIDTH= ConfigProperties.getInstance().getInteger("game_window_width");
 
 	/**
 	 * 窗口高度
 	 */
-	public static final int GAME_HEIGHT=ConfigProperties.getInstance().getInteger("game_window_height");
+	public static final int GAME_WINDOW_HEIGHT=ConfigProperties.getInstance().getInteger("game_window_height");
 
 	/**
 	 * 敌军坦克数量
 	 */
-	public static final int TANK_NUM=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
+	//public static final int TANK_NUM=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
 
 	Button play=new Button("PLAY");
 	Container playContainer=new com.yj.tank.ButtonContainer(300,400,play);
 	GameStatus gameStatus= GameStatus.LOADING;
 	String next="NEXT";
 
+	/**
+	 * 屏幕宽度
+	 */
+	public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+
+	/**
+	 * 屏幕高度
+	 */
+	public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
 	public TankFrame() {
+		this.setBounds((SCREEN_WIDTH-GAME_WINDOW_WIDTH)/2,(SCREEN_HEIGHT-GAME_WINDOW_HEIGHT)/2,GAME_WINDOW_WIDTH,GAME_WINDOW_HEIGHT);
 		/**
 		 * 设置获取焦点(不过不设置，游戏运行时键盘事件失效)
 		 */
 		setFocusable(true);
 		setVisible(true);
-		setSize(GAME_WIDTH, GAME_HEIGHT);
+		setSize(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
 		setTitle("tank bar");
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
@@ -96,12 +98,12 @@ public class TankFrame extends Frame{
 	@Override
 	public void update(Graphics g) {
 		if (offScreenImage == null) {
-			offScreenImage=this.createImage(GAME_WIDTH,GAME_HEIGHT);
+			offScreenImage=this.createImage(GAME_WINDOW_WIDTH,GAME_WINDOW_HEIGHT);
 		}
 		Graphics gOffScreen=offScreenImage.getGraphics();
 		Color color=gOffScreen.getColor();
 		gOffScreen.setColor(Color.BLACK);
-		gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+		gOffScreen.fillRect(0,0,GAME_WINDOW_WIDTH,GAME_WINDOW_HEIGHT);
 		gOffScreen.setColor(color);
 		paint(gOffScreen);
 		g.drawImage(offScreenImage,0,0,null);
@@ -216,7 +218,7 @@ public class TankFrame extends Frame{
 				default:
 					break;
 			}
-			setMainTankDir();
+			changeMainTankDir();
 		}
 
 		@Override
@@ -247,13 +249,13 @@ public class TankFrame extends Frame{
 				default:
 					break;
 			}
-			setMainTankDir();
+			changeMainTankDir();
 		}
 
 		/**
-		 * 设置坦克方向
+		 * 改变坦克方向
 		 */
-		private void setMainTankDir() {
+		private void changeMainTankDir() {
 			AbstractMilitaryWeapon tank=modelManager.getTank();
 			if (tank != null) {
 				if (!kl && !kr && !kd && !ku) {
@@ -315,15 +317,19 @@ public class TankFrame extends Frame{
 	 */
 	private void collideCheck() {
 		List<AbstractBullet> bullets=modelManager.getBullets();
-		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
+		List<AbstractMilitaryWeapon> enemyTanks=modelManager.getEnemyTanks();
 		AbstractMilitaryWeapon tank=modelManager.getTank();
 		for (int i=0;i<bullets.size();i++) {
-			for (int j=0;j<tanks.size();j++) {
-				bullets.get(i).collideWith(tanks.get(j));
+			for (int j=0;j<enemyTanks.size();j++) {
+				bullets.get(i).collideWith(enemyTanks.get(j));
 			}
 			if (tank != null) {
 				bullets.get(i).collideWith(tank);
 			}
+		}
+
+		for (int i=0;i<enemyTanks.size();i++) {
+			enemyTanks.get(i).enemyBoundCheck();
 		}
 	}
 

@@ -15,7 +15,6 @@ import com.yj.tank.view.TankFrame;
 public class Explode extends AbstractExplode {
 	public static final int WIDTH= ResourceManager.explodes[0].getWidth();
 	private static final int HEIGHT=ResourceManager.explodes[0].getHeight();
-	private int x,y;
 	private boolean live=true;
 	int step=0;
 	GameModelManager gameModelManager=null;
