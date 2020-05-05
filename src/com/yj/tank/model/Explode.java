@@ -32,6 +32,6 @@ public class Explode extends AbstractExplode {
 			gameModelManager.getExplodes().remove(this);
 			this.live = false;
 		}
-		System.out.println("-------------------step: "+step);
+
 	}
 }

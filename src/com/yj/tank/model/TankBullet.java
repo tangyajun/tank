@@ -3,6 +3,7 @@ package com.yj.tank.model;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import com.yj.tank.BlastStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -29,6 +30,11 @@ public class TankBullet extends AbstractBullet {
 
 	public TankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager,Image image) {
 		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image);
+		setRectangle(super.rectangle);
+	}
+
+	public TankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager,Image image, BlastStrategy blastStrategy) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image,blastStrategy);
 		setRectangle(super.rectangle);
 	}
 
@@ -137,20 +143,22 @@ public class TankBullet extends AbstractBullet {
 			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
 				die();
 				weapon.die();
-				if (weapon instanceof Plane) {
+				blastStrategy.execute(weapon,this,gameModelManager);
+				/*if (weapon instanceof Plane) {
 					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
 				}else if (weapon instanceof Tank) {
 					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}
+				}*/
 
 			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
 				die();
 				weapon.die();
-				if (weapon instanceof Plane) {
+				blastStrategy.execute(weapon,this,gameModelManager);
+				/*if (weapon instanceof Plane) {
 					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
 				}else if (weapon instanceof Tank) {
 					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}
+				}*/
 			}
 		}
 	}

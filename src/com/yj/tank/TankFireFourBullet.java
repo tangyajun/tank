@@ -19,7 +19,9 @@ public class TankFireFourBullet implements Fire {
 		int y=tank.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
 		Dir[] dirs=Dir.values();
 		for (int i=0;i<dirs.length;i++) {
-			tank.getGameModelManager().getBullets().add(new TankBullet(x,y, dirs[i], tank.getGroup(), tank.getGameModelManager()));
+			TankBullet tankBullet=new TankBullet(x,y, dirs[i], tank.getGroup(), tank.getGameModelManager());
+			tankBullet.setBlastStrategy(new TankBlast(tank,tankBullet,tank.getGameModelManager()));
+			tank.getGameModelManager().getBullets().add(tankBullet);
 		}
 		if (tank.getGroup()== Group.GOOD) {
 			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();

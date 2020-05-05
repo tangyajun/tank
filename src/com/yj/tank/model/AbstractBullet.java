@@ -3,6 +3,7 @@ package com.yj.tank.model;
 import java.awt.Image;
 import java.awt.Rectangle;
 
+import com.yj.tank.BlastStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -44,6 +45,8 @@ public abstract class AbstractBullet extends GameProp {
 	 */
 	//protected Rectangle rectangle=new Rectangle();
 
+	protected BlastStrategy blastStrategy;
+
 	/**
 	 * 子弹的图片
 	 */
@@ -69,10 +72,17 @@ public abstract class AbstractBullet extends GameProp {
 		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.image=image;
-		/*this.rectangle.x=this.x;
-		this.rectangle.y=this.y;
-		this.rectangle.width=width;
-		this.rectangle.height=height;*/
+	}
+
+	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
+			Group group,Image image,BlastStrategy blastStrategy) {
+		super(x,y,width,height);
+		this.dir=dir;
+		this.speed=speed;
+		this.gameModelManager=gameModelManager;
+		this.group=group;
+		this.image=image;
+		this.blastStrategy=blastStrategy;
 	}
 
 
@@ -111,6 +121,14 @@ public abstract class AbstractBullet extends GameProp {
 	 */
 
 	public abstract void die();
+
+	public BlastStrategy getBlastStrategy() {
+		return blastStrategy;
+	}
+
+	public void setBlastStrategy(BlastStrategy blastStrategy) {
+		this.blastStrategy = blastStrategy;
+	}
 
 	public int getSpeed() {
 		return speed;

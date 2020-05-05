@@ -141,6 +141,7 @@ public class TankFrame extends Frame{
 					tankTimeTask.setBadTankSpeed(2);
 					tankTimeTask.setDelay(20000);
 					tankTimeTask.start(10000,GameModelManager.curLevelCount);
+					System.out.println("111111111111111111111111111111111111111");
 				}
 			}else if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
 					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==2) {
@@ -155,6 +156,7 @@ public class TankFrame extends Frame{
 					tankTimeTask.setBadTankSpeed(3);
 					tankTimeTask.setDelay(20000);
 					tankTimeTask.start(10000,GameModelManager.curLevelCount);
+					System.out.println("2222222222222222222222222222222222222222222");
 				}
 			}else if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
 					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==3) {

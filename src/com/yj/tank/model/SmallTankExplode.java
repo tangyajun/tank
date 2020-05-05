@@ -31,6 +31,6 @@ public class SmallTankExplode extends AbstractExplode{
 			gameModelManager.getExplodes().remove(this);
 			this.live = false;
 		}
-		System.out.println("-------------------step: "+step);
+
 	}
 }

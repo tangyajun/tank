@@ -1,6 +1,7 @@
 package com.yj.tank;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -52,6 +53,8 @@ public class ResourceManager {
 
 	public static BufferedImage[] smallTankExplodes=new BufferedImage[8];
 
+	public static BufferedImage windmillImage;
+
 	static {
 		try {
 			badTankUpImage= ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/BadTank1.png"));
@@ -95,6 +98,11 @@ public class ResourceManager {
 			smallBulletD=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/small/bullet_d.gif"));
 			smallBulletL=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/small/bullet_l.gif"));
 			smallBulletR=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/small/bullet_r.gif"));
+
+			/**
+			 *
+			 */
+			windmillImage=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/small/01.jpg"));
 
 			/**
 			 * 左上角45度的图片(坦克朝上)

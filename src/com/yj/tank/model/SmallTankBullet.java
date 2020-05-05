@@ -3,6 +3,7 @@ package com.yj.tank.model;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import com.yj.tank.BlastStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
@@ -29,6 +30,11 @@ public class SmallTankBullet extends AbstractBullet {
 
 	public SmallTankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager, Image image) {
 		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image);
+		setRectangle(super.rectangle);
+	}
+
+	public SmallTankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager, Image image,BlastStrategy blastStrategy) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image,blastStrategy);
 		setRectangle(super.rectangle);
 	}
 
@@ -115,24 +121,26 @@ public class SmallTankBullet extends AbstractBullet {
 			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
 				die();
 				weapon.die();
-				if (weapon instanceof Plane) {
+				/*if (weapon instanceof Plane) {
 					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
 				}else if (weapon instanceof Tank) {
 					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
 				}else if (weapon instanceof SmallTank) {
 					this.gameModelManager.getExplodes().add(new SmallTankExplode(x,y,gameModelManager));
-				}
+				}*/
+				blastStrategy.execute(weapon,this,gameModelManager);
 
 			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
 				die();
 				weapon.die();
-				if (weapon instanceof Plane) {
+				/*if (weapon instanceof Plane) {
 					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
 				}else if (weapon instanceof Tank) {
 					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
 				}else if (weapon instanceof SmallTank) {
 					this.gameModelManager.getExplodes().add(new SmallTankExplode(x,y,gameModelManager));
-				}
+				}*/
+				blastStrategy.execute(weapon,this,gameModelManager);
 			}
 		}
 	}
