@@ -2,6 +2,7 @@ package com.yj.tank.factory;
 
 import java.awt.Image;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractBullet;
@@ -21,17 +22,17 @@ import com.yj.tank.view.TankFrame;
 public class PlaneFamilyFactory implements AbstractWeaponFamilyFactory {
 
 	@Override
-	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
-		return new Plane(x,y,dir,tankFrame,group);
+	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
+		return new Plane(x,y,dir,gameModelManager,group);
 	}
 
 	@Override
-	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed, TankFrame tankFrame, Group group, Image image) {
-		return new PlaneBullet(x,y,width,height,dir,speed,tankFrame,group,image);
+	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed, GameModelManager gameModelManager, Group group, Image image) {
+		return new PlaneBullet(x,y,width,height,dir,speed,gameModelManager,group,image);
 	}
 
 	@Override
-	public AbstractExplode createExplode(int x, int y,int width,int height, TankFrame tankFrame) {
-		return new PlaneExplode(x,y,width,height,tankFrame);
+	public AbstractExplode createExplode(int x, int y,int width,int height, GameModelManager gameModelManager) {
+		return new PlaneExplode(x,y,width,height,gameModelManager);
 	}
 }

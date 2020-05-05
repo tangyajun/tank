@@ -3,6 +3,7 @@ package com.yj.tank.model;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -30,14 +31,14 @@ public class PlaneBullet extends AbstractBullet {
 	 */
 	public static final int HEIGHT=ResourceManager.bulletUpImage.getHeight();
 
-	public PlaneBullet(int x,int y, Dir dir,int speed, TankFrame tankFrame,
+	public PlaneBullet(int x,int y, Dir dir,int speed, GameModelManager gameModelManager,
 			Group group, Image image) {
-		this(x,y,WIDTH,HEIGHT,dir,speed,tankFrame,group,image);
+		this(x,y,WIDTH,HEIGHT,dir,speed,gameModelManager,group,image);
 	}
 
-	public PlaneBullet(int x,int y,int width,int height, Dir dir,int speed, TankFrame tankFrame,
+	public PlaneBullet(int x,int y,int width,int height, Dir dir,int speed, GameModelManager gameModelManager,
 			Group group, Image image) {
-		super(x,y,width,height,dir,speed,tankFrame,group,image);
+		super(x,y,width,height,dir,speed,gameModelManager,group,image);
 	}
 
 	@Override
@@ -69,6 +70,7 @@ public class PlaneBullet extends AbstractBullet {
 		}
 	}
 
+	@Override
 	public void collideWith(AbstractMilitaryWeapon weapon) {
 		if (this.group==weapon.getGroup()) {
 			return;
@@ -78,18 +80,18 @@ public class PlaneBullet extends AbstractBullet {
 				die();
 				weapon.die();
 				if (weapon instanceof Plane) {
-					this.tankFrame.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,tankFrame));
+					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
 				}else if (weapon instanceof Tank) {
-					this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
+					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
 				}
 
 			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
 				die();
 				weapon.die();
 				if (weapon instanceof Plane) {
-					this.tankFrame.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,tankFrame));
+					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
 				}else if (weapon instanceof Tank) {
-					this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
+					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
 				}
 			}
 		}

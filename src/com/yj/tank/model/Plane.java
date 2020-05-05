@@ -2,6 +2,7 @@ package com.yj.tank.model;
 
 import java.awt.Graphics;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -21,22 +22,22 @@ public class Plane extends AbstractMilitaryWeapon {
 	 * @param x x坐标
 	 * @param y y坐标
 	 * @param dir 方向
-	 * @param tankFrame 所属主界面
+	 * @param gameModelManager 游戏模型管理者
 	 * @param group 所属的group
 	 *
 	 */
-	public Plane(int x,int y, Dir dir, TankFrame tankFrame, Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,tankFrame,group);
+	public Plane(int x,int y, Dir dir, GameModelManager gameModelManager, Group group) {
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
 	}
 
-	public Plane(int x,int y,int width,int height,Dir dir, TankFrame tankFrame, Group group) {
-		super(x,y,width,height,dir,tankFrame,group);
+	public Plane(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager, Group group) {
+		super(x,y,width,height,dir,gameModelManager,group);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.tankFrame.getPlanes().remove(this);
+			this.gameModelManager.getPlanes().remove(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -107,7 +108,7 @@ public class Plane extends AbstractMilitaryWeapon {
 	public void fire() {
 		if (live) {
 			//if (this instanceof Plane) {
-			this.tankFrame.getBullets().add(tankFrame.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,tankFrame,this.group,null));
+			this.gameModelManager.getBullets().add(gameModelManager.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
 			//}
 			//this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
 		}

@@ -2,6 +2,7 @@ package com.yj.tank.factory;
 
 import java.awt.Image;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractBullet;
@@ -31,17 +32,17 @@ public class DefaultTankFamilyFactory implements AbstractWeaponFamilyFactory {
 	}
 
 	@Override
-	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
-		return new Tank(x,y,dir,tankFrame,group);
+	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
+		return new Tank(x,y,dir,gameModelManager,group);
 	}
 
 	@Override
-	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed, TankFrame tankFrame, Group group, Image image) {
-		return new TankBullet(x,y,dir,group,tankFrame);
+	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed, GameModelManager gameModelManager, Group group, Image image) {
+		return new TankBullet(x,y,dir,group,gameModelManager);
 	}
 
 	@Override
-	public AbstractExplode createExplode(int x, int y,int width,int height, TankFrame tankFrame) {
-		return new Explode(x,y,tankFrame);
+	public AbstractExplode createExplode(int x, int y,int width,int height, GameModelManager gameModelManager) {
+		return new Explode(x,y,gameModelManager);
 	}
 }

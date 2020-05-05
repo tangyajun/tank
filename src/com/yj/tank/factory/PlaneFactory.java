@@ -3,6 +3,7 @@ package com.yj.tank.factory;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.Plane;
@@ -27,27 +28,27 @@ public class PlaneFactory implements WeaponFactory<Plane> {
 	}
 
 	@Override
-	public Plane createWeapon(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
-		return new Plane(x,y,dir,tankFrame,group);
+	public Plane createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
+		return new Plane(x,y,dir,gameModelManager,group);
 	}
 
 	@Override
-	public List<Plane> createWeapons(int num, TankFrame tankFrame, Group group, int distance, Dir dir) {
+	public List<Plane> createWeapons(int num, GameModelManager gameModelManager, Group group, int distance, Dir dir) {
 		List<Plane> tanks=new LinkedList<>();
 		int x=140;
 		int y=40;
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,tankFrame,group));
+			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
 			x+=distance;
 		}
 		return tanks;
 	}
 
 	@Override
-	public List<Plane> createWeapons(int num, TankFrame tankFrame, Group group, int distance, Dir dir, int x, int y) {
+	public List<Plane> createWeapons(int num, GameModelManager gameModelManager, Group group, int distance, Dir dir, int x, int y) {
 		List<Plane> tanks=new LinkedList<>();
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,tankFrame,group));
+			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
 			x+=distance;
 		}
 		return tanks;

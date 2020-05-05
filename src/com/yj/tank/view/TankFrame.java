@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.ConfigProperties;
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.GameStatus;
 import com.yj.tank.constant.Group;
@@ -29,6 +30,7 @@ import com.yj.tank.TankTimeTask;
 import com.yj.tank.factory.TankFactory;
 import com.yj.tank.factory.DefaultTankFamilyFactory;
 import com.yj.tank.factory.WeaponFactory;
+import com.yj.tank.model.Tank;
 
 /**
  * 坦克游戏主界面
@@ -36,32 +38,18 @@ import com.yj.tank.factory.WeaponFactory;
  *
  */
 public class TankFrame extends Frame{
-	/**
-	 * 定时任务
-	 */
-	TankTimeTask tankTimeTask=new TankTimeTask(this,120);
-
-	AbstractWeaponFamilyFactory abstractWeaponFamilyFactory = DefaultTankFamilyFactory.getInstance();
 
 	/**
 	 *我方坦克集合
 	 */
 	//static List<Tank> goodTanks=new ArrayList<>();
-	static List<AbstractMilitaryWeapon> goodTanks=new ArrayList<>();
 
+	GameModelManager modelManager=GameModelManager.getInstance();
 	/**
 	 * 坦克
 	 *
 	 */
 	//Tank tank;
-
-	AbstractMilitaryWeapon tank;
-
-	/**
-	 * 子弹集合
-	 */
-	//List<Bullet> bullets=new LinkedList<>();
-	List<AbstractBullet> bullets=new LinkedList<>();
 
 	/**
 	 * 窗口宽度
@@ -78,47 +66,10 @@ public class TankFrame extends Frame{
 	 */
 	public static final int TANK_NUM=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
 
-	/**
-	 * 总关卡数
-	 */
-	public static int totalLevelCount=10;
-	/**
-	 * 当前关卡数
-	 */
-	public static int curLevelCount=1;
-
-	/**
-	 * 敌方坦克集合
-	 */
-	//List<Tank> tanks=new LinkedList<>();
-	List<AbstractMilitaryWeapon> tanks=new LinkedList<>();
-
-	/**
-	 * 爆炸
-	 */
-	//List<Explode> explodes=new LinkedList<>();
-	List<AbstractExplode> explodes=new LinkedList<>();
-
-	/**
-	 * 飞机集合
-	 */
-	List<Plane> planes=new LinkedList<>();
-	/**
-	 * 生命数量
-	 */
-	public static final int lifeNum=ConfigProperties.getInstance().getInteger("initLifeNum");
-
-	/**
-	 * 敌军坦克数量
-	 */
-	public static final int enemyTankNum=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
-
 	Button play=new Button("PLAY");
 	Container playContainer=new com.yj.tank.ButtonContainer(300,400,play);
 	GameStatus gameStatus= GameStatus.LOADING;
 	String next="NEXT";
-
-	WeaponFactory weaponFactory= TankFactory.getInstance();
 
 	public TankFrame() {
 		/**
@@ -160,63 +111,66 @@ public class TankFrame extends Frame{
 	public void paint(Graphics graphics) {
 		Color color=graphics.getColor();
 		graphics.setColor(Color.white);
-		graphics.drawString("子弹数量:"+bullets.size(),10,60);
-		graphics.drawString("敌军数量:"+tanks.size(),10,80);
-		graphics.drawString("生命数量:"+goodTanks.size(),10,100);
-		graphics.drawString("当前关数:"+curLevelCount,10,120);
+		graphics.drawString("子弹数量:"+modelManager.getBullets().size(),10,60);
+		graphics.drawString("敌军数量:"+modelManager.getEnemyTanks().size(),10,80);
+		graphics.drawString("生命数量:"+GameModelManager.tanks.size(),10,100);
+		graphics.drawString("当前关数:"+GameModelManager.curLevelCount,10,120);
 		graphics.setColor(color);
+		AbstractMilitaryWeapon tank=modelManager.getTank();
+		TankTimeTask tankTimeTask=modelManager.getTankTimeTask();
+		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
 		if (tank!= null) {
 			tank.paint(graphics);
 			if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
-					this.gameStatus==GameStatus.RUNNING && curLevelCount==1) {
+					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==1) {
 				Color c=graphics.getColor();
 				graphics.setColor(Color.WHITE);
 				graphics.drawString(next,300,400);
 				graphics.setColor(c);
 				next="";
-				if (curLevelCount==1) {
-					curLevelCount++;
+				if (GameModelManager.curLevelCount==1) {
+					GameModelManager.curLevelCount++;
 				}
-				if (curLevelCount==2) {
+				if (GameModelManager.curLevelCount==2) {
 					TankTimeTask.setCurTimes(new AtomicInteger(1));
 					tankTimeTask.setTotal(5);
 					tankTimeTask.setTankNum(6);
 					tankTimeTask.setDistance(110);
 					tankTimeTask.setBadTankSpeed(2);
 					tankTimeTask.setDelay(20000);
-					tankTimeTask.start(10000,curLevelCount);
+					tankTimeTask.start(10000,GameModelManager.curLevelCount);
 				}
 			}else if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
-					this.gameStatus==GameStatus.RUNNING && curLevelCount==2) {
-				if (curLevelCount==2) {
-					curLevelCount++;
+					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==2) {
+				if (GameModelManager.curLevelCount==2) {
+					GameModelManager.curLevelCount++;
 				}
-				if (curLevelCount==3) {
+				if (GameModelManager.curLevelCount==3) {
 					TankTimeTask.setCurTimes(new AtomicInteger(1));
 					tankTimeTask.setTotal(7);
 					tankTimeTask.setTankNum(7);
 					tankTimeTask.setDistance(100);
 					tankTimeTask.setBadTankSpeed(3);
 					tankTimeTask.setDelay(20000);
-					tankTimeTask.start(10000,curLevelCount);
+					tankTimeTask.start(10000,GameModelManager.curLevelCount);
 				}
 			}else if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
-					this.gameStatus==GameStatus.RUNNING && curLevelCount==3) {
+					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==3) {
 				Color c=graphics.getColor();
 				graphics.setColor(Color.WHITE);
 				graphics.drawString("winner",300,400);
 				graphics.setColor(c);
 			}
 		}else {
-			if (goodTanks.size()>0) {
-				goodTanks.remove(goodTanks.get(0));
+			if (GameModelManager.tanks.size()>0) {
+				GameModelManager.tanks.remove(GameModelManager.tanks.get(0));
 				//tank = goodTanks.get(0);
-				if (goodTanks.size()>0) {
-					tank = goodTanks.get(0);
+				if (GameModelManager.tanks.size()>0) {
+					tank = GameModelManager.tanks.get(0);
 				}
-			}else if(goodTanks.size()<=0 && this.gameStatus== GameStatus.RUNNING){
+			}else if(GameModelManager.tanks.size()<=0 && this.gameStatus== GameStatus.RUNNING){
 				this.gameStatus= GameStatus.OVER;
-			}else if (goodTanks.size()==0 && this.gameStatus== GameStatus.OVER) {
+			}else if (GameModelManager.tanks.size()==0 && this.gameStatus== GameStatus.OVER) {
 				Color c=graphics.getColor();
 				graphics.setColor(Color.WHITE);
 				graphics.drawString("game over",300,400);
@@ -289,8 +243,8 @@ public class TankFrame extends Frame{
 					ku=false;
 					break;
 				case KeyEvent.VK_SPACE:
-					if (tank != null) {
-						tank.fire();
+					if (modelManager.getTank() != null) {
+						modelManager.getTank().fire();
 					}
 					break;
 				default:
@@ -303,6 +257,7 @@ public class TankFrame extends Frame{
 		 * 设置坦克方向
 		 */
 		private void setMainTankDir() {
+			AbstractMilitaryWeapon tank=modelManager.getTank();
 			if (tank != null) {
 				if (!kl && !kr && !kd && !ku) {
 					tank.setMoving(false);
@@ -330,6 +285,7 @@ public class TankFrame extends Frame{
 	 * @param graphics
 	 */
 	private void paintBullets(Graphics graphics) {
+		List<AbstractBullet> bullets=modelManager.getBullets();
 		for (int i=0;i<bullets.size();i++) {
 			bullets.get(i).paint(graphics);
 		}
@@ -340,6 +296,7 @@ public class TankFrame extends Frame{
 	 * @param graphics
 	 */
 	private void paintTanks(Graphics graphics) {
+		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
 		for (int j=0;j<tanks.size();j++) {
 			tanks.get(j).paint(graphics);
 		}
@@ -350,6 +307,7 @@ public class TankFrame extends Frame{
 	 * @param graphics
 	 */
 	private void paintExplodes(Graphics graphics) {
+		List<AbstractExplode> explodes=modelManager.getExplodes();
 		for (int i=0;i<explodes.size();i++) {
 			explodes.get(i).paint(graphics);
 		}
@@ -359,6 +317,9 @@ public class TankFrame extends Frame{
 	 * 碰撞检测,检测子弹和坦克是否相撞
 	 */
 	private void collideCheck() {
+		List<AbstractBullet> bullets=modelManager.getBullets();
+		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
+		AbstractMilitaryWeapon tank=modelManager.getTank();
 		for (int i=0;i<bullets.size();i++) {
 			for (int j=0;j<tanks.size();j++) {
 				bullets.get(i).collideWith(tanks.get(j));
@@ -373,13 +334,17 @@ public class TankFrame extends Frame{
 	 * 初始化坦克游戏
 	 */
 	public void init() {
-
-		this.tanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,this, Group.BAD,120,Dir.DOWN));
-		for (int i=0;i<lifeNum;i++) {
+		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
+		WeaponFactory weaponFactory=modelManager.getWeaponFactory();
+		AbstractMilitaryWeapon tank=modelManager.getTank();
+		AbstractWeaponFamilyFactory abstractWeaponFamilyFactory=modelManager.getAbstractWeaponFamilyFactory();
+		tanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,modelManager, Group.BAD,120,Dir.DOWN));
+		for (int i=0;i<GameModelManager.lifeNum;i++) {
 			//goodTanks.add(new Tank(100,400,Dir.DOWN,this,Group.GOOD));
-			goodTanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			GameModelManager.tanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,modelManager,Group.GOOD));
 		}
-		tank=goodTanks.get(0);
+		tank=GameModelManager.tanks.get(0);
+		modelManager.setTank(tank);
 		tank.setMoving(false);
 	}
 
@@ -387,107 +352,22 @@ public class TankFrame extends Frame{
 	 * 清除坦克游戏
 	 */
 	public void clear() {
-		if (this.tank!= null) {
-			this.tank=null;
+		AbstractMilitaryWeapon tank=modelManager.getTank();
+		List<AbstractBullet> bullets=modelManager.getBullets();
+		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
+		if (tank!= null) {
+			modelManager.setTank(null);
 		}
-		if (this.bullets.size()>0) {
-			this.bullets.clear();
+		if (bullets.size()>0) {
+			bullets.clear();
 		}
-		if (this.tanks.size()>0) {
-			this.tanks.clear();
+		if (tanks.size()>0) {
+			tanks.clear();
 		}
-		if (goodTanks.size()>0) {
-			goodTanks.clear();
+		if (GameModelManager.tanks.size()>0) {
+			GameModelManager.tanks.clear();
 		}
 		TankTimeTask.setCurTimes(new AtomicInteger(1));
-	}
-
-	public TankTimeTask getTankTimeTask() {
-		return tankTimeTask;
-	}
-
-	public void setTankTimeTask(TankTimeTask tankTimeTask) {
-		this.tankTimeTask = tankTimeTask;
-	}
-
-	public static List<AbstractMilitaryWeapon> getGoodTanks() {
-		return goodTanks;
-	}
-
-	public static void setGoodTanks(List<AbstractMilitaryWeapon> goodTanks) {
-		TankFrame.goodTanks = goodTanks;
-	}
-
-	public AbstractMilitaryWeapon getTank() {
-		return tank;
-	}
-
-	public void setTank(AbstractMilitaryWeapon tank) {
-		this.tank = tank;
-	}
-
-	public List<AbstractBullet> getBullets() {
-		return bullets;
-	}
-
-	public void setBullets(List<AbstractBullet> bullets) {
-		this.bullets = bullets;
-	}
-
-	public static int getTotalLevelCount() {
-		return totalLevelCount;
-	}
-
-	public static void setTotalLevelCount(int totalLevelCount) {
-		TankFrame.totalLevelCount = totalLevelCount;
-	}
-
-	public static int getCurLevelCount() {
-		return curLevelCount;
-	}
-
-	public static void setCurLevelCount(int curLevelCount) {
-		TankFrame.curLevelCount = curLevelCount;
-	}
-
-	public List<AbstractMilitaryWeapon> getTanks() {
-		return tanks;
-	}
-
-	public void setTanks(List<AbstractMilitaryWeapon> tanks) {
-		this.tanks = tanks;
-	}
-
-	public List<AbstractExplode> getExplodes() {
-		return explodes;
-	}
-
-	public void setExplodes(List<AbstractExplode> explodes) {
-		this.explodes = explodes;
-	}
-
-	public List<Plane> getPlanes() {
-		return planes;
-	}
-
-	public void setPlanes(List<Plane> planes) {
-		this.planes = planes;
-	}
-
-	public static int getLifeNum() {
-		return lifeNum;
-	}
-
-	public static int getEnemyTankNum() {
-		return enemyTankNum;
-	}
-
-	public Button getPlay() {
-		return play;
-	}
-
-	public void setPlay(Button play) {
-		this.play = play;
 	}
 
 	public Container getPlayContainer() {
@@ -506,27 +386,11 @@ public class TankFrame extends Frame{
 		this.gameStatus = gameStatus;
 	}
 
-	public Image getOffScreenImage() {
-		return offScreenImage;
+	public Button getPlay() {
+		return play;
 	}
 
-	public void setOffScreenImage(Image offScreenImage) {
-		this.offScreenImage = offScreenImage;
-	}
-
-	public AbstractWeaponFamilyFactory getAbstractWeaponFamilyFactory() {
-		return abstractWeaponFamilyFactory;
-	}
-
-	public void setAbstractWeaponFamilyFactory(AbstractWeaponFamilyFactory abstractWeaponFamilyFactory) {
-		this.abstractWeaponFamilyFactory = abstractWeaponFamilyFactory;
-	}
-
-	public WeaponFactory getWeaponFactory() {
-		return weaponFactory;
-	}
-
-	public void setWeaponFactory(WeaponFactory weaponFactory) {
-		this.weaponFactory = weaponFactory;
+	public void setPlay(Button play) {
+		this.play = play;
 	}
 }

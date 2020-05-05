@@ -18,7 +18,7 @@ import com.yj.tank.view.TankFrame;
  **/
 public class TankTimeTask {
 
-	private TankFrame tkFrame;
+	private GameModelManager gameModelManager;
 
 	/**
 	 * 定时任务当前执行到第几波
@@ -55,8 +55,8 @@ public class TankTimeTask {
 	 */
 	int delay=10000;
 
-	public TankTimeTask(TankFrame tkFrame,int distance) {
-		this.tkFrame=tkFrame;
+	public TankTimeTask(GameModelManager gameModelManager,int distance) {
+		this.gameModelManager=gameModelManager;
 		this.distance=distance;
 	}
 
@@ -82,39 +82,39 @@ public class TankTimeTask {
 			if (curTimes.intValue()<total) {
 				if (curLevelCount<3) {
 					//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
-					List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,120,Dir.DOWN);
+					List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,120,Dir.DOWN);
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
-					tkFrame.getTanks().addAll(tanks);
+					gameModelManager.getEnemyTanks().addAll(tanks);
 					System.out.println("ScheduledTask");
 					curTimes.getAndIncrement();
 				}else {
 					if (curTimes.intValue()==1 || curTimes.intValue()==4 || curTimes.intValue() ==7) {
 						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
-						List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,120,Dir.DOWN);
+						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,120,Dir.DOWN);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
-						tkFrame.getTanks().addAll(tanks);
+						gameModelManager.getEnemyTanks().addAll(tanks);
 						System.out.println("ScheduledTask");
 						curTimes.getAndIncrement();
 					}else if (curTimes.intValue()==2 || curTimes.intValue() ==5) {
 						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,0,120);
-						List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,120,Dir.DOWN);
+						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,120,Dir.DOWN);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
-						tkFrame.getTanks().addAll(tanks);
+						gameModelManager.getEnemyTanks().addAll(tanks);
 						System.out.println("ScheduledTask");
 						curTimes.getAndIncrement();
 					}else if (curTimes.intValue()==3 || curTimes.intValue()==6) {
 						//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,400,120);
-						List<AbstractMilitaryWeapon> tanks =tkFrame.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,tkFrame, Group.BAD,distance,Dir.RIGHT,400,200);
+						List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(TankFrame.TANK_NUM,gameModelManager, Group.BAD,distance,Dir.RIGHT,400,200);
 						tanks.stream().forEach(tank -> {
 							tank.setSpeedBad(badTankSpeed);
 						});
-						tkFrame.getTanks().addAll(tanks);
+						gameModelManager.getEnemyTanks().addAll(tanks);
 						System.out.println("ScheduledTask");
 						curTimes.getAndIncrement();
 					}
@@ -123,13 +123,7 @@ public class TankTimeTask {
 		}
 	}
 
-	public TankFrame getTkFrame() {
-		return tkFrame;
-	}
 
-	public void setTkFrame(TankFrame tkFrame) {
-		this.tkFrame = tkFrame;
-	}
 
 	public static AtomicInteger getCurTimes() {
 		return curTimes;
@@ -185,5 +179,13 @@ public class TankTimeTask {
 
 	public void setBadTankDir(Dir badTankDir) {
 		this.badTankDir = badTankDir;
+	}
+
+	public GameModelManager getGameModelManager() {
+		return gameModelManager;
+	}
+
+	public void setGameModelManager(GameModelManager gameModelManager) {
+		this.gameModelManager = gameModelManager;
 	}
 }

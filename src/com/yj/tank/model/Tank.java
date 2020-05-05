@@ -3,6 +3,7 @@ package com.yj.tank.model;
 import java.awt.Graphics;
 
 import com.yj.tank.Fire;
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.ResourceManager;
@@ -43,23 +44,23 @@ public class Tank extends AbstractMilitaryWeapon {
 	 */
 	//Fire fire=new DefaultTankFire();
 
-	public Tank(int x,int y,Dir dir,TankFrame tankFrame,Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,tankFrame,group);
+	public Tank(int x,int y,Dir dir,GameModelManager gameModelManager,Group group) {
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
 	}
 
-	public Tank(int x,int y,int width,int height,Dir dir,TankFrame tankFrame,Group group) {
-		super(x,y,width,height,dir,tankFrame,group);
+	public Tank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
+		super(x,y,width,height,dir,gameModelManager,group);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.tankFrame.getTanks().remove(this);
+			this.gameModelManager.getEnemyTanks().remove(this);
 			//this.tankFrame.explodes.add(new Explode(x,y,tankFrame));
 		}
-		if (this.tankFrame.getTank()!= null) {
-			if (!this.tankFrame.getTank().isLive()) {
-				this.tankFrame.setTank(null);
+		if (this.gameModelManager.getTank()!= null) {
+			if (!this.gameModelManager.getTank().isLive()) {
+				this.gameModelManager.setTank(null);
 				//this.tankFrame.explodes.add(new Explode(x, y, tankFrame));
 			}
 		}

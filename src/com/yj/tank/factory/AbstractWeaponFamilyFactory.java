@@ -2,12 +2,12 @@ package com.yj.tank.factory;
 
 import java.awt.Image;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
-import com.yj.tank.view.TankFrame;
 
 /**
  *
@@ -21,11 +21,11 @@ public interface AbstractWeaponFamilyFactory {
 	 * @param x 横坐标
 	 * @param y 纵坐标
 	 * @param dir 方向
-	 * @param tankFrame 所属界面
+	 * @param gameModelManager 游戏模型管理者
 	 * @param group 所属分组
 	 * @return 返回军事武器
 	 */
-	AbstractMilitaryWeapon createWeapon(int x,int y, Dir dir, TankFrame tankFrame, Group group);
+	AbstractMilitaryWeapon createWeapon(int x,int y, Dir dir, GameModelManager gameModelManager, Group group);
 
 	/**
 	 * 创建子弹
@@ -35,12 +35,12 @@ public interface AbstractWeaponFamilyFactory {
 	 * @param height 高度
 	 * @param dir 方向
 	 * @param speed 速度
-	 * @param tankFrame 所属界面
+	 * @param gameModelManager 模型管理者
 	 * @param group 所属分组
 	 * @param image 图片
 	 * @return 返回子弹
 	 */
-	AbstractBullet createBullet(int x,int y,int width,int height,Dir dir,int speed,TankFrame tankFrame,
+	AbstractBullet createBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
 			Group group, Image image);
 
 	/**
@@ -49,8 +49,8 @@ public interface AbstractWeaponFamilyFactory {
 	 * @param y 纵坐标
 	 * @param width 宽度
 	 * @param height 高度
-	 * @param tankFrame 所属界面
+	 * @param gameModelManager 游戏模型管理者
 	 * @return 返回爆炸
 	 */
-	AbstractExplode createExplode(int x,int y,int width,int height,TankFrame tankFrame);
+	AbstractExplode createExplode(int x,int y,int width,int height,GameModelManager gameModelManager);
 }

@@ -7,6 +7,7 @@ import java.util.Random;
 
 import com.yj.tank.DefaultTankFire;
 import com.yj.tank.Fire;
+import com.yj.tank.GameModelManager;
 import com.yj.tank.MoveBehavior;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
@@ -48,7 +49,7 @@ public abstract class AbstractMilitaryWeapon {
 	/**
 	 * 所属界面
 	 */
-	protected TankFrame tankFrame=null;
+	protected GameModelManager gameModelManager=null;
 
 	/**
 	 * 设备的宽度
@@ -114,17 +115,17 @@ public abstract class AbstractMilitaryWeapon {
 	protected Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
-	public AbstractMilitaryWeapon(int x,int y,Dir dir,TankFrame tankFrame,Group group) {
+	public AbstractMilitaryWeapon(int x,int y,Dir dir, GameModelManager gameModelManager,Group group) {
 		this.x=x;
 		this.y=y;
-		this.tankFrame=tankFrame;
+		this.gameModelManager=gameModelManager;
 		this.group=group;
 	}
 
-	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,TankFrame tankFrame,Group group) {
+	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group) {
 		this.x=x;
 		this.y=y;
-		this.tankFrame=tankFrame;
+		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.rectangle.x=this.x;
 		this.rectangle.y=this.y;
@@ -247,12 +248,12 @@ public abstract class AbstractMilitaryWeapon {
 		this.moving = moving;
 	}
 
-	public TankFrame getTankFrame() {
-		return tankFrame;
+	public GameModelManager getGameModelManager() {
+		return gameModelManager;
 	}
 
-	public void setTankFrame(TankFrame tankFrame) {
-		this.tankFrame = tankFrame;
+	public void setGameModelManager(GameModelManager gameModelManager) {
+		this.gameModelManager = gameModelManager;
 	}
 
 	public static int getWIDTH() {
@@ -334,4 +335,13 @@ public abstract class AbstractMilitaryWeapon {
 	public void setRectangle(Rectangle rectangle) {
 		this.rectangle = rectangle;
 	}
+
+	public int getBulletFrequency() {
+		return bulletFrequency;
+	}
+
+	public void setBulletFrequency(int bulletFrequency) {
+		this.bulletFrequency = bulletFrequency;
+	}
+
 }

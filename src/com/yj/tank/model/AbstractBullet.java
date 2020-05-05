@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.view.TankFrame;
@@ -48,7 +49,7 @@ public abstract class AbstractBullet {
 	/**
 	 *
 	 */
-	protected TankFrame tankFrame;
+	protected GameModelManager gameModelManager;
 
 	/**
 	 * 所属分组
@@ -73,11 +74,11 @@ public abstract class AbstractBullet {
 	 * @param height
 	 * @param dir
 	 * @param speed
-	 * @param tankFrame
+	 * @param gameModelManager
 	 * @param group
 	 * @param image
 	 */
-	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed,TankFrame tankFrame,
+	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
 			Group group,Image image) {
 		this.x=x;
 		this.y=y;
@@ -85,7 +86,7 @@ public abstract class AbstractBullet {
 		this.height=height;
 		this.dir=dir;
 		this.speed=speed;
-		this.tankFrame=tankFrame;
+		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.image=image;
 		this.rectangle.x=this.x;
@@ -120,10 +121,14 @@ public abstract class AbstractBullet {
 		}
 	}*/
 
-	public abstract void collideWith(AbstractMilitaryWeapon weapon);
 	/**
 	 * 碰撞检测
 	 * @param weapon
+	 */
+	public abstract void collideWith(AbstractMilitaryWeapon weapon);
+	/**
+	 * 碰撞检测
+	 * @param //weapon
 	 */
 	/*public void collideWith(AbstractMilitaryWeapon weapon) {
 		if (this.group==weapon.getGroup()) {
@@ -211,12 +216,12 @@ public abstract class AbstractBullet {
 		this.live = live;
 	}
 
-	public TankFrame getTankFrame() {
-		return tankFrame;
+	public GameModelManager getGameModelManager() {
+		return gameModelManager;
 	}
 
-	public void setTankFrame(TankFrame tankFrame) {
-		this.tankFrame = tankFrame;
+	public void setGameModelManager(GameModelManager gameModelManager) {
+		this.gameModelManager = gameModelManager;
 	}
 
 	public Group getGroup() {

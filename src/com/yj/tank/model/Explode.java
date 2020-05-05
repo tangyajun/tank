@@ -2,6 +2,7 @@ package com.yj.tank.model;
 
 import java.awt.Graphics;
 
+import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.view.TankFrame;
 
@@ -17,9 +18,9 @@ public class Explode extends AbstractExplode {
 	private int x,y;
 	private boolean live=true;
 	int step=0;
-	TankFrame tankFrame=null;
-	public Explode(int x,int y,TankFrame tankFrame) {
-		super(x,y,WIDTH,HEIGHT,tankFrame);
+	GameModelManager gameModelManager=null;
+	public Explode(int x,int y, GameModelManager gameModelManager) {
+		super(x,y,WIDTH,HEIGHT,gameModelManager);
 		/*this.x=x+(Tank.WIDTH/2)-(WIDTH/2);
 		this.y=y+(Tank.HEIGHT/2)-(HEIGHT/2);
 		this.tankFrame=tankFrame;
@@ -33,7 +34,7 @@ public class Explode extends AbstractExplode {
 				graphics.drawImage(ResourceManager.explodes[step++], x, y, null);
 			}
 		}else {
-			tankFrame.getExplodes().remove(this);
+			gameModelManager.getExplodes().remove(this);
 			this.live = false;
 		}
 		System.out.println("-------------------step: "+step);

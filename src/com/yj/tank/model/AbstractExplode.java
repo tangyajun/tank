@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import com.yj.tank.Audio;
+import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.view.TankFrame;
 
@@ -35,7 +36,7 @@ public abstract class AbstractExplode {
 	protected int height;
 
 	protected int step=0;
-	protected TankFrame tankFrame=null;
+	protected GameModelManager gameModelManager=null;
 
 	/**
 	 * 爆炸图片
@@ -47,18 +48,18 @@ public abstract class AbstractExplode {
 	 */
 	protected String audioFilePath="audio/explode.wav";
 
-	public AbstractExplode(int x,int y,TankFrame tankFrame) {
-		this(x,y,tankFrame,null,null);
+	public AbstractExplode(int x,int y,GameModelManager gameModelManager) {
+		this(x,y,gameModelManager,null,null);
 	}
 
-	public AbstractExplode(int x,int y,TankFrame tankFrame,Image[] images) {
-		this(x,y,tankFrame,images,null);
+	public AbstractExplode(int x,int y,GameModelManager gameModelManager,Image[] images) {
+		this(x,y,gameModelManager,images,null);
 	}
 
-	public AbstractExplode(int x,int y,TankFrame tankFrame,Image[] images,String audioFilePath) {
+	public AbstractExplode(int x,int y,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
 		this.x=x;
 		this.y=y;
-		this.tankFrame=tankFrame;
+		this.gameModelManager=gameModelManager;
 		if (images !=null) {
 			this.images = images;
 		}
@@ -69,20 +70,20 @@ public abstract class AbstractExplode {
 		}
 	}
 
-	public AbstractExplode(int x,int y,int width,int height,TankFrame tankFrame) {
-		this(x,y,width,height,tankFrame,null,null);
+	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager) {
+		this(x,y,width,height,gameModelManager,null,null);
 	}
 
-	public AbstractExplode(int x,int y,int width,int height,TankFrame tankFrame,Image[] images) {
-		this(x,y,width,height,tankFrame,images,null);
+	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager,Image[] images) {
+		this(x,y,width,height,gameModelManager,images,null);
 	}
 
-	public AbstractExplode(int x,int y,int width,int height,TankFrame tankFrame,Image[] images,String audioFilePath) {
+	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
 		this.x=x;
 		this.y=y;
 		this.width=width;
 		this.height=height;
-		this.tankFrame=tankFrame;
+		this.gameModelManager=gameModelManager;
 		if (images !=null) {
 			this.images = images;
 		}
@@ -101,6 +102,6 @@ public abstract class AbstractExplode {
 		if(step < images.length) {
 			graphics.drawImage(images[step++], x, y, null);
 		}
-		tankFrame.getExplodes().remove(this);
+		gameModelManager.getExplodes().remove(this);
 	}
 }
