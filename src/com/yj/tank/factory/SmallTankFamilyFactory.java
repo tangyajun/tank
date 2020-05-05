@@ -3,6 +3,7 @@ package com.yj.tank.factory;
 import java.awt.Image;
 
 import com.yj.tank.GameModelManager;
+import com.yj.tank.SmallTankFireBulletStrategy;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractBullet;
@@ -30,7 +31,7 @@ public class SmallTankFamilyFactory extends AbstractWeaponFactory {
 
 	@Override
 	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		return new SmallTank(x,y,dir,gameModelManager,group);
+		return new SmallTank(x,y,dir,gameModelManager,group,new SmallTankFireBulletStrategy());
 	}
 
 	@Override

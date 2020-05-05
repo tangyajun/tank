@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.List;
 
 import com.yj.tank.DefaultTankFire;
+import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
@@ -40,6 +41,10 @@ public class SmallTank extends AbstractMilitaryWeapon {
 		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
 	}
 
+	public SmallTank(int x,int y, Dir dir, GameModelManager gameModelManager, Group group,FireBulletStrategy fireBulletStrategy) {
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,fireBulletStrategy);
+	}
+
 	/**
 	 * 坦克构造函数
 	 * @param x x坐标
@@ -51,7 +56,12 @@ public class SmallTank extends AbstractMilitaryWeapon {
 	 * @param group 分组
 	 */
 	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
-		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire());
+		this(x,y,width,height,dir,gameModelManager,group,null);
+	}
+
+	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
+			FireBulletStrategy fireBulletStrategy) {
+		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire(),fireBulletStrategy);
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.Tank;
-import com.yj.tank.view.TankFrame;
 
 /**
  *  坦克工厂

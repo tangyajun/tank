@@ -16,7 +16,6 @@ import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.Plane;
-import com.yj.tank.view.TankFrame;
 
 /**
  *  游戏模型管理器

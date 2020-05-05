@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.yj.tank.GameModelManager;
+import com.yj.tank.TankFireBulletStrategy;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.Plane;
@@ -29,7 +30,7 @@ public class PlaneFactory implements WeaponFactory<Plane> {
 
 	@Override
 	public Plane createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		return new Plane(x,y,dir,gameModelManager,group);
+		return new Plane(x,y,dir,gameModelManager,group,new TankFireBulletStrategy());
 	}
 
 	@Override

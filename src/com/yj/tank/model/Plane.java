@@ -3,7 +3,9 @@ package com.yj.tank.model;
 import java.awt.Graphics;
 
 import com.yj.tank.DefaultPlaneFireBullet;
+import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
+import com.yj.tank.PlaneFireBulletStrategy;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -28,11 +30,20 @@ public class Plane extends AbstractMilitaryWeapon {
 	 *
 	 */
 	public Plane(int x,int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,new PlaneFireBulletStrategy());
+	}
+
+	public Plane(int x,int y, Dir dir, GameModelManager gameModelManager, Group group, FireBulletStrategy fireBulletStrategy ) {
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,fireBulletStrategy);
 	}
 
 	public Plane(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager, Group group) {
-		super(x,y,width,height,dir,gameModelManager,group,new DefaultPlaneFireBullet());
+		this(x,y,width,height,dir,gameModelManager,group,null);
+	}
+
+	public Plane(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager, Group group,
+			FireBulletStrategy fireBulletStrategy) {
+		super(x,y,width,height,dir,gameModelManager,group,new DefaultPlaneFireBullet(),fireBulletStrategy);
 	}
 
 	@Override

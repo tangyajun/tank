@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.yj.tank.DefaultTankFire;
 import com.yj.tank.Fire;
+import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.MoveBehavior;
 import com.yj.tank.ResourceManager;
@@ -87,6 +88,8 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	 */
 	protected int  bulletFrequency=95;
 
+	protected FireBulletStrategy fireBulletStrategy;
+
 	/**
 	 *
 	 */
@@ -98,6 +101,19 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
 	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group,Fire fire) {
+		/*super(x,y,width,height);
+		this.group=group;
+		this.rectangle.x=this.x;
+		this.rectangle.y=this.y;
+		this.rectangle.width=width;
+		this.rectangle.height=height;
+		this.gameModelManager=gameModelManager;
+		this.fire=fire;*/
+		this(x,y,width,height,dir,gameModelManager,group,fire,null);
+	}
+
+	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,
+			Group group,Fire fire,FireBulletStrategy fireBulletStrategy) {
 		super(x,y,width,height);
 		this.group=group;
 		this.rectangle.x=this.x;
@@ -106,6 +122,7 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 		this.rectangle.height=height;
 		this.gameModelManager=gameModelManager;
 		this.fire=fire;
+		this.fireBulletStrategy=fireBulletStrategy;
 	}
 
 
@@ -279,4 +296,11 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 		this.bulletFrequency = bulletFrequency;
 	}
 
+	public FireBulletStrategy getFireBulletStrategy() {
+		return fireBulletStrategy;
+	}
+
+	public void setFireBulletStrategy(FireBulletStrategy fireBulletStrategy) {
+		this.fireBulletStrategy = fireBulletStrategy;
+	}
 }

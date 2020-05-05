@@ -4,7 +4,9 @@ import java.awt.Graphics;
 
 import com.yj.tank.DefaultTankFire;
 import com.yj.tank.Fire;
+import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
+import com.yj.tank.TankFireBulletStrategy;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.ResourceManager;
@@ -36,7 +38,11 @@ public class Tank extends AbstractMilitaryWeapon {
 	 * @param group 分组
 	 */
 	public Tank(int x,int y,Dir dir,GameModelManager gameModelManager,Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,new TankFireBulletStrategy());
+	}
+
+	public Tank(int x,int y,Dir dir,GameModelManager gameModelManager,Group group,FireBulletStrategy fireBulletStrategy) {
+		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,fireBulletStrategy);
 	}
 
 	/**
@@ -50,7 +56,12 @@ public class Tank extends AbstractMilitaryWeapon {
 	 * @param group 分组
 	 */
 	public Tank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
-		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire());
+		this(x,y,width,height,dir,gameModelManager,group,null);
+	}
+
+	public Tank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
+			FireBulletStrategy fireBulletStrategy) {
+		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire(),fireBulletStrategy);
 	}
 
 	@Override
