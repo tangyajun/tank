@@ -1,13 +1,11 @@
 package com.yj.tank.model;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.view.TankFrame;
 
 /**
  *
@@ -15,21 +13,11 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-04-16:35
  **/
-public abstract class AbstractBullet extends GameProps {
+public abstract class AbstractBullet extends GameProp {
 	/**
 	 * 子弹的速度
 	 */
 	protected int speed=20;
-
-	/**
-	 * 宽度
-	 */
-	protected int width;
-
-	/**
-	 * 高度
-	 */
-	protected int height;
 
 	/**
 	 * 子弹的方向
@@ -54,7 +42,7 @@ public abstract class AbstractBullet extends GameProps {
 	/**
 	 * 子弹矩形
 	 */
-	protected Rectangle rectangle=new Rectangle();
+	//protected Rectangle rectangle=new Rectangle();
 
 	/**
 	 * 子弹的图片
@@ -62,33 +50,29 @@ public abstract class AbstractBullet extends GameProps {
 	protected Image image;
 
 	/**
-	 *
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param dir
-	 * @param speed
+	 * 构造方法
+	 * @param x x 坐标
+	 * @param y y坐标
+	 * @param width 宽度
+	 * @param height 高度
+	 * @param dir 方向
+	 * @param speed 速度
 	 * @param gameModelManager
-	 * @param group
+	 * @param group 分组
 	 * @param image
 	 */
 	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
 			Group group,Image image) {
-		super(x,y);
-		this.x=x;
-		this.y=y;
-		this.width=width;
-		this.height=height;
+		super(x,y,width,height);
 		this.dir=dir;
 		this.speed=speed;
 		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.image=image;
-		this.rectangle.x=this.x;
+		/*this.rectangle.x=this.x;
 		this.rectangle.y=this.y;
 		this.rectangle.width=width;
-		this.rectangle.height=height;
+		this.rectangle.height=height;*/
 	}
 
 
@@ -125,35 +109,8 @@ public abstract class AbstractBullet extends GameProps {
 	 * 碰撞检测
 	 * @param //weapon
 	 */
-	/*public void collideWith(AbstractMilitaryWeapon weapon) {
-		if (this.group==weapon.getGroup()) {
-			return;
-		}
-		if (this.rectangle.intersects(weapon.getRectangle())) {
-			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
-				die();
-				weapon.die();
-				if (weapon instanceof Plane) {
-					this.tankFrame.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,tankFrame));
-				}else if (weapon instanceof Tank) {
-					this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
-				}
 
-			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
-				die();
-				weapon.die();
-				if (weapon instanceof Plane) {
-					this.tankFrame.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,tankFrame));
-				}else if (weapon instanceof Tank) {
-					this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
-				}
-			}
-		}
-	}*/
-
-	public abstract void die(); /*{
-		this.live=false;
-	}*/
+	public abstract void die();
 
 	public int getSpeed() {
 		return speed;

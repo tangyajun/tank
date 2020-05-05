@@ -2,6 +2,7 @@ package com.yj.tank.model;
 
 import java.awt.Graphics;
 
+import com.yj.tank.DefaultTankFire;
 import com.yj.tank.Fire;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
@@ -16,40 +17,40 @@ import com.yj.tank.view.TankFrame;
  *  @create 2020-05-02-13:18
  **/
 public class Tank extends AbstractMilitaryWeapon {
-	/*private int x,y;
-	private Dir dir=Dir.DOWN;
-	public int speedGood=10;
-	public int speedBad=1;
-	private boolean moving=true;
-	TankFrame tankFrame=null;*/
+	/**
+	 * 坦克宽度
+	 */
 	public static final int WIDTH= ResourceManager.goodTankDownImage.getWidth();
+
+	/**
+	 * 坦克高度
+	 */
 	public static final int HEIGHT=ResourceManager.goodTankDownImage.getHeight();
-	/*Random random=new Random();
-	boolean live=true;
-	private Group group=Group.BAD;
-	private Dir[] dirs={Dir.LEFT,Dir.RIGHT,Dir.UP};
-	private Dir[] dirs1={Dir.RIGHT,Dir.LEFT,Dir.DOWN};
-	private Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
-	private Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};*/
 
 	/**
-	 * 子弹发射的频率
+	 * 坦克构造函数
+	 * @param x x坐标
+	 * @param y y坐标
+	 * @param dir 方向
+	 * @param gameModelManager
+	 * @param group 分组
 	 */
-	//int  bulletFrequency=95;
-
-	//Rectangle rectangle=new Rectangle();
-
-	/**
-	 *
-	 */
-	//Fire fire=new DefaultTankFire();
-
 	public Tank(int x,int y,Dir dir,GameModelManager gameModelManager,Group group) {
 		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
 	}
 
+	/**
+	 * 坦克构造函数
+	 * @param x x坐标
+	 * @param y y坐标
+	 * @param width 宽度
+	 * @param height 高度
+	 * @param dir 方向
+	 * @param gameModelManager
+	 * @param group 分组
+	 */
 	public Tank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
-		super(x,y,width,height,dir,gameModelManager,group);
+		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire());
 	}
 
 	@Override

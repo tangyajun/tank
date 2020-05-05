@@ -212,9 +212,6 @@ public class TankFrame extends Frame{
 					ku=true;
 					break;
 				case KeyEvent.VK_SPACE:
-					/*if (tank != null) {
-						tank.fire();
-					}*/
 					break;
 				default:
 					break;

@@ -21,10 +21,6 @@ public class Explode extends AbstractExplode {
 	GameModelManager gameModelManager=null;
 	public Explode(int x,int y, GameModelManager gameModelManager) {
 		super(x,y,WIDTH,HEIGHT,gameModelManager);
-		/*this.x=x+(Tank.WIDTH/2)-(WIDTH/2);
-		this.y=y+(Tank.HEIGHT/2)-(HEIGHT/2);
-		this.tankFrame=tankFrame;
-		new Thread(() -> new Audio("audio/explode.wav").play()).start();*/
 	}
 
 	@Override

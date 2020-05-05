@@ -23,7 +23,7 @@ public interface WeaponFactory<T> {
 	 * @param group
 	 * @return
 	 */
-	public abstract T createWeapon(int x,int y,Dir dir, GameModelManager gameModelManager, Group group);
+	abstract T createWeapon(int x,int y,Dir dir, GameModelManager gameModelManager, Group group);
 
 	/**
 	 * 创建武器
@@ -34,7 +34,7 @@ public interface WeaponFactory<T> {
 	 * @param dir
 	 * @return
 	 */
-	public abstract List<T> createWeapons(int num, GameModelManager gameModelManager, Group group, final int distance, Dir dir);
+	abstract List<T> createWeapons(int num, GameModelManager gameModelManager, Group group, final int distance, Dir dir);
 
 	/**
 	 * 创建武器
@@ -47,5 +47,5 @@ public interface WeaponFactory<T> {
 	 * @param y
 	 * @return
 	 */
-	public abstract List<T> createWeapons(int num,GameModelManager gameModelManager,Group group, final int distance,Dir dir,int x,int y);
+	abstract List<T> createWeapons(int num,GameModelManager gameModelManager,Group group, final int distance,Dir dir,int x,int y);
 }

@@ -23,54 +23,13 @@ public class TankBullet extends AbstractBullet {
 	public static final int WIDTH= ResourceManager.bulletUpImage.getWidth();
 	public static final int HEIGHT=ResourceManager.bulletUpImage.getHeight();
 
-	/**
-	 * 子弹的坐标
-	 */
-	/*private int x,y;
-
-	*//**
-	 * 子弹的方向
-	 *//*
-	private Dir dir;
-
-	*//**
-	 * 子弹是否存活
-	 *//*
-	boolean live=true;
-
-	*//**
-	 *
-	 *//*
-	TankFrame tankFrame;
-
-	*//**
-	 * 所属分组
-	 *//*
-	private Group group=Group.BAD;
-
-	Rectangle rectangle=new Rectangle();
-
-	*//**
-	 * 子弹的图片
-	 *//*
-	private Image image;*/
-
 	public TankBullet(int x,int y,Dir dir,Group group,GameModelManager gameModelManager) {
 		this(x,y,dir,group,gameModelManager,null);
 	}
 
 	public TankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager,Image image) {
 		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image);
-		/*this.tankFrame=tankFrame;
-		this.x=x;
-		this.y=y;
-		this.dir=dir;
-		this.group=group;
-		this.image=image;
-		this.rectangle.x=this.x;
-		this.rectangle.y=this.y;
-		this.rectangle.width=WIDTH;
-		this.rectangle.height=HEIGHT;*/
+		setRectangle(super.rectangle);
 	}
 
 	@Override

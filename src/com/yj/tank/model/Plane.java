@@ -2,6 +2,7 @@ package com.yj.tank.model;
 
 import java.awt.Graphics;
 
+import com.yj.tank.DefaultPlaneFireBullet;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
@@ -31,13 +32,13 @@ public class Plane extends AbstractMilitaryWeapon {
 	}
 
 	public Plane(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager, Group group) {
-		super(x,y,width,height,dir,gameModelManager,group);
+		super(x,y,width,height,dir,gameModelManager,group,new DefaultPlaneFireBullet());
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.gameModelManager.getPlanes().remove(this);
+			this.gameModelManager.getEnemyTanks().remove(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -107,10 +108,7 @@ public class Plane extends AbstractMilitaryWeapon {
 	@Override
 	public void fire() {
 		if (live) {
-			//if (this instanceof Plane) {
 			this.gameModelManager.getBullets().add(gameModelManager.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
-			//}
-			//this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
 		}
 	}
 

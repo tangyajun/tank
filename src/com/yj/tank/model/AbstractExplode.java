@@ -12,17 +12,7 @@ import com.yj.tank.ResourceManager;
  *  @author tangyajun
  *  @create 2020-05-04-16:35
  **/
-public abstract class AbstractExplode extends GameProps {
-
-	/**
-	 * 宽度
-	 */
-	protected int width;
-
-	/**
-	 * 高度
-	 */
-	protected int height;
+public abstract class AbstractExplode extends GameProp {
 
 	protected int step=0;
 
@@ -38,27 +28,6 @@ public abstract class AbstractExplode extends GameProps {
 	 */
 	protected String audioFilePath="audio/explode.wav";
 
-	public AbstractExplode(int x,int y,GameModelManager gameModelManager) {
-		this(x,y,gameModelManager,null,null);
-	}
-
-	public AbstractExplode(int x,int y,GameModelManager gameModelManager,Image[] images) {
-		this(x,y,gameModelManager,images,null);
-	}
-
-	public AbstractExplode(int x,int y,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
-		super(x,y);
-		this.gameModelManager=gameModelManager;
-		if (images !=null) {
-			this.images = images;
-		}
-		if (audioFilePath != null && !"".equals(audioFilePath)) {
-			new Thread(() -> new Audio(audioFilePath).play()).start();
-		}else {
-			new Thread(() -> new Audio(this.audioFilePath).play()).start();
-		}
-	}
-
 	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager) {
 		this(x,y,width,height,gameModelManager,null,null);
 	}
@@ -68,11 +37,7 @@ public abstract class AbstractExplode extends GameProps {
 	}
 
 	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
-		super(x,y);
-		this.x=x;
-		this.y=y;
-		this.width=width;
-		this.height=height;
+		super(x,y,width,height);
 		this.gameModelManager=gameModelManager;
 		if (images !=null) {
 			this.images = images;

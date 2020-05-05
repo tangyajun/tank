@@ -14,11 +14,13 @@ import com.yj.tank.factory.WeaponFactory;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
+import com.yj.tank.model.GameProp;
 import com.yj.tank.model.Plane;
 import com.yj.tank.view.TankFrame;
 
 /**
- *
+ *  游戏模型管理器
+ *  包含游戏中所有的模型添加、删除
  *  @Description TO DO
  *  @author tangyajun
  *  @create 2020-05-05-6:39
@@ -29,12 +31,21 @@ public class GameModelManager {
 	/**
 	 * 生命数量
 	 */
-	public static final int lifeNum=ConfigProperties.getInstance().getInteger("initLifeNum");
+	public static final int LIFE_NUM=ConfigProperties.getInstance().getInteger("initLifeNum");
 
 	/**
 	 * 敌军坦克数量
 	 */
-	public static final int enemyTankNum=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
+	public static final int ENEMY_TANK_NUM=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
+
+	/**
+	 * 总关卡数
+	 */
+	public static final int TOTAL_LEVEL_COUNT=10;
+	/**
+	 * 当前关卡数
+	 */
+	public static int curLevelCount=1;
 	/**
 	 * 定时任务
 	 */
@@ -54,34 +65,31 @@ public class GameModelManager {
 	/**
 	 * 子弹集合
 	 */
-	//List<Bullet> bullets=new LinkedList<>();
 	List<AbstractBullet> bullets=new LinkedList<>();
 
-	/**
-	 * 总关卡数
-	 */
-	public static int totalLevelCount=10;
-	/**
-	 * 当前关卡数
-	 */
-	public static int curLevelCount=1;
+
 
 	/**
-	 * 敌方坦克集合
+	 * 敌方坦克
 	 */
-	//List<Tank> tanks=new LinkedList<>();
 	List<AbstractMilitaryWeapon> enemyTanks=new LinkedList<>();
 
 	/**
 	 * 爆炸
 	 */
-	//List<Explode> explodes=new LinkedList<>();
 	List<AbstractExplode> explodes=new LinkedList<>();
 
 	/**
 	 * 飞机集合
 	 */
-	List<Plane> planes=new LinkedList<>();
+	List<Plane> enemyPlanes=new LinkedList<>();
+
+	/**
+	 * 飞机
+	 */
+	AbstractMilitaryWeapon plane;
+
+	List<GameProp> gameProps=new LinkedList<>();
 
 	private GameModelManager() {
 
@@ -89,6 +97,14 @@ public class GameModelManager {
 
 	public static GameModelManager getInstance() {
 		return INSTANCE;
+	}
+
+	public void addGameProp(GameProp gameProp) {
+		gameProps.add(gameProp);
+	}
+
+	public void removeGameProp(GameProp gameProp) {
+		gameProps.remove(gameProp);
 	}
 
 	/**
@@ -114,12 +130,15 @@ public class GameModelManager {
 	 * 初始化坦克游戏
 	 */
 	public void init() {
-		tanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,this, Group.BAD,120, Dir.DOWN));
-		for (int i=0;i<lifeNum;i++) {
-			//goodTanks.add(new Tank(100,400,Dir.DOWN,this,Group.GOOD));
+		// 初始化敌军坦克
+		enemyTanks.addAll(weaponFactory.createWeapons(TankFrame.TANK_NUM,this, Group.BAD,120, Dir.DOWN));
+		//  初始化我方坦克
+		for (int i=0;i<LIFE_NUM;i++) {
 			tanks.add(abstractWeaponFamilyFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
 		}
-		this.tank=tanks.get(0);
+		if (tanks.size()>0) {
+			setTank(tanks.get(0));
+		}
 		tank.setMoving(false);
 	}
 
@@ -163,14 +182,6 @@ public class GameModelManager {
 		this.bullets = bullets;
 	}
 
-	public static int getTotalLevelCount() {
-		return totalLevelCount;
-	}
-
-	public static void setTotalLevelCount(int totalLevelCount) {
-		GameModelManager.totalLevelCount = totalLevelCount;
-	}
-
 	public static int getCurLevelCount() {
 		return curLevelCount;
 	}
@@ -195,12 +206,20 @@ public class GameModelManager {
 		this.explodes = explodes;
 	}
 
-	public List<Plane> getPlanes() {
-		return planes;
+	public List<Plane> getEnemyPlanes() {
+		return enemyPlanes;
 	}
 
-	public void setPlanes(List<Plane> planes) {
-		this.planes = planes;
+	public void setEnemyPlanes(List<Plane> enemyPlanes) {
+		this.enemyPlanes = enemyPlanes;
+	}
+
+	public AbstractMilitaryWeapon getPlane() {
+		return plane;
+	}
+
+	public void setPlane(AbstractMilitaryWeapon plane) {
+		this.plane = plane;
 	}
 
 	public WeaponFactory getWeaponFactory() {

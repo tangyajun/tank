@@ -1,6 +1,5 @@
 package com.yj.tank.model;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -12,7 +11,6 @@ import com.yj.tank.MoveBehavior;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.view.TankFrame;
 
 /**
  *
@@ -20,20 +18,20 @@ import com.yj.tank.view.TankFrame;
  *  @author tang
  *  @create 2020-05-03-16:59
  **/
-public abstract class AbstractMilitaryWeapon extends GameProps {
+public abstract class AbstractMilitaryWeapon extends GameProp {
 
 	/**
-	 * 设备的方向
+	 * 方向
 	 */
 	protected Dir dir=Dir.DOWN;
 
 	/**
-	 * 我方设备的速度
+	 * 速度
 	 */
 	protected int speedGood=10;
 
 	/**
-	 * 敌方设备的速度
+	 * 敌方的速度
 	 */
 	protected int speedBad=1;
 
@@ -43,19 +41,9 @@ public abstract class AbstractMilitaryWeapon extends GameProps {
 	protected boolean moving=true;
 
 	/**
-	 * 所属界面
+	 * 模型管理器
 	 */
 	protected GameModelManager gameModelManager=null;
-
-	/**
-	 * 设备的宽度
-	 */
-	public static final int WIDTH= ResourceManager.goodTankDownImage.getWidth();
-
-	/**
-	 * 设备高度
-	 */
-	public static final int HEIGHT=ResourceManager.goodTankDownImage.getHeight();
 
 	protected Random random=new Random();
 
@@ -99,32 +87,25 @@ public abstract class AbstractMilitaryWeapon extends GameProps {
 	 */
 	protected int  bulletFrequency=95;
 
-	protected Rectangle rectangle=new Rectangle();
-
 	/**
 	 *
 	 */
-	protected Fire fire=new DefaultTankFire();
+	protected Fire fire;
 
 	protected Dir[] dirs={Dir.LEFT,Dir.RIGHT,Dir.UP};
 	protected Dir[] dirs1={Dir.RIGHT,Dir.LEFT,Dir.DOWN};
 	protected Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
-	public AbstractMilitaryWeapon(int x,int y,Dir dir, GameModelManager gameModelManager,Group group) {
-		super(x,y);
-		this.gameModelManager=gameModelManager;
-		this.group=group;
-	}
-
-	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group) {
-		super(x,y);
-		this.gameModelManager=gameModelManager;
+	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group,Fire fire) {
+		super(x,y,width,height);
 		this.group=group;
 		this.rectangle.x=this.x;
 		this.rectangle.y=this.y;
 		this.rectangle.width=width;
 		this.rectangle.height=height;
+		this.gameModelManager=gameModelManager;
+		this.fire=fire;
 	}
 
 	/**
@@ -136,55 +117,6 @@ public abstract class AbstractMilitaryWeapon extends GameProps {
 		this.live=false;
 	}
 
-	/**
-	 * 边界检测
-	 */
-	/*public void boundsCheck() {
-		if (this.x<20){
-			x=20;
-			randomDir();
-		}
-		if (this.y<40) {
-			y=40;
-			randomDir();
-		}
-		if (this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) {
-			this.x=TankFrame.GAME_WIDTH-Tank.WIDTH-4;
-			randomDir();
-		}
-		if (this.y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) {
-			this.y=TankFrame.GAME_HEIGHT-Tank.HEIGHT-4;
-			randomDir();
-		}
-	}*/
-
-	/*public void randomDir() {
-		if (this.dir==Dir.LEFT) {
-			this.dir=dirs[random.nextInt(3)];
-		}
-		if(this.dir==Dir.RIGHT) {
-			this.dir=dirs3[random.nextInt(3)];
-		}
-		if (this.dir==Dir.UP) {
-			this.dir=dirs1[random.nextInt(3)];
-		}
-		if (this.dir==Dir.DOWN) {
-			this.dir=dirs2[random.nextInt(3)];
-		}
-		this.dir=Dir.values()[random.nextInt(4)];
-	}*/
-
-	/**
-	 * 开火
-	 */
-	/*public void fire() {
-		if (live) {
-			//if (this instanceof Plane) {
-			this.tankFrame.getBullets().add(tankFrame.getAbstractWeaponFamilyFactory().createBullet(this.x,this.y,0,0,dir,1,tankFrame,this.group,null));
-			//}
-			//this.tankFrame.getBullets().add(new Bullet(this.x, this.y, dir, this.group, this.tankFrame));
-		}
-	}*/
 
 	public abstract void fire();
 
@@ -242,14 +174,6 @@ public abstract class AbstractMilitaryWeapon extends GameProps {
 
 	public void setGameModelManager(GameModelManager gameModelManager) {
 		this.gameModelManager = gameModelManager;
-	}
-
-	public static int getWIDTH() {
-		return WIDTH;
-	}
-
-	public static int getHEIGHT() {
-		return HEIGHT;
 	}
 
 	public Random getRandom() {
