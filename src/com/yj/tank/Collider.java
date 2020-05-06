@@ -13,6 +13,7 @@ public interface Collider {
 	 *  游戏道具碰撞
 	 * @param gameProp1
 	 * @param gameProp2
+	 * @return 有相应的碰撞检测器则返回true,否则返回false
 	 */
-	void collide(GameProp gameProp1,GameProp gameProp2);
+	boolean collide(GameProp gameProp1,GameProp gameProp2);
 }

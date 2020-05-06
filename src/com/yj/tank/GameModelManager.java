@@ -8,13 +8,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.factory.AbstractWeaponFactory;
+import com.yj.tank.factory.EnemySmallTankFactory;
+import com.yj.tank.factory.GamersSmallTankFactory;
 import com.yj.tank.factory.SmallTankFactory;
 import com.yj.tank.factory.SmallTankFamilyFactory;
 import com.yj.tank.factory.WeaponFactory;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
+import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GameProp;
+import com.yj.tank.model.GamersTank;
 import com.yj.tank.model.Plane;
 
 /**
@@ -30,7 +34,7 @@ public class GameModelManager {
 
 	private static GameModelManager INSTANCE=new GameModelManager();
 	/**
-	 * 生命数量
+	 * 玩家生命数量
 	 */
 	public static final int LIFE_NUM=ConfigProperties.getInstance().getInteger("initLifeNum");
 
@@ -50,16 +54,24 @@ public class GameModelManager {
 	/**
 	 * 定时任务
 	 */
-	TankTimeTask tankTimeTask=new TankTimeTask(this,120);
+	TankTask tankTask =new TankTask(this,120);
 
 	AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
 
-	WeaponFactory weaponFactory= SmallTankFactory.getInstance();
+	/**
+	 * 敌军坦克工厂
+	 */
+	WeaponFactory<EnemyTank> enemyWeaponFactory= EnemySmallTankFactory.getInstance();
 
 	/**
-	 * 我方坦克集合
+	 * 玩家坦克工厂
 	 */
-	public static List<AbstractMilitaryWeapon> tanks=new ArrayList<>();
+	WeaponFactory<GamersTank> gamersWeaponFactory= GamersSmallTankFactory.getInstance();
+
+	/**
+	 * 玩家坦克集合
+	 */
+	public static List<AbstractMilitaryWeapon> gamersTanks=new ArrayList<>();
 
 	AbstractMilitaryWeapon tank;
 
@@ -116,16 +128,16 @@ public class GameModelManager {
 		if (this.bullets.size()>0) {
 			this.bullets.clear();
 		}
-		if (tanks.size()>0) {
-			tanks.clear();
+		if (gamersTanks.size()>0) {
+			gamersTanks.clear();
 		}
-		if (tanks.size()>0) {
-			tanks.clear();
+		if (gamersTanks.size()>0) {
+			gamersTanks.clear();
 		}
 		if (enemyTanks.size()>0) {
 			enemyTanks.clear();
 		}
-		TankTimeTask.setCurTimes(new AtomicInteger(1));
+		TankTask.setCurTimes(new AtomicInteger(1));
 	}
 
 	/**
@@ -133,23 +145,27 @@ public class GameModelManager {
 	 */
 	public void init() {
 		// 初始化敌军坦克
-		enemyTanks.addAll(weaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this, Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
-		//  初始化我方坦克
+		//enemyTanks.addAll(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this, Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
+		gameProps.addAll(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
+				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
+		//  初始化玩家坦克
 		for (int i=0;i<LIFE_NUM;i++) {
-			tanks.add(abstractWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			//gamersTanks.add(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			gameProps.add(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
 		}
-		if (tanks.size()>0) {
-			setTank(tanks.get(0));
+
+		/*if (gamersTanks.size()>0) {
+			setTank(gamersTanks.get(0));
 		}
-		tank.setMoving(false);
+		tank.setMoving(false);*/
 	}
 
-	public TankTimeTask getTankTimeTask() {
-		return tankTimeTask;
+	public TankTask getTankTask() {
+		return tankTask;
 	}
 
-	public void setTankTimeTask(TankTimeTask tankTimeTask) {
-		this.tankTimeTask = tankTimeTask;
+	public void setTankTask(TankTask tankTask) {
+		this.tankTask = tankTask;
 	}
 
 	public AbstractWeaponFactory getAbstractWeaponFactory() {
@@ -161,11 +177,11 @@ public class GameModelManager {
 	}
 
 	public static List<AbstractMilitaryWeapon> getTanks() {
-		return tanks;
+		return gamersTanks;
 	}
 
 	public static void setTanks(List<AbstractMilitaryWeapon> tanks) {
-		GameModelManager.tanks = tanks;
+		GameModelManager.gamersTanks = tanks;
 	}
 
 	public AbstractMilitaryWeapon getTank() {
@@ -224,11 +240,35 @@ public class GameModelManager {
 		this.plane = plane;
 	}
 
-	public WeaponFactory getWeaponFactory() {
-		return weaponFactory;
+	public WeaponFactory<EnemyTank> getEnemyWeaponFactory() {
+		return enemyWeaponFactory;
 	}
 
-	public void setWeaponFactory(WeaponFactory weaponFactory) {
-		this.weaponFactory = weaponFactory;
+	public void setEnemyWeaponFactory(WeaponFactory<EnemyTank> enemyWeaponFactory) {
+		this.enemyWeaponFactory = enemyWeaponFactory;
+	}
+
+	public WeaponFactory<GamersTank> getGamersWeaponFactory() {
+		return gamersWeaponFactory;
+	}
+
+	public void setGamersWeaponFactory(WeaponFactory<GamersTank> gamersWeaponFactory) {
+		this.gamersWeaponFactory = gamersWeaponFactory;
+	}
+
+	public static List<AbstractMilitaryWeapon> getGamersTanks() {
+		return gamersTanks;
+	}
+
+	public static void setGamersTanks(List<AbstractMilitaryWeapon> gamersTanks) {
+		GameModelManager.gamersTanks = gamersTanks;
+	}
+
+	public List<GameProp> getGameProps() {
+		return gameProps;
+	}
+
+	public void setGameProps(List<GameProp> gameProps) {
+		this.gameProps = gameProps;
 	}
 }

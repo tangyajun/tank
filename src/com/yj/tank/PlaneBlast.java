@@ -11,7 +11,7 @@ import com.yj.tank.model.PlaneExplode;
  *  @create 2020-05-05-19:10
  **/
 public class PlaneBlast implements BlastStrategy {
-	private AbstractBullet abstractBullet;
+	private GameProp gameProp1;
 	private GameModelManager gameModelManager;
 	private GameProp gameProp;
 
@@ -19,14 +19,14 @@ public class PlaneBlast implements BlastStrategy {
 
 	}
 
-	public PlaneBlast(GameProp gameProp, AbstractBullet abstractBullet,GameModelManager gameModelManager) {
-		this.abstractBullet=abstractBullet;
+	public PlaneBlast(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
+		this.gameProp1=gameProp1;
 		this.gameModelManager=gameModelManager;
 		this.gameProp=gameProp;
 	}
 
 	@Override
-	public void execute(GameProp gameProp, AbstractBullet abstractBullet,GameModelManager gameModelManager) {
-		GameModelManager.getInstance().getExplodes().add(new PlaneExplode(abstractBullet.getX(),abstractBullet.getY(),PlaneExplode.WIDTH,PlaneExplode.HEIGHT,GameModelManager.getInstance()));
+	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
+		GameModelManager.getInstance().getExplodes().add(new PlaneExplode(gameProp1.getX(),gameProp1.getY(),PlaneExplode.WIDTH,PlaneExplode.HEIGHT,GameModelManager.getInstance()));
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
+import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.view.TankFrame;
 
 /**
@@ -13,7 +14,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-04-18:37
  **/
-public interface WeaponFactory<T> {
+public interface WeaponFactory<T extends AbstractMilitaryWeapon> {
 	/**
 	 * 创建
 	 * @param x

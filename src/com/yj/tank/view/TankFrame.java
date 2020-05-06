@@ -14,15 +14,17 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.yj.tank.ColliderChain;
 import com.yj.tank.ConfigProperties;
 import com.yj.tank.GameModelManager;
+import com.yj.tank.PlayListener;
+import com.yj.tank.TankTask;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.GameStatus;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
-import com.yj.tank.PlayListener;
-import com.yj.tank.TankTimeTask;
+import com.yj.tank.model.GameProp;
 
 /**
  * 坦克游戏主界面
@@ -32,11 +34,16 @@ import com.yj.tank.TankTimeTask;
 public class TankFrame extends Frame{
 
 	/**
-	 *我方坦克集合
+	 *玩家坦克集合
 	 */
 	//static List<Tank> goodTanks=new ArrayList<>();
 
 	GameModelManager modelManager=GameModelManager.getInstance();
+
+	/**
+	 *
+	 */
+	ColliderChain colliderChain=ColliderChain.getInstance();
 	/**
 	 * 坦克
 	 *
@@ -59,7 +66,7 @@ public class TankFrame extends Frame{
 	//public static final int TANK_NUM=ConfigProperties.getInstance().getInteger("initEnemyTankNum");
 
 	Button play=new Button("PLAY");
-	Container playContainer=new com.yj.tank.ButtonContainer(300,400,play);
+	Container playContainer=new ButtonContainer(300,400,play);
 	GameStatus gameStatus= GameStatus.LOADING;
 	String next="NEXT";
 
@@ -80,7 +87,7 @@ public class TankFrame extends Frame{
 		setFocusable(true);
 		setVisible(true);
 		setSize(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
-		setTitle("tank bar");
+		setTitle("坦克大战");
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -115,15 +122,15 @@ public class TankFrame extends Frame{
 		graphics.setColor(Color.white);
 		graphics.drawString("子弹数量:"+modelManager.getBullets().size(),10,60);
 		graphics.drawString("敌军数量:"+modelManager.getEnemyTanks().size(),10,80);
-		graphics.drawString("生命数量:"+GameModelManager.tanks.size(),10,100);
+		graphics.drawString("生命数量:"+GameModelManager.gamersTanks.size(),10,100);
 		graphics.drawString("当前关数:"+GameModelManager.curLevelCount,10,120);
 		graphics.setColor(color);
 		AbstractMilitaryWeapon tank=modelManager.getTank();
-		TankTimeTask tankTimeTask=modelManager.getTankTimeTask();
+		TankTask tankTask =modelManager.getTankTask();
 		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
 		if (tank!= null) {
 			tank.paint(graphics);
-			if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
+			if (TankTask.curTimes.intValue()== tankTask.total && tanks.size()<=0 &&
 					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==1) {
 				Color c=graphics.getColor();
 				graphics.setColor(Color.WHITE);
@@ -134,31 +141,31 @@ public class TankFrame extends Frame{
 					GameModelManager.curLevelCount++;
 				}
 				if (GameModelManager.curLevelCount==2) {
-					TankTimeTask.setCurTimes(new AtomicInteger(1));
-					tankTimeTask.setTotal(5);
-					tankTimeTask.setTankNum(6);
-					tankTimeTask.setDistance(110);
-					tankTimeTask.setBadTankSpeed(2);
-					tankTimeTask.setDelay(20000);
-					tankTimeTask.start(10000,GameModelManager.curLevelCount);
+					TankTask.setCurTimes(new AtomicInteger(1));
+					tankTask.setTotal(5);
+					tankTask.setTankNum(6);
+					tankTask.setDistance(110);
+					tankTask.setBadTankSpeed(2);
+					tankTask.setDelay(20000);
+					tankTask.start(10000,GameModelManager.curLevelCount);
 					System.out.println("111111111111111111111111111111111111111");
 				}
-			}else if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
+			}else if (TankTask.curTimes.intValue()== tankTask.total && tanks.size()<=0 &&
 					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==2) {
 				if (GameModelManager.curLevelCount==2) {
 					GameModelManager.curLevelCount++;
 				}
 				if (GameModelManager.curLevelCount==3) {
-					TankTimeTask.setCurTimes(new AtomicInteger(1));
-					tankTimeTask.setTotal(7);
-					tankTimeTask.setTankNum(7);
-					tankTimeTask.setDistance(100);
-					tankTimeTask.setBadTankSpeed(3);
-					tankTimeTask.setDelay(20000);
-					tankTimeTask.start(10000,GameModelManager.curLevelCount);
+					TankTask.setCurTimes(new AtomicInteger(1));
+					tankTask.setTotal(7);
+					tankTask.setTankNum(7);
+					tankTask.setDistance(100);
+					tankTask.setBadTankSpeed(3);
+					tankTask.setDelay(20000);
+					tankTask.start(10000,GameModelManager.curLevelCount);
 					System.out.println("2222222222222222222222222222222222222222222");
 				}
-			}else if (TankTimeTask.curTimes.intValue()==tankTimeTask.total && tanks.size()<=0 &&
+			}else if (TankTask.curTimes.intValue()== tankTask.total && tanks.size()<=0 &&
 					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==3) {
 				Color c=graphics.getColor();
 				graphics.setColor(Color.WHITE);
@@ -166,15 +173,14 @@ public class TankFrame extends Frame{
 				graphics.setColor(c);
 			}
 		}else {
-			if (GameModelManager.tanks.size()>0) {
-				GameModelManager.tanks.remove(GameModelManager.tanks.get(0));
-				//tank = goodTanks.get(0);
-				if (GameModelManager.tanks.size()>0) {
-					tank = GameModelManager.tanks.get(0);
+			if (GameModelManager.gamersTanks.size()>0) {
+				GameModelManager.gamersTanks.remove(GameModelManager.gamersTanks.get(0));
+				if (GameModelManager.gamersTanks.size()>0) {
+					tank = GameModelManager.gamersTanks.get(0);
 				}
-			}else if(GameModelManager.tanks.size()<=0 && this.gameStatus== GameStatus.RUNNING){
+			}else if(GameModelManager.gamersTanks.size()<=0 && this.gameStatus== GameStatus.RUNNING){
 				this.gameStatus= GameStatus.OVER;
-			}else if (GameModelManager.tanks.size()==0 && this.gameStatus== GameStatus.OVER) {
+			}else if (GameModelManager.gamersTanks.size()==0 && this.gameStatus== GameStatus.OVER) {
 				Color c=graphics.getColor();
 				graphics.setColor(Color.WHITE);
 				graphics.drawString("game over",300,400);
@@ -184,9 +190,18 @@ public class TankFrame extends Frame{
 				modelManager.clear();
 			}
 		}
-		paintBullets(graphics);
+		// 绘制游戏道具图形
+		List<GameProp> gameProps=modelManager.getGameProps();
+		/*gameProps.stream().forEach(gameProp -> {
+			gameProp.paint(graphics);
+		});*/
+		for (int i=0;i<gameProps.size();i++) {
+			gameProps.get(i).paint(graphics);
+		}
+
+		/*paintBullets(graphics);
 		paintTanks(graphics);
-		paintExplodes(graphics);
+		paintExplodes(graphics);*/
 		collideCheck();
 	}
 
@@ -318,7 +333,7 @@ public class TankFrame extends Frame{
 	 * 碰撞检测,检测子弹和坦克是否相撞
 	 */
 	private void collideCheck() {
-		List<AbstractBullet> bullets=modelManager.getBullets();
+		/*List<AbstractBullet> bullets=modelManager.getBullets();
 		List<AbstractMilitaryWeapon> enemyTanks=modelManager.getEnemyTanks();
 		AbstractMilitaryWeapon tank=modelManager.getTank();
 		for (int i=0;i<bullets.size();i++) {
@@ -332,6 +347,13 @@ public class TankFrame extends Frame{
 
 		for (int i=0;i<enemyTanks.size();i++) {
 			enemyTanks.get(i).enemyBoundCheck();
+		}*/
+
+		List<GameProp> gameProps=modelManager.getGameProps();
+		for (int i=0;i<gameProps.size();i++) {
+			for (int j=0;j<gameProps.size();j++) {
+				colliderChain.chain(gameProps.get(i),gameProps.get(j));
+			}
 		}
 	}
 

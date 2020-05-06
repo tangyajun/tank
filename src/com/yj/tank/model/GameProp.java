@@ -31,7 +31,7 @@ public abstract class GameProp {
 	protected int height;
 
 	/**
-	 * 范围
+	 * 矩形
 	 */
 	protected Rectangle rectangle=new Rectangle();
 
@@ -52,4 +52,43 @@ public abstract class GameProp {
 	 */
 	public abstract void paint(Graphics graphics);
 
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
+
+	public void setRectangle(Rectangle rectangle) {
+		this.rectangle = rectangle;
+	}
 }

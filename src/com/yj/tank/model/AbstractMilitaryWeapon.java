@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.yj.tank.BlastStrategy;
 import com.yj.tank.DefaultTankFire;
 import com.yj.tank.Fire;
 import com.yj.tank.FireBulletStrategy;
@@ -90,6 +91,8 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 
 	protected FireBulletStrategy fireBulletStrategy;
 
+	protected BlastStrategy blastStrategy;
+
 	/**
 	 *
 	 */
@@ -160,18 +163,22 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 		this.dir=Dir.values()[random.nextInt(4)];
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	@Override
 	public int getY() {
 		return y;
 	}
 
+	@Override
 	public void setY(int y) {
 		this.y = y;
 	}
@@ -280,10 +287,12 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 		this.moveBehavior = moveBehavior;
 	}
 
+	@Override
 	public Rectangle getRectangle() {
 		return rectangle;
 	}
 
+	@Override
 	public void setRectangle(Rectangle rectangle) {
 		this.rectangle = rectangle;
 	}
@@ -302,5 +311,13 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 
 	public void setFireBulletStrategy(FireBulletStrategy fireBulletStrategy) {
 		this.fireBulletStrategy = fireBulletStrategy;
+	}
+
+	public BlastStrategy getBlastStrategy() {
+		return blastStrategy;
+	}
+
+	public void setBlastStrategy(BlastStrategy blastStrategy) {
+		this.blastStrategy = blastStrategy;
 	}
 }

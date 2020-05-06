@@ -1,19 +1,16 @@
 package com.yj.tank;
 
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractMilitaryWeapon;
-import com.yj.tank.view.TankFrame;
+import com.yj.tank.model.EnemyTank;
 
 /**
  *  坦克定时任务
@@ -21,7 +18,7 @@ import com.yj.tank.view.TankFrame;
  *  @author tangyajun
  *  @create 2020-05-03-0:21
  **/
-public class TankTimeTask {
+public class TankTask {
 
 	private GameModelManager gameModelManager;
 
@@ -66,7 +63,7 @@ public class TankTimeTask {
 
 	ScheduledExecutorService scheduledExecutorService= Executors.newSingleThreadScheduledExecutor();
 
-	public TankTimeTask(GameModelManager gameModelManager,int distance) {
+	public TankTask(GameModelManager gameModelManager,int distance) {
 		this.gameModelManager=gameModelManager;
 		this.distance=distance;
 	}
@@ -111,7 +108,7 @@ public class TankTimeTask {
 		if (curTimes.intValue()<total) {
 			if (curLevelCount<3) {
 				//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
-				List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
+				List<EnemyTank> tanks =gameModelManager.getEnemyWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
 				tanks.stream().forEach(tank -> {
 					tank.setSpeedBad(badTankSpeed);
 				});
@@ -123,7 +120,7 @@ public class TankTimeTask {
 
 				if (curTimes.intValue()==1 || curTimes.intValue()==4 || curTimes.intValue() ==7) {
 					//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, badTankDir);
-					List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
+					List<EnemyTank> tanks =gameModelManager.getEnemyWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
@@ -133,7 +130,7 @@ public class TankTimeTask {
 					System.out.println("---------------------------满足条件2当前等级："+curLevelCount);
 				}else if (curTimes.intValue()==2 || curTimes.intValue() ==5) {
 					//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,0,120);
-					List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
+					List<EnemyTank> tanks =gameModelManager.getEnemyWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE,Dir.DOWN);
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
@@ -143,7 +140,7 @@ public class TankTimeTask {
 					System.out.println("---------------------------满足条件3当前等级："+curLevelCount);
 				}else if (curTimes.intValue()==3 || curTimes.intValue()==6) {
 					//List<Tank> tanks = TankFactory.createTanks(tankNum, tkFrame, Group.BAD, distance, Dir.RIGHT,400,120);
-					List<AbstractMilitaryWeapon> tanks =gameModelManager.getWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,distance,Dir.RIGHT,400,200);
+					List<EnemyTank> tanks =gameModelManager.getEnemyWeaponFactory().createWeapons(GameModelManager.ENEMY_TANK_NUM,gameModelManager, Group.BAD,distance,Dir.RIGHT,400,200);
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
@@ -217,6 +214,6 @@ public class TankTimeTask {
 	}
 
 	public static void setCurTimes(AtomicInteger curTimes) {
-		TankTimeTask.curTimes = curTimes;
+		TankTask.curTimes = curTimes;
 	}
 }

@@ -1,4 +1,4 @@
-package com.yj.tank;
+package com.yj.tank.view;
 
 import java.awt.Button;
 import java.awt.Color;

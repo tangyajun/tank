@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 /**
  *
  *  @Description TO DO
- *  @author yang
+ *  @author tangyajun
  *  @create 2020-05-02-19:07
  **/
 public class ImageUtils {

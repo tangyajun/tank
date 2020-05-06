@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.List;
 
 import com.yj.tank.DefaultTankFire;
+import com.yj.tank.Fire;
 import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
@@ -61,7 +62,12 @@ public class SmallTank extends AbstractMilitaryWeapon {
 
 	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
 			FireBulletStrategy fireBulletStrategy) {
-		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire(),fireBulletStrategy);
+		this(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire(),fireBulletStrategy);
+	}
+
+	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
+			Fire fire,FireBulletStrategy fireBulletStrategy) {
+		super(x,y,width,height,dir,gameModelManager,group,fire,fireBulletStrategy);
 	}
 
 	@Override
@@ -164,8 +170,8 @@ public class SmallTank extends AbstractMilitaryWeapon {
 			x=20;
 			randomDir();
 		}
-		if (this.y<40) {
-			y=40;
+		if (this.y<60) {
+			y=60;
 			randomDir();
 		}
 		if (this.x> TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH) {

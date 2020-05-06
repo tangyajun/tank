@@ -150,4 +150,8 @@ public class Windmill extends Cowry {
 			randomDir();
 		}
 	}
+
+	public void die() {
+		this.live=false;
+	}
 }

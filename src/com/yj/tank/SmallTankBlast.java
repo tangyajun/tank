@@ -1,8 +1,6 @@
 package com.yj.tank;
 
-import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.GameProp;
-import com.yj.tank.model.SmallTank;
 import com.yj.tank.model.SmallTankExplode;
 
 /**
@@ -13,7 +11,7 @@ import com.yj.tank.model.SmallTankExplode;
  **/
 public class SmallTankBlast implements BlastStrategy {
 
-	private AbstractBullet abstractBullet;
+	private GameProp gameProp1;
 	private GameModelManager gameModelManager;
 	private GameProp gameProp;
 
@@ -21,14 +19,14 @@ public class SmallTankBlast implements BlastStrategy {
 
 	}
 
-	public SmallTankBlast(GameProp gameProp, AbstractBullet abstractBullet,GameModelManager gameModelManager) {
-		this.abstractBullet=abstractBullet;
+	public SmallTankBlast(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
+		this.gameProp1=gameProp1;
 		this.gameModelManager=gameModelManager;
 		this.gameProp=gameProp;
 	}
 
 	@Override
-	public void execute(GameProp gameProp, AbstractBullet abstractBullet,GameModelManager gameModelManager) {
-		gameModelManager.getExplodes().add(new SmallTankExplode(abstractBullet.getX(),abstractBullet.getY(),gameModelManager));
+	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
+		gameModelManager.getExplodes().add(new SmallTankExplode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
 	}
 }

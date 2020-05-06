@@ -34,7 +34,7 @@ public class PlayListener  extends MouseAdapter {
 		modelManager.init();
 		Button button=(Button) e.getSource();
 		button.setVisible(false);
-		modelManager.getTankTimeTask().start(30000,GameModelManager.curLevelCount);
+		modelManager.getTankTask().start(30000,GameModelManager.curLevelCount);
 	}
 
 	@Override
