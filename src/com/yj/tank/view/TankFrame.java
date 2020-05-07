@@ -11,7 +11,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.ColliderChain;
@@ -25,6 +28,7 @@ import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractExplode;
 import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.GameProp;
+import com.yj.tank.model.GamersTank;
 
 /**
  * 坦克游戏主界面
@@ -128,7 +132,7 @@ public class TankFrame extends Frame{
 		AbstractMilitaryWeapon tank=modelManager.getTank();
 		TankTask tankTask =modelManager.getTankTask();
 		List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
-		if (tank!= null) {
+		/*if (tank!= null) {
 			tank.paint(graphics);
 			if (TankTask.curTimes.intValue()== tankTask.total && tanks.size()<=0 &&
 					this.gameStatus==GameStatus.RUNNING && GameModelManager.curLevelCount==1) {
@@ -189,15 +193,21 @@ public class TankFrame extends Frame{
 				play.setVisible(true);
 				modelManager.clear();
 			}
-		}
+		}*/
 		// 绘制游戏道具图形
 		List<GameProp> gameProps=modelManager.getGameProps();
+		Map<String,GameProp> gamePropMap=GameModelManager.getGameModelMap();
+
+		for (Iterator<String> iter=gamePropMap.keySet().iterator();iter.hasNext();) {
+			String key=iter.next();
+			gamePropMap.get(key).paint(graphics);
+		}
 		/*gameProps.stream().forEach(gameProp -> {
 			gameProp.paint(graphics);
 		});*/
-		for (int i=0;i<gameProps.size();i++) {
+		/*for (int i=0;i<gameProps.size();i++) {
 			gameProps.get(i).paint(graphics);
-		}
+		}*/
 
 		/*paintBullets(graphics);
 		paintTanks(graphics);
@@ -240,6 +250,7 @@ public class TankFrame extends Frame{
 
 		@Override
 		public void keyReleased(KeyEvent e) {
+			GamersTank gamersTank=modelManager.getGamersTank();
 			int keyCode=e.getKeyCode();
 			switch (keyCode) {
 				case KeyEvent.VK_LEFT:
@@ -259,8 +270,8 @@ public class TankFrame extends Frame{
 					ku=false;
 					break;
 				case KeyEvent.VK_SPACE:
-					if (modelManager.getTank() != null) {
-						modelManager.getTank().fire();
+					if (gamersTank != null) {
+						gamersTank.fire();
 					}
 					break;
 				default:
@@ -273,7 +284,7 @@ public class TankFrame extends Frame{
 		 * 改变坦克方向
 		 */
 		private void changeMainTankDir() {
-			AbstractMilitaryWeapon tank=modelManager.getTank();
+			GamersTank tank=modelManager.getGamersTank();
 			if (tank != null) {
 				if (!kl && !kr && !kd && !ku) {
 					tank.setMoving(false);
@@ -333,22 +344,6 @@ public class TankFrame extends Frame{
 	 * 碰撞检测,检测子弹和坦克是否相撞
 	 */
 	private void collideCheck() {
-		/*List<AbstractBullet> bullets=modelManager.getBullets();
-		List<AbstractMilitaryWeapon> enemyTanks=modelManager.getEnemyTanks();
-		AbstractMilitaryWeapon tank=modelManager.getTank();
-		for (int i=0;i<bullets.size();i++) {
-			for (int j=0;j<enemyTanks.size();j++) {
-				bullets.get(i).collideWith(enemyTanks.get(j));
-			}
-			if (tank != null) {
-				bullets.get(i).collideWith(tank);
-			}
-		}
-
-		for (int i=0;i<enemyTanks.size();i++) {
-			enemyTanks.get(i).enemyBoundCheck();
-		}*/
-
 		List<GameProp> gameProps=modelManager.getGameProps();
 		for (int i=0;i<gameProps.size();i++) {
 			for (int j=0;j<gameProps.size();j++) {
@@ -356,7 +351,6 @@ public class TankFrame extends Frame{
 			}
 		}
 	}
-
 
 	public Container getPlayContainer() {
 		return playContainer;

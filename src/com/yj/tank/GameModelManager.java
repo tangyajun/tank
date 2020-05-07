@@ -1,9 +1,15 @@
 package com.yj.tank;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -102,6 +108,10 @@ public class GameModelManager {
 
 	List<GameProp> gameProps=new LinkedList<>();
 
+	private AtomicLong gamePropNum=new AtomicLong(0);
+
+	private static Map<String,Object> gameModelMap=new ConcurrentHashMap<>();
+
 	private GameModelManager() {
 
 	}
@@ -110,12 +120,37 @@ public class GameModelManager {
 		return INSTANCE;
 	}
 
-	public void addGameProp(GameProp gameProp) {
-		gameProps.add(gameProp);
+	public <T> void addGameProp(T gameProp) {
+		StringBuffer gamePropName=new StringBuffer();
+		gamePropName.append(gameProp.getClass().getSimpleName());
+		gamePropName.append("_");
+		gamePropName.append(gamePropNum.decrementAndGet());
+		gameModelMap.put(gamePropName.toString(),gameProp);
+		//gameProps.add(gameProp);
 	}
 
-	public void removeGameProp(GameProp gameProp) {
-		gameProps.remove(gameProp);
+	public <T> void addGameProps(Collection<T> collection) {
+		if (collection != null && !collection.isEmpty()) {
+			collection.stream().forEach(gameProp -> {
+				StringBuffer gamePropName=new StringBuffer();
+				gamePropName.append(gameProp.getClass().getSimpleName());
+				gamePropName.append("_");
+				gamePropName.append(gamePropNum.decrementAndGet());
+				gameModelMap.put(gamePropName.toString(),gameProp);
+			});
+		}
+	}
+
+	public <T> void removeGameProp(T gameProp) {
+		for (Iterator<String> iter=gameModelMap.keySet().iterator();iter.hasNext();) {
+			if (gameModelMap.get(iter.next())==gameProp) {
+				gameModelMap.remove(gameProp);
+			}
+		}
+	}
+
+	public <T> T getGameProp(String gamePropName) {
+		return (T)gameModelMap.get(gamePropName);
 	}
 
 	/**
@@ -146,18 +181,31 @@ public class GameModelManager {
 	public void init() {
 		// 初始化敌军坦克
 		//enemyTanks.addAll(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this, Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
-		gameProps.addAll(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
+		/*gameProps.addAll(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
+				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));*/
+		addGameProps(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
 				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
 		//  初始化玩家坦克
 		for (int i=0;i<LIFE_NUM;i++) {
 			//gamersTanks.add(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
-			gameProps.add(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			//gameProps.add(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			addGameProp(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
 		}
 
 		/*if (gamersTanks.size()>0) {
 			setTank(gamersTanks.get(0));
 		}
 		tank.setMoving(false);*/
+	}
+
+	public GamersTank getGamersTank() {
+		for (Iterator<String> keyIter=gameModelMap.keySet().iterator();keyIter.hasNext();) {
+			String key=keyIter.next();
+			if (key.indexOf(GamersTank.class.getSimpleName())>0) {
+				return (GamersTank)gameModelMap.get(key);
+			}
+		}
+		return null;
 	}
 
 	public TankTask getTankTask() {
@@ -271,4 +319,9 @@ public class GameModelManager {
 	public void setGameProps(List<GameProp> gameProps) {
 		this.gameProps = gameProps;
 	}
+
+	public static <T extends Object> Map<String, T> getGameModelMap() {
+		return (Map<String, T>) gameModelMap;
+	}
+
 }

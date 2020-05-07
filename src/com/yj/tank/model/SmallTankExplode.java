@@ -28,7 +28,7 @@ public class SmallTankExplode extends AbstractExplode{
 				graphics.drawImage(ResourceManager.smallTankExplodes[step++], x, y, null);
 			}
 		}else {
-			gameModelManager.getExplodes().remove(this);
+			gameModelManager.removeGameProp(this);
 			this.live = false;
 		}
 

@@ -73,13 +73,13 @@ public class SmallTank extends AbstractMilitaryWeapon {
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.gameModelManager.getEnemyTanks().remove(this);
+			this.gameModelManager.removeGameProp(this);
 		}
-		if (this.gameModelManager.getTank()!= null) {
+		/*if (this.gameModelManager.getTank()!= null) {
 			if (!this.gameModelManager.getTank().isLive()) {
 				this.gameModelManager.setTank(null);
 			}
-		}
+		}*/
 		paintImage(graphics);
 		move();
 	}

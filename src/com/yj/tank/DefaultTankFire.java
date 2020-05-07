@@ -1,14 +1,8 @@
 package com.yj.tank;
 
-import com.yj.tank.constant.Group;
-import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.AbstractMilitaryWeapon;
-import com.yj.tank.model.SmallTank;
-import com.yj.tank.model.SmallTankBullet;
-import com.yj.tank.model.TankBullet;
-import com.yj.tank.model.Plane;
-import com.yj.tank.model.PlaneBullet;
 import com.yj.tank.model.Tank;
+import com.yj.tank.model.TankBullet;
 
 /**
  *

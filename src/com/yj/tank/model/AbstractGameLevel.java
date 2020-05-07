@@ -12,12 +12,12 @@ import java.util.List;
  **/
 public abstract class AbstractGameLevel {
 	/**
-	 * 敌军坦克
+	 * 敌军坦克每次出现的数量
 	 */
 	protected static List<EnemyTank> enemyTanks=new ArrayList<>(5);
 
 	/**
-	 * 玩家坦克
+	 * 玩家坦克数量
 	 */
 	protected static List<GamersTank> gamersTanks=new ArrayList<>(1);
 
@@ -35,4 +35,14 @@ public abstract class AbstractGameLevel {
 	 * 敌军坦克循环出现次数
 	 */
 	public static final int ENEMY_TANK_LOOP_NUM=3;
+
+	abstract void start();
+
+	/**
+	 * 是否过关
+	 * @return
+	 */
+	public boolean isPass() {
+		return enemyTanks.size()<=0;
+	}
 }

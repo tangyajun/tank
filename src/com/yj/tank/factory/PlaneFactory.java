@@ -1,5 +1,6 @@
 package com.yj.tank.factory;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import com.yj.tank.TankFireBulletStrategy;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.Plane;
-import com.yj.tank.view.TankFrame;
 
 /**
  *

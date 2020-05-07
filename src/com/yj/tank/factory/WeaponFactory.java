@@ -1,12 +1,12 @@
 package com.yj.tank.factory;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.yj.tank.GameModelManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractMilitaryWeapon;
-import com.yj.tank.view.TankFrame;
 
 /**
  *
