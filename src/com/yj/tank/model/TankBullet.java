@@ -41,7 +41,7 @@ public class TankBullet extends AbstractBullet {
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			gameModelManager.getBullets().remove(this);
+			gameModelManager.removeGameProp(this);
 		}
 		switch (dir) {
 			case DOWN:

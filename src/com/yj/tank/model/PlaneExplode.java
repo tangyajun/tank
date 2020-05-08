@@ -28,6 +28,6 @@ public class PlaneExplode extends AbstractExplode {
 		if(step < images.length) {
 			graphics.drawImage(images[step++], x, y, null);
 		}
-		gameModelManager.getExplodes().remove(this);
+		gameModelManager.removeGameProp(this);
 	}
 }

@@ -49,7 +49,7 @@ public class Plane extends AbstractMilitaryWeapon {
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.gameModelManager.getEnemyTanks().remove(this);
+			this.gameModelManager.removeGameProp(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -119,13 +119,8 @@ public class Plane extends AbstractMilitaryWeapon {
 	@Override
 	public void fire() {
 		if (live) {
-			this.gameModelManager.getBullets().add(gameModelManager.getAbstractWeaponFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
+			this.gameModelManager.addGameProp(gameModelManager.getAbstractWeaponFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
 		}
-	}
-
-	@Override
-	public void enemyBoundCheck() {
-
 	}
 
 	@Override

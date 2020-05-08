@@ -196,7 +196,7 @@ public class SmallTank extends AbstractMilitaryWeapon {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void enemyBoundCheck() {
 		List<AbstractMilitaryWeapon> enemyTanks=gameModelManager.getEnemyTanks();
 		for (int i=0;i<enemyTanks.size();i++) {
@@ -230,5 +230,5 @@ public class SmallTank extends AbstractMilitaryWeapon {
 				}
 			}
 		}
-	}
+	}*/
 }

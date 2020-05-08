@@ -119,7 +119,7 @@ public class TankTask {
 				tanks.stream().forEach(tank -> {
 					tank.setSpeedBad(badTankSpeed);
 				});
-				gameModelManager.getEnemyTanks().addAll(tanks);
+				gameModelManager.addGameProps(tanks);
 				System.out.println("ScheduledTask");
 				curTimes.getAndIncrement();
 				System.out.println("---------------------------满足条件1当前等级："+curLevelCount);
@@ -131,7 +131,7 @@ public class TankTask {
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
-					gameModelManager.getEnemyTanks().addAll(tanks);
+					gameModelManager.addGameProps(tanks);
 					System.out.println("ScheduledTask");
 					curTimes.getAndIncrement();
 					System.out.println("---------------------------满足条件2当前等级："+curLevelCount);
@@ -141,7 +141,7 @@ public class TankTask {
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
-					gameModelManager.getEnemyTanks().addAll(tanks);
+					gameModelManager.addGameProps(tanks);
 					System.out.println("ScheduledTask");
 					curTimes.getAndIncrement();
 					System.out.println("---------------------------满足条件3当前等级："+curLevelCount);
@@ -151,7 +151,7 @@ public class TankTask {
 					tanks.stream().forEach(tank -> {
 						tank.setSpeedBad(badTankSpeed);
 					});
-					gameModelManager.getEnemyTanks().addAll(tanks);
+					gameModelManager.addGameProps(tanks);
 					System.out.println("ScheduledTask");
 					curTimes.getAndIncrement();
 					System.out.println("---------------------------满足条件4当前等级："+curLevelCount);

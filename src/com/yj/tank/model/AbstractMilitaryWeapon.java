@@ -5,12 +5,10 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import com.yj.tank.BlastStrategy;
-import com.yj.tank.DefaultTankFire;
 import com.yj.tank.Fire;
 import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.MoveBehavior;
-import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 
@@ -137,12 +135,6 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	 * 发射子弹
 	 */
 	public abstract void fire();
-
-	/**
-	 * 检测敌方坦克是否要撞击自己的坦克，如果快要撞击则改变方向
-	 * @param
-	 */
-	public abstract void enemyBoundCheck();
 
 	/**
 	 * 随机改变方向
