@@ -115,28 +115,28 @@ public class SmallTank extends AbstractMilitaryWeapon {
 			switch (dir) {
 				case LEFT:
 					if (this.group==Group.BAD) {
-						x -= speedBad;
+						//x -= speedBad;
 					}else if (this.group==Group.GOOD) {
 						x -= speedGood;
 					}
 					break;
 				case RIGHT:
 					if (this.group==Group.BAD) {
-						x += speedBad;
+						//x += speedBad;
 					}else {
 						x += speedGood;
 					}
 					break;
 				case UP:
 					if (this.group==Group.BAD) {
-						y -= speedBad;
+						//y -= speedBad;
 					}else {
 						y -= speedGood;
 					}
 					break;
 				case DOWN:
 					if (this.group==Group.BAD) {
-						y += speedBad;
+						//y += speedBad;
 					}else {
 						y += speedGood;
 					}
@@ -150,7 +150,7 @@ public class SmallTank extends AbstractMilitaryWeapon {
 			 */
 			if (random.nextInt(100)>bulletFrequency) {
 				if (this.getGroup()==Group.BAD) {
-					fire();
+					//fire();
 				}
 			}
 			if (this.y>200 && this.group==Group.BAD && random.nextInt(100)>95) {

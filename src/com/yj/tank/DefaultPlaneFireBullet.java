@@ -10,7 +10,7 @@ import com.yj.tank.model.Tank;
 /**
  *
  *  @Description TO DO
- *  @author yang
+ *  @author tangyajun
  *  @create 2020-05-04-19:43
  **/
 public class DefaultPlaneFireBullet implements Fire {

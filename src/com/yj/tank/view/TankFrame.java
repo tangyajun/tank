@@ -344,12 +344,20 @@ public class TankFrame extends Frame{
 	 * 碰撞检测,检测子弹和坦克是否相撞
 	 */
 	private void collideCheck() {
-		List<GameProp> gameProps=modelManager.getGameProps();
-		for (int i=0;i<gameProps.size();i++) {
+		//List<GameProp> gameProps=modelManager.getGameProps();
+		Map<String,GameProp> gamePropsMap=GameModelManager.getGameModelMap();
+		for (Iterator iter=gamePropsMap.keySet().iterator();iter.hasNext();) {
+			GameProp gameProp=gamePropsMap.get(iter.next());
+			for (Iterator keyIter=gamePropsMap.keySet().iterator();keyIter.hasNext();) {
+				GameProp gameProp1=gamePropsMap.get(keyIter.next());
+				colliderChain.chain(gameProp,gameProp1);
+			}
+		}
+		/*for (int i=0;i<gameProps.size();i++) {
 			for (int j=0;j<gameProps.size();j++) {
 				colliderChain.chain(gameProps.get(i),gameProps.get(j));
 			}
-		}
+		}*/
 	}
 
 	public Container getPlayContainer() {

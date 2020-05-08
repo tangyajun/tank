@@ -19,7 +19,11 @@ public class ColliderChain {
 	private List<Collider> colliders=new LinkedList<>();
 
 	private ColliderChain() {
-
+		colliders.add(new SmallTankBulletCollider());
+		colliders.add(new GamersTankBulletCollider());
+		colliders.add(new GamersTankEnemyTankCollider());
+		colliders.add(new GamersTankWindmillCollider());
+		colliders.add(new EnemyTankBulletCollider());
 	}
 
 	public static ColliderChain getInstance() {

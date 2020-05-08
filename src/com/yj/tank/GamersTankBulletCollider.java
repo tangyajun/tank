@@ -4,6 +4,7 @@ import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.GamersTank;
+import com.yj.tank.model.SmallTankBullet;
 
 /**
  *  玩家坦克和子弹碰撞检测器
@@ -14,20 +15,20 @@ import com.yj.tank.model.GamersTank;
 public class GamersTankBulletCollider implements Collider {
 	@Override
 	public boolean collide(GameProp gameProp1, GameProp gameProp2) {
-		if (gameProp1 instanceof GamersTank && gameProp2 instanceof AbstractBullet) {
+		if (gameProp1 instanceof GamersTank && gameProp2 instanceof SmallTankBullet) {
 			GamersTank gamersTank=(GamersTank)gameProp1;
-			AbstractBullet bullet=(AbstractBullet)gameProp2;
+			SmallTankBullet bullet=(SmallTankBullet)gameProp2;
 			return check(gamersTank,bullet);
-		}else if (gameProp1 instanceof AbstractBullet && gameProp2 instanceof GamersTank) {
+		}else if (gameProp1 instanceof SmallTankBullet && gameProp2 instanceof GamersTank) {
 			GamersTank gamersTank=(GamersTank)gameProp2;
-			AbstractBullet bullet=(AbstractBullet)gameProp1;
+			SmallTankBullet bullet=(SmallTankBullet)gameProp1;
 			return check(gamersTank,bullet);
 		}else {
 			return false;
 		}
 	}
 
-	private boolean check(GamersTank gamersTank,AbstractBullet bullet) {
+	private boolean check(GamersTank gamersTank,SmallTankBullet bullet) {
 		/*if (gamersTank.getGroup()==bullet.getGroup()) {
 			return;
 		}*/

@@ -1,6 +1,7 @@
 package com.yj.tank;
 
 import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
@@ -9,8 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
+import com.yj.tank.model.AbstractGameLevel;
 import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.EnemyTank;
+import com.yj.tank.model.FirstGameLevel;
 
 /**
  *  坦克定时任务
@@ -21,6 +24,8 @@ import com.yj.tank.model.EnemyTank;
 public class TankTask {
 
 	private GameModelManager gameModelManager;
+
+	AbstractGameLevel gameLevel= FirstGameLevel.getInstance();
 
 	/**
 	 * 定时任务当前执行到第几波
@@ -57,7 +62,9 @@ public class TankTask {
 	 */
 	int delay=50;
 
-	//Timer timer=new Timer();
+	Timer timer=new Timer();
+
+	Task timerTask=new Task();
 
 	public static AtomicInteger execTimes=new AtomicInteger(0);
 
@@ -75,7 +82,7 @@ public class TankTask {
 	 */
 	public void start(long period,int curLevelCount) {
 		//scheduledExecutorService.scheduleWithFixedDelay(new Task(curLevelCount),delay,period, TimeUnit.SECONDS);
-		CompletableFuture.supplyAsync(() -> {
+		/*CompletableFuture.supplyAsync(() -> {
 			for(int i=0; i<total; i++){
 				try {
 					Thread.sleep(period);
@@ -83,24 +90,24 @@ public class TankTask {
 				} catch (Exception e) { }
 			}
 			return null;
-		});
+		});*/
+		//timer.schedule(timerTask,0,200000);
 	}
 
 	public class Task extends TimerTask {
+		int i=0;
+		public Task() {
 
-		private int curLevelCount;
-
-		public Task(int curLevelCount) {
-			this.curLevelCount=curLevelCount;
 		}
 
 		@Override
 		public void run() {
-			System.out.println("任务执行次数："+execTimes.get());
-			System.out.println("定时任务执行："+System.currentTimeMillis());
-
-			execTimes.incrementAndGet();
-			System.out.println("定时任务执行次数："+execTimes.get());
+			if (i<AbstractGameLevel.ENEMY_TANK_LOOP_NUM) {
+				gameLevel.start();
+				i++;
+			}else {
+				timer.cancel();
+			}
 		}
 	}
 
@@ -215,5 +222,13 @@ public class TankTask {
 
 	public static void setCurTimes(AtomicInteger curTimes) {
 		TankTask.curTimes = curTimes;
+	}
+
+	public AbstractGameLevel getGameLevel() {
+		return gameLevel;
+	}
+
+	public void setGameLevel(AbstractGameLevel gameLevel) {
+		this.gameLevel = gameLevel;
 	}
 }

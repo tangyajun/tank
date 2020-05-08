@@ -60,7 +60,7 @@ public class GameModelManager {
 	/**
 	 * 定时任务
 	 */
-	TankTask tankTask =new TankTask(this,120);
+	TankTask tankTask=new TankTask(INSTANCE,120);
 
 	AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
 
@@ -113,7 +113,7 @@ public class GameModelManager {
 	private static Map<String,Object> gameModelMap=new ConcurrentHashMap<>();
 
 	private GameModelManager() {
-
+		//tankTask=new TankTask(INSTANCE,120);
 	}
 
 	public static GameModelManager getInstance() {
@@ -122,9 +122,9 @@ public class GameModelManager {
 
 	public <T> void addGameProp(T gameProp) {
 		StringBuffer gamePropName=new StringBuffer();
-		gamePropName.append(gameProp.getClass().getSimpleName());
+		gamePropName.append(gameProp.getClass().getName());
 		gamePropName.append("_");
-		gamePropName.append(gamePropNum.decrementAndGet());
+		gamePropName.append(gamePropNum.incrementAndGet());
 		gameModelMap.put(gamePropName.toString(),gameProp);
 		//gameProps.add(gameProp);
 	}
@@ -133,9 +133,9 @@ public class GameModelManager {
 		if (collection != null && !collection.isEmpty()) {
 			collection.stream().forEach(gameProp -> {
 				StringBuffer gamePropName=new StringBuffer();
-				gamePropName.append(gameProp.getClass().getSimpleName());
+				gamePropName.append(gameProp.getClass().getName());
 				gamePropName.append("_");
-				gamePropName.append(gamePropNum.decrementAndGet());
+				gamePropName.append(gamePropNum.incrementAndGet());
 				gameModelMap.put(gamePropName.toString(),gameProp);
 			});
 		}
@@ -196,12 +196,13 @@ public class GameModelManager {
 			setTank(gamersTanks.get(0));
 		}
 		tank.setMoving(false);*/
+		getGamersTank().setMoving(false);
 	}
 
 	public GamersTank getGamersTank() {
 		for (Iterator<String> keyIter=gameModelMap.keySet().iterator();keyIter.hasNext();) {
 			String key=keyIter.next();
-			if (key.indexOf(GamersTank.class.getSimpleName())>0) {
+			if (key.indexOf(GamersTank.class.getName())!=-1) {
 				return (GamersTank)gameModelMap.get(key);
 			}
 		}
