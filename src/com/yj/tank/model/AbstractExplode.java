@@ -5,6 +5,7 @@ import java.awt.Image;
 import com.yj.tank.Audio;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
+import com.yj.tank.thread.ThreadConfig;
 
 /**
  * 爆炸抽象类
@@ -43,9 +44,11 @@ public abstract class AbstractExplode extends GameProp {
 			this.images = images;
 		}
 		if (audioFilePath != null && !"".equals(audioFilePath)) {
-			new Thread(() -> new Audio(audioFilePath).play()).start();
+			ThreadConfig.executorService.execute(() -> new Audio(audioFilePath).play());
+			//new Thread(() -> new Audio(audioFilePath).play()).start();
 		}else {
-			new Thread(() -> new Audio(this.audioFilePath).play()).start();
+			//new Thread(() -> new Audio(this.audioFilePath).play()).start();
+			ThreadConfig.executorService.execute(() -> new Audio(audioFilePath).play());
 		}
 	}
 

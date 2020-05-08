@@ -1,5 +1,6 @@
 package com.yj.tank;
 
+import com.yj.tank.constant.Group;
 import com.yj.tank.model.AbstractMilitaryWeapon;
 import com.yj.tank.model.Tank;
 import com.yj.tank.model.TankBullet;
@@ -17,7 +18,8 @@ public class DefaultTankFire implements Fire {
 		//AbstractBullet abstractBullet=null;
 		int x=weapon.getX()+(Tank.WIDTH/2)-(TankBullet.WIDTH/2);
 		int y=weapon.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
-		weapon.getFireBulletStrategy().execute(weapon,x,y);
+		weapon.getFireBulletStrategy().execute(weapon, x, y);
+
 		/*if (weapon instanceof Plane) {
 			abstractBullet=new PlaneBullet(x,y,PlaneBullet.WIDTH,PlaneBullet.HEIGHT,
 					weapon.getDir(),PlaneBullet.SPEED,weapon.getGameModelManager(),weapon.getGroup(),

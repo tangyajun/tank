@@ -29,19 +29,26 @@ public class GamersTankBulletCollider implements Collider {
 	}
 
 	private boolean check(GamersTank gamersTank,SmallTankBullet bullet) {
-		/*if (gamersTank.getGroup()==bullet.getGroup()) {
-			return;
-		}*/
 		if (gamersTank.getRectangle().intersects(bullet.getRectangle())) {
 			if (gamersTank.getGroup() == Group.BAD && bullet.getGroup() == Group.GOOD) {
+				startBlast(gamersTank,bullet);
 				bullet.die();
 				gamersTank.die();
+				return true;
 			}else if (gamersTank.getGroup() == Group.GOOD && bullet.getGroup() == Group.BAD) {
+				startBlast(gamersTank,bullet);
 				bullet.die();
 				gamersTank.die();
+				return true;
 			}
 		}
-		bullet.getBlastStrategy().execute(gamersTank,bullet,bullet.getGameModelManager());
+		return false;
+	}
+
+	public boolean startBlast(GamersTank gamersTank,SmallTankBullet bullet) {
+		if (bullet.getBlastStrategy()!= null) {
+			bullet.getBlastStrategy().execute(gamersTank, bullet, bullet.getGameModelManager());
+		}
 		return true;
 	}
 }

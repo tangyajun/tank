@@ -62,6 +62,8 @@ public class GameModelManager {
 	 */
 	TankTask tankTask=new TankTask(INSTANCE,120);
 
+	ColliderChain colliderChain=ColliderChain.getInstance();
+
 	AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
 
 	/**
@@ -143,8 +145,9 @@ public class GameModelManager {
 
 	public <T> void removeGameProp(T gameProp) {
 		for (Iterator<String> iter=gameModelMap.keySet().iterator();iter.hasNext();) {
-			if (gameModelMap.get(iter.next())==gameProp) {
-				gameModelMap.remove(gameProp);
+			String key=iter.next();
+			if (gameModelMap.get(key)==gameProp) {
+				gameModelMap.remove(key);
 			}
 		}
 	}
@@ -325,4 +328,11 @@ public class GameModelManager {
 		return (Map<String, T>) gameModelMap;
 	}
 
+	public ColliderChain getColliderChain() {
+		return colliderChain;
+	}
+
+	public void setColliderChain(ColliderChain colliderChain) {
+		this.colliderChain = colliderChain;
+	}
 }

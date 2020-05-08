@@ -27,6 +27,6 @@ public class PlaneBlast implements BlastStrategy {
 
 	@Override
 	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
-		GameModelManager.getInstance().getExplodes().add(new PlaneExplode(gameProp1.getX(),gameProp1.getY(),PlaneExplode.WIDTH,PlaneExplode.HEIGHT,GameModelManager.getInstance()));
+		gameModelManager.addGameProp(new PlaneExplode(gameProp1.getX(),gameProp1.getY(),PlaneExplode.WIDTH,PlaneExplode.HEIGHT,GameModelManager.getInstance()));
 	}
 }

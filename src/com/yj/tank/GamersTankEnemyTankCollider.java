@@ -1,5 +1,7 @@
 package com.yj.tank;
 
+import java.util.Objects;
+
 import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.GamersTank;
@@ -28,11 +30,14 @@ public class GamersTankEnemyTankCollider implements Collider {
 
 	private boolean check(GamersTank gamersTank, EnemyTank enemyTank) {
 		if (gamersTank.getRectangle().intersects(enemyTank.getRectangle())) {
+			// 坦克爆炸策略
+			if (enemyTank.getBlastStrategy()!= null) {
+				enemyTank.getBlastStrategy().execute(gamersTank, enemyTank, enemyTank.getGameModelManager());
+			}
 			enemyTank.die();
 			gamersTank.die();
+			return true;
 		}
-		// 坦克爆炸策略
-		enemyTank.getBlastStrategy().execute(gamersTank,enemyTank,enemyTank.getGameModelManager());
-		return true;
+		return false;
 	}
 }

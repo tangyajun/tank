@@ -31,7 +31,6 @@ public class GamersTankWindmillCollider implements Collider {
 	private boolean check(GamersTank gamersTank,Windmill windmill) {
 		if (gamersTank.getRectangle().intersects(windmill.getRectangle())) {
 			windmill.die();
-
 		}
 		return true;
 	}

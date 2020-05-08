@@ -28,19 +28,25 @@ public class SmallTankBulletCollider implements Collider {
 	}
 
 	private boolean check(SmallTankBullet smallTankBullet,SmallTank smallTank) {
-		/*if (smallTank.getGroup()==smallTankBullet.getGroup()) {
-			return;
-		}*/
 		if (smallTank.getRectangle().intersects(smallTankBullet.getRectangle())) {
 			if (smallTank.getGroup() == Group.BAD && smallTankBullet.getGroup() == Group.GOOD) {
 				smallTankBullet.die();
 				smallTank.die();
+				return startAudio(smallTankBullet,smallTank);
 			}else if (smallTank.getGroup() == Group.GOOD && smallTankBullet.getGroup() == Group.BAD) {
 				smallTankBullet.die();
 				smallTank.die();
+				return startAudio(smallTankBullet,smallTank);
 			}
+
 		}
-		smallTankBullet.getBlastStrategy().execute(smallTank,smallTankBullet,smallTankBullet.getGameModelManager());
+		return false;
+	}
+
+	private boolean startAudio(SmallTankBullet smallTankBullet,SmallTank smallTank) {
+		if (smallTankBullet.getBlastStrategy()!=null) {
+			smallTankBullet.getBlastStrategy().execute(smallTank, smallTankBullet, smallTankBullet.getGameModelManager());
+		}
 		return true;
 	}
 }

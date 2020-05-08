@@ -29,6 +29,6 @@ public class TankBlast implements BlastStrategy {
 
 	@Override
 	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
-		gameModelManager.getExplodes().add(new Explode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
+		gameModelManager.addGameProp(new Explode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
 	}
 }

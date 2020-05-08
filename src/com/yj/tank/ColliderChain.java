@@ -12,14 +12,14 @@ import com.yj.tank.model.GameProp;
  *  @author tangyajun
  *  @create 2020-05-05-21:46
  **/
-public class ColliderChain {
+public class ColliderChain implements Collider {
 
 	private static ColliderChain INSTANCE=new ColliderChain();
 
 	private List<Collider> colliders=new LinkedList<>();
 
 	private ColliderChain() {
-		colliders.add(new SmallTankBulletCollider());
+		//colliders.add(new SmallTankBulletCollider());
 		colliders.add(new GamersTankBulletCollider());
 		colliders.add(new GamersTankEnemyTankCollider());
 		colliders.add(new GamersTankWindmillCollider());
@@ -42,7 +42,8 @@ public class ColliderChain {
 		return colliders;
 	}
 
-	public void chain(GameProp gameProp1,GameProp gameProp2) {
+	@Override
+	public boolean collide(GameProp gameProp1,GameProp gameProp2) {
 		Iterator<Collider> colliderIterator=colliders.iterator();
 		while(colliderIterator.hasNext()) {
 			Collider collider=colliderIterator.next();
@@ -50,5 +51,6 @@ public class ColliderChain {
 				break;
 			}
 		}
+		return true;
 	}
 }

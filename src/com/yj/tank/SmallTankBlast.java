@@ -27,6 +27,6 @@ public class SmallTankBlast implements BlastStrategy {
 
 	@Override
 	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
-		gameModelManager.getExplodes().add(new SmallTankExplode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
+		gameModelManager.addGameProp(new SmallTankExplode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
 	}
 }

@@ -11,6 +11,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,7 @@ public class TankFrame extends Frame{
 	/**
 	 *
 	 */
-	ColliderChain colliderChain=ColliderChain.getInstance();
+
 	/**
 	 * 坦克
 	 *
@@ -346,13 +348,31 @@ public class TankFrame extends Frame{
 	private void collideCheck() {
 		//List<GameProp> gameProps=modelManager.getGameProps();
 		Map<String,GameProp> gamePropsMap=GameModelManager.getGameModelMap();
-		for (Iterator iter=gamePropsMap.keySet().iterator();iter.hasNext();) {
-			GameProp gameProp=gamePropsMap.get(iter.next());
+		/*for (Iterator iter=gamePropsMap.keySet().iterator();iter.hasNext();) {
+			String gamePropKey1=iter.next().toString();
+			GameProp gameProp=gamePropsMap.get(gamePropKey1);
 			for (Iterator keyIter=gamePropsMap.keySet().iterator();keyIter.hasNext();) {
-				GameProp gameProp1=gamePropsMap.get(keyIter.next());
+				String gamePropKey2=keyIter.next().toString();
+				GameProp gameProp1=gamePropsMap.get(gamePropKey2);
 				colliderChain.chain(gameProp,gameProp1);
 			}
-		}
+		}*/
+
+		Collection<GameProp> gameProps=gamePropsMap.values();
+		List<GameProp> gamePropList=new ArrayList<>(gameProps);
+		/*for (int i=0;i<gamePropList.size();i++) {
+			for (int j=0;j<gamePropList.size();j++) {
+				if (gamePropList.get(i) !=gamePropList.get(j)) {
+					modelManager.getColliderChain().collide(gamePropList.get(i), gamePropList.get(j));
+				}
+			}
+		}*/
+		gamePropsMap.values().stream().forEach(gameProp -> {
+			gamePropsMap.values().stream().forEach(gameProp1 -> {
+				modelManager.getColliderChain().collide(gameProp,gameProp1);
+				System.out.println("---------------");
+			});
+		});
 		/*for (int i=0;i<gameProps.size();i++) {
 			for (int j=0;j<gameProps.size();j++) {
 				colliderChain.chain(gameProps.get(i),gameProps.get(j));
