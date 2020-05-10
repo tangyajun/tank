@@ -7,7 +7,6 @@ import java.util.Random;
 import com.yj.tank.BlastStrategy;
 import com.yj.tank.Fire;
 import com.yj.tank.FireBulletStrategy;
-import com.yj.tank.GameModelManager;
 import com.yj.tank.MoveBehavior;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
@@ -39,11 +38,6 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	 * 是否移动
 	 */
 	protected boolean moving=true;
-
-	/**
-	 * 模型管理器
-	 */
-	protected GameModelManager gameModelManager=null;
 
 	protected Random random=new Random();
 
@@ -101,11 +95,11 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	protected Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
-	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group,Fire fire) {
-		this(x,y,width,height,dir,gameModelManager,group,fire,null);
+	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,Group group,Fire fire) {
+		this(x,y,width,height,dir,group,fire,null);
 	}
 
-	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,
+	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,
 			Group group,Fire fire,FireBulletStrategy fireBulletStrategy) {
 		super(x,y,width,height);
 		this.group=group;
@@ -113,7 +107,6 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 		this.rectangle.y=this.y;
 		this.rectangle.width=width;
 		this.rectangle.height=height;
-		this.gameModelManager=gameModelManager;
 		this.fire=fire;
 		this.fireBulletStrategy=fireBulletStrategy;
 	}
@@ -197,14 +190,6 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 
 	public void setMoving(boolean moving) {
 		this.moving = moving;
-	}
-
-	public GameModelManager getGameModelManager() {
-		return gameModelManager;
-	}
-
-	public void setGameModelManager(GameModelManager gameModelManager) {
-		this.gameModelManager = gameModelManager;
 	}
 
 	public Random getRandom() {

@@ -29,10 +29,12 @@ public class EnemyTankEnemyTankCollider implements Collider {
 	}
 
 	private void changeDir(EnemyTank enemyTank,EnemyTank enemyTank1) {
-		enemyTank.setX(enemyTank.getPreX());
+		/*enemyTank.setX(enemyTank.getPreX());
 		enemyTank.setY(enemyTank.getPreY());
 		enemyTank1.setX(enemyTank1.getPreX());
-		enemyTank1.setY(enemyTank1.getPreY());
+		enemyTank1.setY(enemyTank1.getPreY());*/
+		enemyTank.back();
+		enemyTank1.back();
 		enemyTank.setDir(Dir.values()[random.nextInt(3)]);
 		enemyTank1.setDir(Dir.values()[random.nextInt(3)]);
 	}

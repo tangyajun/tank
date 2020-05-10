@@ -32,25 +32,25 @@ public class PlaneBullet extends AbstractBullet {
 	 */
 	public static final int HEIGHT=ResourceManager.bulletUpImage.getHeight();
 
-	public PlaneBullet(int x,int y, Dir dir,int speed, GameModelManager gameModelManager,
+	public PlaneBullet(int x,int y, Dir dir,int speed,
 			Group group, Image image) {
-		this(x,y,WIDTH,HEIGHT,dir,speed,gameModelManager,group,image);
+		this(x,y,WIDTH,HEIGHT,dir,speed,group,image);
 	}
 
-	public PlaneBullet(int x,int y,int width,int height, Dir dir,int speed, GameModelManager gameModelManager,
+	public PlaneBullet(int x,int y,int width,int height, Dir dir,int speed,
 			Group group, Image image) {
-		super(x,y,width,height,dir,speed,gameModelManager,group,image);
+		super(x,y,width,height,dir,speed,group,image);
 	}
 
-	public PlaneBullet(int x,int y,int width,int height, Dir dir,int speed, GameModelManager gameModelManager,
+	public PlaneBullet(int x,int y,int width,int height, Dir dir,int speed,
 			Group group, Image image, BlastStrategy blastStrategy) {
-		super(x,y,width,height,dir,speed,gameModelManager,group,image,blastStrategy);
+		super(x,y,width,height,dir,speed,group,image,blastStrategy);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -120,21 +120,11 @@ public class PlaneBullet extends AbstractBullet {
 			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
 				die();
 				weapon.die();
-				/*if (weapon instanceof Plane) {
-					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
-				}else if (weapon instanceof Tank) {
-					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}*/
-				blastStrategy.execute(weapon,this,gameModelManager);
+				blastStrategy.execute(weapon,this);
 			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
 				die();
 				weapon.die();
-				/*if (weapon instanceof Plane) {
-					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
-				}else if (weapon instanceof Tank) {
-					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}*/
-				blastStrategy.execute(weapon,this,gameModelManager);
+				blastStrategy.execute(weapon,this);
 			}
 		}
 	}

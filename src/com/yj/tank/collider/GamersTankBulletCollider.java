@@ -47,7 +47,7 @@ public class GamersTankBulletCollider implements Collider {
 
 	public boolean startBlast(GamersTank gamersTank,SmallTankBullet bullet) {
 		if (bullet.getBlastStrategy()!= null) {
-			bullet.getBlastStrategy().execute(gamersTank, bullet, bullet.getGameModelManager());
+			bullet.getBlastStrategy().execute(gamersTank, bullet);
 		}
 		return true;
 	}

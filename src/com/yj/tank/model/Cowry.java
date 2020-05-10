@@ -16,8 +16,6 @@ public abstract class Cowry extends GameProp  {
 	 */
 	protected boolean live=false;
 
-	protected GameModelManager gameModelManager;
-
 	/**
 	 * 速度
 	 */
@@ -29,9 +27,8 @@ public abstract class Cowry extends GameProp  {
 	 * @param width
 	 * @param height
 	 */
-	public Cowry(int x,int y,int width,int height, GameModelManager gameModelManager) {
+	public Cowry(int x,int y,int width,int height) {
 		super(x,y,width,height);
-		this.gameModelManager=gameModelManager;
 	}
 
 	public boolean isLive() {
@@ -40,14 +37,6 @@ public abstract class Cowry extends GameProp  {
 
 	public void setLive(boolean live) {
 		this.live = live;
-	}
-
-	public GameModelManager getGameModelManager() {
-		return gameModelManager;
-	}
-
-	public void setGameModelManager(GameModelManager gameModelManager) {
-		this.gameModelManager = gameModelManager;
 	}
 
 	public int getSpeed() {

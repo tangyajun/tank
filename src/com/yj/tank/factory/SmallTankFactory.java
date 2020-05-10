@@ -30,14 +30,14 @@ public class SmallTankFactory implements WeaponFactory<SmallTank> {
 	static Dir[] dirs={Dir.UP,Dir.DOWN,Dir.LEFT,Dir.RIGHT};
 
 	@Override
-	public  SmallTank createWeapon(int x,int y,Dir dir, GameModelManager gameModelManager, Group group) {
-		return new SmallTank(x,y,dir,gameModelManager,group,new SmallTankFireBulletStrategy());
+	public  SmallTank createWeapon(int x,int y,Dir dir,  Group group) {
+		return new SmallTank(x,y,dir,group,new SmallTankFireBulletStrategy());
 	}
 
 	/**
 	 *
 	 * @param num 坦克数量
-	 * @param gameModelManager
+	 * @param
 	 * @param group 坦克分组
 	 * @param distance 坦克间距
 	 * @param dir 坦克方向
@@ -46,22 +46,22 @@ public class SmallTankFactory implements WeaponFactory<SmallTank> {
 	 * @return
 	 */
 	@Override
-	public List<SmallTank> createWeapons(int num, GameModelManager gameModelManager, Group group, final int distance, Dir dir,int x,int y) {
+	public List<SmallTank> createWeapons(int num, Group group, final int distance, Dir dir,int x,int y) {
 		List<SmallTank> tanks=new LinkedList<>();
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
+			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
 		return tanks;
 	}
 
 	@Override
-	public List<SmallTank> createWeapons(int num,GameModelManager gameModelManager,Group group, final int distance,Dir dir) {
+	public List<SmallTank> createWeapons(int num,Group group, final int distance,Dir dir) {
 		List<SmallTank> tanks=new LinkedList<>();
 		int x=140;
 		int y=40;
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
+			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
 		return tanks;

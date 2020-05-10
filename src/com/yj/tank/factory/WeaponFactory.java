@@ -20,27 +20,27 @@ public interface WeaponFactory<T extends AbstractMilitaryWeapon> {
 	 * @param x
 	 * @param y
 	 * @param dir
-	 * @param gameModelManager
+	 * @param
 	 * @param group
 	 * @return
 	 */
-	abstract T createWeapon(int x,int y,Dir dir, GameModelManager gameModelManager, Group group);
+	abstract T createWeapon(int x,int y,Dir dir,  Group group);
 
 	/**
 	 * 创建武器
 	 * @param num
-	 * @param gameModelManager
+	 * @param
 	 * @param group
 	 * @param distance
 	 * @param dir
 	 * @return
 	 */
-	abstract List<T> createWeapons(int num, GameModelManager gameModelManager, Group group, final int distance, Dir dir);
+	abstract List<T> createWeapons(int num, Group group, final int distance, Dir dir);
 
 	/**
 	 * 创建武器
 	 * @param num
-	 * @param gameModelManager
+	 * @param
 	 * @param group
 	 * @param distance
 	 * @param dir
@@ -48,5 +48,5 @@ public interface WeaponFactory<T extends AbstractMilitaryWeapon> {
 	 * @param y
 	 * @return
 	 */
-	abstract List<T> createWeapons(int num,GameModelManager gameModelManager,Group group, final int distance,Dir dir,int x,int y);
+	abstract List<T> createWeapons(int num,Group group, final int distance,Dir dir,int x,int y);
 }

@@ -18,8 +18,8 @@ public class Explode extends AbstractExplode {
 	private boolean live=true;
 	int step=0;
 	GameModelManager gameModelManager=null;
-	public Explode(int x,int y, GameModelManager gameModelManager) {
-		super(x,y,WIDTH,HEIGHT,gameModelManager);
+	public Explode(int x,int y) {
+		super(x,y,WIDTH,HEIGHT);
 	}
 
 	@Override

@@ -17,8 +17,6 @@ public abstract class AbstractExplode extends GameProp {
 
 	protected int step=0;
 
-	protected GameModelManager gameModelManager=null;
-
 	/**
 	 * 爆炸图片
 	 */
@@ -29,17 +27,16 @@ public abstract class AbstractExplode extends GameProp {
 	 */
 	protected String audioFilePath="audio/explode.wav";
 
-	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager) {
-		this(x,y,width,height,gameModelManager,null,null);
+	public AbstractExplode(int x,int y,int width,int height) {
+		this(x,y,width,height,null,null);
 	}
 
-	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager,Image[] images) {
-		this(x,y,width,height,gameModelManager,images,null);
+	public AbstractExplode(int x,int y,int width,int height,Image[] images) {
+		this(x,y,width,height,images,null);
 	}
 
-	public AbstractExplode(int x,int y,int width,int height,GameModelManager gameModelManager,Image[] images,String audioFilePath) {
+	public AbstractExplode(int x,int y,int width,int height,Image[] images,String audioFilePath) {
 		super(x,y,width,height);
-		this.gameModelManager=gameModelManager;
 		if (images !=null) {
 			this.images = images;
 		}

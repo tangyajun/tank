@@ -12,21 +12,20 @@ import com.yj.tank.model.SmallTankExplode;
 public class SmallTankBlast implements BlastStrategy {
 
 	private GameProp gameProp1;
-	private GameModelManager gameModelManager;
+
 	private GameProp gameProp;
 
 	public SmallTankBlast() {
 
 	}
 
-	public SmallTankBlast(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
+	public SmallTankBlast(GameProp gameProp, GameProp gameProp1) {
 		this.gameProp1=gameProp1;
-		this.gameModelManager=gameModelManager;
 		this.gameProp=gameProp;
 	}
 
 	@Override
-	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
-		gameModelManager.addGameProp(new SmallTankExplode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
+	public void execute(GameProp gameProp, GameProp gameProp1) {
+		GameModelManager.getInstance().addGameProp(new SmallTankExplode(gameProp1.getX(),gameProp1.getY()));
 	}
 }

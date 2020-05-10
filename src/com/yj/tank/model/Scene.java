@@ -1,6 +1,7 @@
 package com.yj.tank.model;
 
 import java.awt.Graphics;
+import java.util.List;
 
 /**
  *  场景
@@ -10,7 +11,11 @@ import java.awt.Graphics;
  **/
 public class Scene extends GameProp {
 
+	List<Wall> walls;
 
+	public Scene() {
+		super();
+	}
 
 	public Scene(int x, int y, int width, int height) {
 		super(x, y, width, height);

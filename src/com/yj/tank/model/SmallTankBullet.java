@@ -3,6 +3,7 @@ package com.yj.tank.model;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import com.sun.xml.internal.ws.api.addressing.WSEndpointReference.EPRExtension;
 import com.yj.tank.BlastStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
@@ -24,24 +25,24 @@ public class SmallTankBullet extends AbstractBullet {
 	public static final int WIDTH= ResourceManager.smallBulletD.getWidth();
 	public static final int HEIGHT=ResourceManager.smallBulletD.getHeight();
 
-	public SmallTankBullet(int x,int y, Dir dir, Group group, GameModelManager gameModelManager) {
-		this(x,y,dir,group,gameModelManager,null);
+	public SmallTankBullet(int x,int y, Dir dir, Group group) {
+		this(x,y,dir,group,null);
 	}
 
-	public SmallTankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager, Image image) {
-		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image);
+	public SmallTankBullet(int x,int y,Dir dir,Group group, Image image) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,group,image);
 		setRectangle(super.rectangle);
 	}
 
-	public SmallTankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager, Image image,BlastStrategy blastStrategy) {
-		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image,blastStrategy);
+	public SmallTankBullet(int x,int y,Dir dir,Group group,  Image image,BlastStrategy blastStrategy) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,group,image,blastStrategy);
 		setRectangle(super.rectangle);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -121,26 +122,13 @@ public class SmallTankBullet extends AbstractBullet {
 			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
 				die();
 				weapon.die();
-				/*if (weapon instanceof Plane) {
-					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
-				}else if (weapon instanceof Tank) {
-					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}else if (weapon instanceof SmallTank) {
-					this.gameModelManager.getExplodes().add(new SmallTankExplode(x,y,gameModelManager));
-				}*/
-				blastStrategy.execute(weapon,this,gameModelManager);
+				blastStrategy.execute(weapon,this);
 
 			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
 				die();
 				weapon.die();
-				/*if (weapon instanceof Plane) {
-					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
-				}else if (weapon instanceof Tank) {
-					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}else if (weapon instanceof SmallTank) {
-					this.gameModelManager.getExplodes().add(new SmallTankExplode(x,y,gameModelManager));
-				}*/
-				blastStrategy.execute(weapon,this,gameModelManager);
+
+				blastStrategy.execute(weapon,this);
 			}
 		}
 	}

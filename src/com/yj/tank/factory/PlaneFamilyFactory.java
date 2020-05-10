@@ -21,17 +21,17 @@ import com.yj.tank.model.PlaneExplode;
 public class PlaneFamilyFactory extends AbstractWeaponFactory {
 
 	@Override
-	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		return new Plane(x,y,dir,gameModelManager,group);
+	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, Group group) {
+		return new Plane(x,y,dir,group);
 	}
 
 	@Override
-	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed, GameModelManager gameModelManager, Group group, Image image) {
-		return new PlaneBullet(x,y,width,height,dir,speed,gameModelManager,group,image);
+	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed,  Group group, Image image) {
+		return new PlaneBullet(x,y,width,height,dir,speed,group,image);
 	}
 
 	@Override
-	public AbstractExplode createExplode(int x, int y,int width,int height, GameModelManager gameModelManager) {
-		return new PlaneExplode(x,y,width,height,gameModelManager);
+	public AbstractExplode createExplode(int x, int y,int width,int height) {
+		return new PlaneExplode(x,y,width,height);
 	}
 }

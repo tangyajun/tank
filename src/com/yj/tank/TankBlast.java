@@ -14,21 +14,20 @@ import com.yj.tank.model.SmallTankExplode;
 public class TankBlast implements BlastStrategy {
 
 	private GameProp gameProp1;
-	private GameModelManager gameModelManager;
+
 	private GameProp gameProp;
 
 	public TankBlast() {
 
 	}
 
-	public TankBlast(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
+	public TankBlast(GameProp gameProp, GameProp gameProp1) {
 		this.gameProp1=gameProp1;
-		this.gameModelManager=gameModelManager;
 		this.gameProp=gameProp;
 	}
 
 	@Override
-	public void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager) {
-		gameModelManager.addGameProp(new Explode(gameProp1.getX(),gameProp1.getY(),gameModelManager));
+	public void execute(GameProp gameProp, GameProp gameProp1) {
+		GameModelManager.getInstance().addGameProp(new Explode(gameProp1.getX(),gameProp1.getY()));
 	}
 }

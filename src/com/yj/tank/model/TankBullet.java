@@ -24,24 +24,24 @@ public class TankBullet extends AbstractBullet {
 	public static final int WIDTH= ResourceManager.bulletUpImage.getWidth();
 	public static final int HEIGHT=ResourceManager.bulletUpImage.getHeight();
 
-	public TankBullet(int x,int y,Dir dir,Group group,GameModelManager gameModelManager) {
-		this(x,y,dir,group,gameModelManager,null);
+	public TankBullet(int x,int y,Dir dir,Group group) {
+		this(x,y,dir,group,null);
 	}
 
-	public TankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager,Image image) {
-		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image);
+	public TankBullet(int x,int y,Dir dir,Group group, Image image) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,group,image);
 		setRectangle(super.rectangle);
 	}
 
-	public TankBullet(int x,int y,Dir dir,Group group, GameModelManager gameModelManager,Image image, BlastStrategy blastStrategy) {
-		super(x,y,WIDTH,HEIGHT,dir,SPEED,gameModelManager,group,image,blastStrategy);
+	public TankBullet(int x,int y,Dir dir,Group group, Image image, BlastStrategy blastStrategy) {
+		super(x,y,WIDTH,HEIGHT,dir,SPEED,group,image,blastStrategy);
 		setRectangle(super.rectangle);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -110,28 +110,6 @@ public class TankBullet extends AbstractBullet {
 
 	/**
 	 * 碰撞检测
-	 * @param tank
-	 */
-	/*public void collideWith(Tank tank) {
-		if (this.group==tank.getGroup()) {
-			return;
-		}
-		if (this.rectangle.intersects(tank.getRectangle())) {
-			if (this.group == Group.BAD && tank.getGroup() == Group.GOOD) {
-				die();
-				tank.die();
-				//this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
-			}else if (this.group==Group.GOOD && tank.getGroup()==Group.BAD) {
-				die();
-				tank.die();
-				//this.tankFrame.getExplodes().add(new Explode(x,y,tankFrame));
-			}
-		}
-
-	}*/
-
-	/**
-	 * 碰撞检测
 	 * @param weapon
 	 */
 	@Override
@@ -143,22 +121,12 @@ public class TankBullet extends AbstractBullet {
 			if (this.group == Group.BAD && weapon.getGroup() == Group.GOOD) {
 				die();
 				weapon.die();
-				blastStrategy.execute(weapon,this,gameModelManager);
-				/*if (weapon instanceof Plane) {
-					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
-				}else if (weapon instanceof Tank) {
-					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}*/
+				blastStrategy.execute(weapon,this);
 
 			}else if (this.group==Group.GOOD && weapon.getGroup()==Group.BAD) {
 				die();
 				weapon.die();
-				blastStrategy.execute(weapon,this,gameModelManager);
-				/*if (weapon instanceof Plane) {
-					this.gameModelManager.getExplodes().add(new PlaneExplode(x,y,PlaneExplode.WIDTH,PlaneExplode.HEIGHT,gameModelManager));
-				}else if (weapon instanceof Tank) {
-					this.gameModelManager.getExplodes().add(new Explode(x,y,gameModelManager));
-				}*/
+				blastStrategy.execute(weapon,this);
 			}
 		}
 	}

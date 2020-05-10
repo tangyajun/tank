@@ -30,14 +30,14 @@ public class TankFactory implements WeaponFactory<Tank> {
 	static Dir[] dirs={Dir.UP,Dir.DOWN,Dir.LEFT,Dir.RIGHT};
 
 	@Override
-	public  Tank createWeapon(int x,int y,Dir dir, GameModelManager gameModelManager, Group group) {
-		return new Tank(x,y,dir,gameModelManager,group);
+	public  Tank createWeapon(int x,int y,Dir dir, Group group) {
+		return new Tank(x,y,dir,group);
 	}
 
 	/**
 	 *
 	 * @param num 坦克数量
-	 * @param gameModelManager
+	 * @param
 	 * @param group 坦克分组
 	 * @param distance 坦克间距
 	 * @param dir 坦克方向
@@ -46,22 +46,22 @@ public class TankFactory implements WeaponFactory<Tank> {
 	 * @return
 	 */
 	@Override
-	public List<Tank> createWeapons(int num,GameModelManager gameModelManager,Group group, final int distance,Dir dir,int x,int y) {
+	public List<Tank> createWeapons(int num,Group group, final int distance,Dir dir,int x,int y) {
 		List<Tank> tanks=new LinkedList<>();
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
+			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
 		return tanks;
 	}
 
 	@Override
-	public List<Tank> createWeapons(int num,GameModelManager gameModelManager,Group group, final int distance,Dir dir) {
+	public List<Tank> createWeapons(int num,Group group, final int distance,Dir dir) {
 		List<Tank> tanks=new LinkedList<>();
 		int x=140;
 		int y=40;
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
+			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
 		return tanks;

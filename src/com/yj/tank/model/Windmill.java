@@ -38,12 +38,12 @@ public class Windmill extends Cowry {
 	protected Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
-	public Windmill(int x,int y, GameModelManager gameModelManager) {
-		super(x,y,WIDTH,HEIGHT,gameModelManager);
+	public Windmill(int x,int y) {
+		super(x,y,WIDTH,HEIGHT);
 	}
 
-	public Windmill(int x,int y, Dir dir,GameModelManager gameModelManager) {
-		super(x,y,WIDTH,HEIGHT,gameModelManager);
+	public Windmill(int x,int y, Dir dir) {
+		super(x,y,WIDTH,HEIGHT);
 		this.dir=dir;
 	}
 
@@ -51,13 +51,8 @@ public class Windmill extends Cowry {
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 		}
-		/*if (this.gameModelManager.getTank()!= null) {
-			if (!this.gameModelManager.getTank().isLive()) {
-				this.gameModelManager.setTank(null);
-			}
-		}*/
 		paintImage(graphics);
 		move();
 	}

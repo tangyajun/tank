@@ -21,11 +21,11 @@ public abstract class AbstractWeaponFactory {
 	 * @param x 横坐标
 	 * @param y 纵坐标
 	 * @param dir 方向
-	 * @param gameModelManager 游戏模型管理者
+	 * @param
 	 * @param group 所属分组
 	 * @return 返回军事武器
 	 */
-	public abstract AbstractMilitaryWeapon createWeapon(int x,int y, Dir dir, GameModelManager gameModelManager, Group group);
+	public abstract AbstractMilitaryWeapon createWeapon(int x,int y, Dir dir,  Group group);
 
 	/**
 	 * 创建子弹
@@ -35,12 +35,12 @@ public abstract class AbstractWeaponFactory {
 	 * @param height 高度
 	 * @param dir 方向
 	 * @param speed 速度
-	 * @param gameModelManager 模型管理者
+	 * @param
 	 * @param group 所属分组
 	 * @param image 图片
 	 * @return 返回子弹
 	 */
-	public abstract AbstractBullet createBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
+	public abstract AbstractBullet createBullet(int x,int y,int width,int height,Dir dir,int speed,
 			Group group, Image image);
 
 	/**
@@ -49,8 +49,8 @@ public abstract class AbstractWeaponFactory {
 	 * @param y 纵坐标
 	 * @param width 宽度
 	 * @param height 高度
-	 * @param gameModelManager 游戏模型管理者
+	 * @param
 	 * @return 返回爆炸
 	 */
-	public abstract AbstractExplode createExplode(int x,int y,int width,int height,GameModelManager gameModelManager);
+	public abstract AbstractExplode createExplode(int x,int y,int width,int height);
 }

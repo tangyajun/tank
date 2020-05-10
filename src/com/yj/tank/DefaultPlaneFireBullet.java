@@ -19,9 +19,8 @@ public class DefaultPlaneFireBullet implements Fire {
 		int x=tank.getX()+(Tank.WIDTH/2)-(TankBullet.WIDTH/2);
 		int y=tank.getY()+(Tank.HEIGHT/2)-(TankBullet.HEIGHT/2);
 		if (tank instanceof Plane) {
-			tank.getGameModelManager().addGameProp(new PlaneBullet(x,y,PlaneBullet.WIDTH,
-					PlaneBullet.HEIGHT, tank.getDir(),PlaneBullet.SPEED,
-					tank.getGameModelManager(),tank.getGroup(), null,new PlaneBlast()));
+			GameModelManager.getInstance().addGameProp(new PlaneBullet(x,y,PlaneBullet.WIDTH,
+					PlaneBullet.HEIGHT, tank.getDir(),PlaneBullet.SPEED,tank.getGroup(), null,new PlaneBlast()));
 		}
 		if (tank.getGroup()== Group.GOOD) {
 			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();

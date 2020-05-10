@@ -19,15 +19,15 @@ public class EnemyTank extends SmallTank {
 	 * @param x x坐标
 	 * @param y y坐标
 	 * @param dir 方向
-	 * @param gameModelManager
+	 * @param
 	 * @param group 分组
 	 */
-	public EnemyTank(int x,int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
+	public EnemyTank(int x,int y, Dir dir, Group group) {
+		this(x,y,WIDTH,HEIGHT,dir,group);
 	}
 
-	public EnemyTank(int x,int y, Dir dir, GameModelManager gameModelManager, Group group, FireBulletStrategy fireBulletStrategy) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,fireBulletStrategy);
+	public EnemyTank(int x,int y, Dir dir,  Group group, FireBulletStrategy fireBulletStrategy) {
+		this(x,y,WIDTH,HEIGHT,dir,group,fireBulletStrategy);
 	}
 
 	/**
@@ -37,15 +37,15 @@ public class EnemyTank extends SmallTank {
 	 * @param width 宽度
 	 * @param height 高度
 	 * @param dir 方向
-	 * @param gameModelManager
+	 * @param
 	 * @param group 分组
 	 */
-	public EnemyTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
-		this(x,y,width,height,dir,gameModelManager,group,null);
+	public EnemyTank(int x,int y,int width,int height,Dir dir, Group group) {
+		this(x,y,width,height,dir,group,null);
 	}
 
-	public EnemyTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
+	public EnemyTank(int x,int y,int width,int height,Dir dir, Group group,
 			FireBulletStrategy fireBulletStrategy) {
-		super(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire(),fireBulletStrategy);
+		super(x,y,width,height,dir,group,new DefaultTankFire(),fireBulletStrategy);
 	}
 }

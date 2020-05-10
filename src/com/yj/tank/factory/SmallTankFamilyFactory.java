@@ -30,17 +30,17 @@ public class SmallTankFamilyFactory extends AbstractWeaponFactory {
 	}
 
 	@Override
-	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		return new SmallTank(x,y,dir,gameModelManager,group,new SmallTankFireBulletStrategy());
+	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir,  Group group) {
+		return new SmallTank(x,y,dir,group,new SmallTankFireBulletStrategy());
 	}
 
 	@Override
-	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed, GameModelManager gameModelManager, Group group, Image image) {
-		return new SmallTankBullet(x,y,dir,group,gameModelManager);
+	public AbstractBullet createBullet(int x, int y, int width, int height, Dir dir, int speed,  Group group, Image image) {
+		return new SmallTankBullet(x,y,dir,group);
 	}
 
 	@Override
-	public AbstractExplode createExplode(int x, int y, int width, int height, GameModelManager gameModelManager) {
-		return new SmallTankExplode(x,y,gameModelManager);
+	public AbstractExplode createExplode(int x, int y, int width, int height) {
+		return new SmallTankExplode(x,y);
 	}
 }

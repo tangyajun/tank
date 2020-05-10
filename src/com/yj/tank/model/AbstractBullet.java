@@ -31,11 +31,6 @@ public abstract class AbstractBullet extends GameProp {
 	protected boolean live=true;
 
 	/**
-	 *
-	 */
-	protected GameModelManager gameModelManager;
-
-	/**
 	 * 所属分组
 	 */
 	protected Group group;
@@ -59,55 +54,29 @@ public abstract class AbstractBullet extends GameProp {
 	 * @param height 高度
 	 * @param dir 方向
 	 * @param speed 速度
-	 * @param gameModelManager
+	 * @param
 	 * @param group 分组
 	 * @param image
 	 */
-	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
+	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed,
 			Group group,Image image) {
 		super(x,y,width,height);
 		this.dir=dir;
 		this.speed=speed;
-		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.image=image;
 	}
 
-	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed, GameModelManager gameModelManager,
+	public AbstractBullet(int x,int y,int width,int height,Dir dir,int speed,
 			Group group,Image image,BlastStrategy blastStrategy) {
 		super(x,y,width,height);
 		this.dir=dir;
 		this.speed=speed;
-		this.gameModelManager=gameModelManager;
 		this.group=group;
 		this.image=image;
 		this.blastStrategy=blastStrategy;
 	}
 
-
-	/*protected void move() {
-		switch (dir) {
-			case LEFT:
-				x-=speed;
-				break;
-			case RIGHT:
-				x+=speed;
-				break;
-			case UP:
-				y-=speed;
-				break;
-			case DOWN:
-				y+=speed;
-				break;
-			default:
-				break;
-		}
-		this.rectangle.x=this.x;
-		this.rectangle.y=this.y;
-		if (x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT) {
-			live=false;
-		}
-	}*/
 
 	/**
 	 * 碰撞检测
@@ -191,14 +160,6 @@ public abstract class AbstractBullet extends GameProp {
 
 	public void setLive(boolean live) {
 		this.live = live;
-	}
-
-	public GameModelManager getGameModelManager() {
-		return gameModelManager;
-	}
-
-	public void setGameModelManager(GameModelManager gameModelManager) {
-		this.gameModelManager = gameModelManager;
 	}
 
 	public Group getGroup() {

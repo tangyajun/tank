@@ -36,15 +36,15 @@ public class SmallTank extends AbstractMilitaryWeapon {
 	 * @param x x坐标
 	 * @param y y坐标
 	 * @param dir 方向
-	 * @param gameModelManager
+	 * @param
 	 * @param group 分组
 	 */
-	public SmallTank(int x,int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group);
+	public SmallTank(int x,int y, Dir dir, Group group) {
+		this(x,y,WIDTH,HEIGHT,dir,group);
 	}
 
-	public SmallTank(int x,int y, Dir dir, GameModelManager gameModelManager, Group group,FireBulletStrategy fireBulletStrategy) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,fireBulletStrategy);
+	public SmallTank(int x,int y, Dir dir, Group group,FireBulletStrategy fireBulletStrategy) {
+		this(x,y,WIDTH,HEIGHT,dir,group,fireBulletStrategy);
 	}
 
 	/**
@@ -54,33 +54,28 @@ public class SmallTank extends AbstractMilitaryWeapon {
 	 * @param width 宽度
 	 * @param height 高度
 	 * @param dir 方向
-	 * @param gameModelManager
+	 * @param
 	 * @param group 分组
 	 */
-	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group) {
-		this(x,y,width,height,dir,gameModelManager,group,null);
+	public SmallTank(int x,int y,int width,int height,Dir dir, Group group) {
+		this(x,y,width,height,dir,group,null);
 	}
 
-	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
+	public SmallTank(int x,int y,int width,int height,Dir dir, Group group,
 			FireBulletStrategy fireBulletStrategy) {
-		this(x,y,width,height,dir,gameModelManager,group,new DefaultTankFire(),fireBulletStrategy);
+		this(x,y,width,height,dir,group,new DefaultTankFire(),fireBulletStrategy);
 	}
 
-	public SmallTank(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager,Group group,
+	public SmallTank(int x,int y,int width,int height,Dir dir, Group group,
 			Fire fire,FireBulletStrategy fireBulletStrategy) {
-		super(x,y,width,height,dir,gameModelManager,group,fire,fireBulletStrategy);
+		super(x,y,width,height,dir,group,fire,fireBulletStrategy);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 		}
-		/*if (this.gameModelManager.getTank()!= null) {
-			if (!this.gameModelManager.getTank().isLive()) {
-				this.gameModelManager.setTank(null);
-			}
-		}*/
 		paintImage(graphics);
 		move();
 	}
@@ -108,13 +103,18 @@ public class SmallTank extends AbstractMilitaryWeapon {
 		}
 	}
 
+	public void back() {
+		this.x=preX;
+		this.y=preY;
+	}
+
 	/**
 	 * 坦克移动
 	 */
 	public void move() {
+		this.preX=this.x;
+		this.preY=this.y;
 		if (moving) {
-			this.preX=this.x;
-			this.preY=this.y;
 			switch (dir) {
 				case LEFT:
 					if (this.group==Group.BAD) {

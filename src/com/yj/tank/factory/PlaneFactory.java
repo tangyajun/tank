@@ -29,27 +29,27 @@ public class PlaneFactory implements WeaponFactory<Plane> {
 	}
 
 	@Override
-	public Plane createWeapon(int x, int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		return new Plane(x,y,dir,gameModelManager,group,new TankFireBulletStrategy());
+	public Plane createWeapon(int x, int y, Dir dir,  Group group) {
+		return new Plane(x,y,dir,group,new TankFireBulletStrategy());
 	}
 
 	@Override
-	public List<Plane> createWeapons(int num, GameModelManager gameModelManager, Group group, int distance, Dir dir) {
+	public List<Plane> createWeapons(int num,Group group, int distance, Dir dir) {
 		List<Plane> tanks=new LinkedList<>();
 		int x=140;
 		int y=40;
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
+			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
 		return tanks;
 	}
 
 	@Override
-	public List<Plane> createWeapons(int num, GameModelManager gameModelManager, Group group, int distance, Dir dir, int x, int y) {
+	public List<Plane> createWeapons(int num, Group group, int distance, Dir dir, int x, int y) {
 		List<Plane> tanks=new LinkedList<>();
 		for (int i=0;i<num;i++) {
-			tanks.add(createWeapon(x,y,dir,gameModelManager,group));
+			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
 		return tanks;

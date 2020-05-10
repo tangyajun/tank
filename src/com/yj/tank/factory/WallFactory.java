@@ -26,14 +26,14 @@ public class WallFactory {
 		return WallFactoryHolder.INSTANCE;
 	}
 
-	public Wall createWall(int x,int y, GameModelManager gameModelManager) {
-		return new Wall(x,y,gameModelManager);
+	public Wall createWall(int x,int y) {
+		return new Wall(x,y);
 	}
 
-	public List<Wall> createWalls(int x,int y,GameModelManager gameModelManager) {
+	public List<Wall> createWalls(int x,int y) {
 		List<Wall> walls=new ArrayList<>();
 		for (int i=0;i<6;i++) {
-			walls.add(new Wall(x,y,gameModelManager));
+			walls.add(new Wall(x,y));
 			x+=Wall.WIDTH;
 		}
 		System.out.println("------------------------------------x: "+x);

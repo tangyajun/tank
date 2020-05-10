@@ -35,6 +35,10 @@ public abstract class GameProp {
 	 */
 	protected Rectangle rectangle=new Rectangle();
 
+	public GameProp() {
+
+	}
+
 	public GameProp(int x,int y,int width,int height) {
 		this.x=x;
 		this.y=y;

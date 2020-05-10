@@ -46,7 +46,7 @@ public class SmallTankBulletCollider implements Collider {
 
 	private boolean startAudio(SmallTankBullet smallTankBullet,SmallTank smallTank) {
 		if (smallTankBullet.getBlastStrategy()!=null) {
-			smallTankBullet.getBlastStrategy().execute(smallTank, smallTankBullet, smallTankBullet.getGameModelManager());
+			smallTankBullet.getBlastStrategy().execute(smallTank, smallTankBullet);
 		}
 		return true;
 	}

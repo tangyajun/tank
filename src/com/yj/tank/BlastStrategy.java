@@ -14,7 +14,7 @@ public interface BlastStrategy {
 	 * 两个道具碰撞的爆炸效果
 	 * @param gameProp
 	 * @param gameProp1
-	 * @param gameModelManager
+	 * @param
 	 */
-	void execute(GameProp gameProp, GameProp gameProp1,GameModelManager gameModelManager);
+	void execute(GameProp gameProp, GameProp gameProp1);
 }

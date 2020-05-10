@@ -18,7 +18,6 @@ import com.yj.tank.factory.WallFactory;
 import com.yj.tank.factory.WeaponFactory;
 import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GamersTank;
-import com.yj.tank.model.Wall;
 
 /**
  *  游戏模型管理器
@@ -131,27 +130,27 @@ public class GameModelManager {
 		// 初始化敌军坦克
 		/*addGameProps(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
 				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));*/
-		addGameProp(enemyWeaponFactory.createWeapon(5,200,Dir.RIGHT,this,Group.BAD));
-		addGameProp(enemyWeaponFactory.createWeapon(5,500,Dir.RIGHT,this,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(5,200,Dir.RIGHT,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(5,500,Dir.RIGHT,Group.BAD));
 
-		addGameProp(enemyWeaponFactory.createWeapon(500,20,Dir.DOWN,this,Group.BAD));
-		addGameProp(enemyWeaponFactory.createWeapon(700,20,Dir.DOWN,this,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(500,20,Dir.DOWN,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(700,20,Dir.DOWN,Group.BAD));
 
-		addGameProp(enemyWeaponFactory.createWeapon(1300,220,Dir.LEFT,this,Group.BAD));
-		addGameProp(enemyWeaponFactory.createWeapon(1300,620,Dir.LEFT,this,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(1300,220,Dir.LEFT,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(1300,620,Dir.LEFT,Group.BAD));
 		//addGameProp(enemyWeaponFactory.createWeapon(810,80,Dir.DOWN,this,Group.BAD));
 		//  初始化玩家坦克
 		for (int i=0;i<LIFE_NUM;i++) {
-			addGameProp(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
+			addGameProp(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,Group.GOOD));
 		}
 		getGamersTank().setMoving(false);
 		// 初始化墙
 		//addGameProp(new Wall(5,39,this));
-		addGameProps(wallFactory.createWalls(5,39,this));
-		addGameProps(wallFactory.createWalls(810,39,this));
+		addGameProps(wallFactory.createWalls(5,39));
+		addGameProps(wallFactory.createWalls(810,39));
 
-		addGameProps(wallFactory.createWalls(810,730,this));
-		addGameProps(wallFactory.createWalls(5,730,this));
+		addGameProps(wallFactory.createWalls(810,730));
+		addGameProps(wallFactory.createWalls(5,730));
 	}
 
 	public GamersTank getGamersTank() {

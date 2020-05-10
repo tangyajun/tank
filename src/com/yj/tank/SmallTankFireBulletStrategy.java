@@ -17,12 +17,8 @@ public class SmallTankFireBulletStrategy implements FireBulletStrategy {
 	@Override
 	public void execute(AbstractMilitaryWeapon abstractMilitaryWeapon,int x,int y) {
 		AbstractBullet abstractBullet=new SmallTankBullet(x,y,abstractMilitaryWeapon.getDir(),
-				abstractMilitaryWeapon.getGroup(),abstractMilitaryWeapon.getGameModelManager(),null,new SmallTankBlast());
-		//abstractMilitaryWeapon.getGameModelManager().getBullets().add(abstractBullet);
-		abstractMilitaryWeapon.getGameModelManager().addGameProp(abstractBullet);
-		/*if (abstractMilitaryWeapon.getGroup()== Group.GOOD) {
-			new Thread(() -> new Audio("audio/fire.wav").play()).start();
-		}*/
+				abstractMilitaryWeapon.getGroup(),null,new SmallTankBlast());
+		GameModelManager.getInstance().addGameProp(abstractBullet);
 		if (abstractMilitaryWeapon.getGroup()== Group.GOOD) {
 			ThreadConfig.executorService.execute(() -> new Audio("audio/fire.wav").play());
 		}

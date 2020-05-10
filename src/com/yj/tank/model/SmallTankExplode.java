@@ -17,8 +17,8 @@ public class SmallTankExplode extends AbstractExplode{
 	private static final int HEIGHT=ResourceManager.smallTankExplodes[0].getHeight();
 	int step=0;
 	private boolean live=true;
-	public SmallTankExplode(int x,int y, GameModelManager gameModelManager) {
-		super(x,y,WIDTH,HEIGHT,gameModelManager,null,"audio/blast.wav");
+	public SmallTankExplode(int x,int y) {
+		super(x,y,WIDTH,HEIGHT,null,"audio/blast.wav");
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class SmallTankExplode extends AbstractExplode{
 				graphics.drawImage(ResourceManager.smallTankExplodes[step++], x, y, null);
 			}
 		}else {
-			gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 			this.live = false;
 		}
 

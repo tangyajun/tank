@@ -52,7 +52,7 @@ public class EnemyTankBulletCollider implements Collider {
 
 	public boolean startBlast(EnemyTank enemyTank, SmallTankBullet bullet) {
 		if (bullet.getBlastStrategy()!=null) {
-			bullet.getBlastStrategy().execute(enemyTank, bullet, bullet.getGameModelManager());
+			bullet.getBlastStrategy().execute(enemyTank, bullet);
 		}
 		return true;
 	}

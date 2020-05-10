@@ -25,31 +25,31 @@ public class Plane extends AbstractMilitaryWeapon {
 	 * @param x x坐标
 	 * @param y y坐标
 	 * @param dir 方向
-	 * @param gameModelManager 游戏模型管理者
+	 * @param
 	 * @param group 所属的group
 	 *
 	 */
-	public Plane(int x,int y, Dir dir, GameModelManager gameModelManager, Group group) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,new PlaneFireBulletStrategy());
+	public Plane(int x,int y, Dir dir,  Group group) {
+		this(x,y,WIDTH,HEIGHT,dir,group,new PlaneFireBulletStrategy());
 	}
 
-	public Plane(int x,int y, Dir dir, GameModelManager gameModelManager, Group group, FireBulletStrategy fireBulletStrategy ) {
-		this(x,y,WIDTH,HEIGHT,dir,gameModelManager,group,fireBulletStrategy);
+	public Plane(int x,int y, Dir dir,  Group group, FireBulletStrategy fireBulletStrategy ) {
+		this(x,y,WIDTH,HEIGHT,dir,group,fireBulletStrategy);
 	}
 
-	public Plane(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager, Group group) {
-		this(x,y,width,height,dir,gameModelManager,group,null);
+	public Plane(int x,int y,int width,int height,Dir dir,  Group group) {
+		this(x,y,width,height,dir,group,null);
 	}
 
-	public Plane(int x,int y,int width,int height,Dir dir, GameModelManager gameModelManager, Group group,
+	public Plane(int x,int y,int width,int height,Dir dir, Group group,
 			FireBulletStrategy fireBulletStrategy) {
-		super(x,y,width,height,dir,gameModelManager,group,new DefaultPlaneFireBullet(),fireBulletStrategy);
+		super(x,y,width,height,dir,group,new DefaultPlaneFireBullet(),fireBulletStrategy);
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		if (!live) {
-			this.gameModelManager.removeGameProp(this);
+			GameModelManager.getInstance().removeGameProp(this);
 		}
 		switch (dir) {
 			case DOWN:
@@ -119,7 +119,7 @@ public class Plane extends AbstractMilitaryWeapon {
 	@Override
 	public void fire() {
 		if (live) {
-			this.gameModelManager.addGameProp(gameModelManager.getAbstractWeaponFactory().createBullet(this.x,this.y,0,0,dir,1,gameModelManager,this.group,null));
+			GameModelManager.getInstance().addGameProp(GameModelManager.getInstance().getAbstractWeaponFactory().createBullet(this.x,this.y,0,0,dir,1,this.group,null));
 		}
 	}
 
