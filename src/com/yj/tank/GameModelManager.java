@@ -10,13 +10,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.yj.tank.collider.ColliderChain;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
-import com.yj.tank.factory.AbstractWeaponFactory;
 import com.yj.tank.factory.EnemySmallTankFactory;
 import com.yj.tank.factory.GamersSmallTankFactory;
-import com.yj.tank.factory.SmallTankFamilyFactory;
 import com.yj.tank.factory.WallFactory;
-import com.yj.tank.factory.WeaponFactory;
-import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GamersTank;
 
 /**
@@ -57,19 +53,19 @@ public class GameModelManager {
 
 	ColliderChain colliderChain=new ColliderChain();
 
-	AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
+	/*AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
 
-	/**
+	*//**
 	 * 敌军坦克工厂
-	 */
+	 *//*
 	WeaponFactory<EnemyTank> enemyWeaponFactory= EnemySmallTankFactory.getInstance();
 
-	/**
+	*//**
 	 * 玩家坦克工厂
-	 */
+	 *//*
 	WeaponFactory<GamersTank> gamersWeaponFactory= GamersSmallTankFactory.getInstance();
 
-	WallFactory wallFactory=WallFactory.getInstance();
+	WallFactory wallFactory=WallFactory.getInstance();*/
 
 	private AtomicLong gamePropNum=new AtomicLong(0);
 
@@ -130,27 +126,27 @@ public class GameModelManager {
 		// 初始化敌军坦克
 		/*addGameProps(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
 				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));*/
-		addGameProp(enemyWeaponFactory.createWeapon(5,200,Dir.RIGHT,Group.BAD));
-		addGameProp(enemyWeaponFactory.createWeapon(5,500,Dir.RIGHT,Group.BAD));
+		addGameProp(EnemySmallTankFactory.getInstance().createWeapon(5,200,Dir.RIGHT,Group.BAD));
+		addGameProp(EnemySmallTankFactory.getInstance().createWeapon(5,500,Dir.RIGHT,Group.BAD));
 
-		addGameProp(enemyWeaponFactory.createWeapon(500,20,Dir.DOWN,Group.BAD));
-		addGameProp(enemyWeaponFactory.createWeapon(700,20,Dir.DOWN,Group.BAD));
+		addGameProp(EnemySmallTankFactory.getInstance().createWeapon(500,20,Dir.DOWN,Group.BAD));
+		addGameProp(EnemySmallTankFactory.getInstance().createWeapon(700,20,Dir.DOWN,Group.BAD));
 
-		addGameProp(enemyWeaponFactory.createWeapon(1300,220,Dir.LEFT,Group.BAD));
-		addGameProp(enemyWeaponFactory.createWeapon(1300,620,Dir.LEFT,Group.BAD));
+		addGameProp(EnemySmallTankFactory.getInstance().createWeapon(1300,220,Dir.LEFT,Group.BAD));
+		addGameProp(EnemySmallTankFactory.getInstance().createWeapon(1300,620,Dir.LEFT,Group.BAD));
 		//addGameProp(enemyWeaponFactory.createWeapon(810,80,Dir.DOWN,this,Group.BAD));
 		//  初始化玩家坦克
 		for (int i=0;i<LIFE_NUM;i++) {
-			addGameProp(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,Group.GOOD));
+			addGameProp(GamersSmallTankFactory.getInstance().createWeapon(100,400,Dir.DOWN,Group.GOOD));
 		}
 		getGamersTank().setMoving(false);
 		// 初始化墙
 		//addGameProp(new Wall(5,39,this));
-		addGameProps(wallFactory.createWalls(5,39));
-		addGameProps(wallFactory.createWalls(810,39));
+		addGameProps(WallFactory.getInstance().createWalls(5,39));
+		addGameProps(WallFactory.getInstance().createWalls(810,39));
 
-		addGameProps(wallFactory.createWalls(810,730));
-		addGameProps(wallFactory.createWalls(5,730));
+		addGameProps(WallFactory.getInstance().createWalls(810,730));
+		addGameProps(WallFactory.getInstance().createWalls(5,730));
 	}
 
 	public GamersTank getGamersTank() {
@@ -171,36 +167,12 @@ public class GameModelManager {
 		this.tankTask = tankTask;
 	}
 
-	public AbstractWeaponFactory getAbstractWeaponFactory() {
-		return abstractWeaponFactory;
-	}
-
-	public void setAbstractWeaponFactory(AbstractWeaponFactory abstractWeaponFactory) {
-		this.abstractWeaponFactory = abstractWeaponFactory;
-	}
-
 	public static int getCurLevelCount() {
 		return curLevelCount;
 	}
 
 	public static void setCurLevelCount(int curLevelCount) {
 		GameModelManager.curLevelCount = curLevelCount;
-	}
-
-	public WeaponFactory<EnemyTank> getEnemyWeaponFactory() {
-		return enemyWeaponFactory;
-	}
-
-	public void setEnemyWeaponFactory(WeaponFactory<EnemyTank> enemyWeaponFactory) {
-		this.enemyWeaponFactory = enemyWeaponFactory;
-	}
-
-	public WeaponFactory<GamersTank> getGamersWeaponFactory() {
-		return gamersWeaponFactory;
-	}
-
-	public void setGamersWeaponFactory(WeaponFactory<GamersTank> gamersWeaponFactory) {
-		this.gamersWeaponFactory = gamersWeaponFactory;
 	}
 
 	public static <T extends Object> Map<String, T> getGameModelMap() {

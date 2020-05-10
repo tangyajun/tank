@@ -20,6 +20,18 @@ import com.yj.tank.model.PlaneExplode;
  **/
 public class PlaneFamilyFactory extends AbstractWeaponFactory {
 
+	private PlaneFamilyFactory() {
+
+	}
+
+	private static class PlaneFamilyFactoryHolder {
+		private static PlaneFamilyFactory INSTANCE=new PlaneFamilyFactory();
+	}
+
+	public static PlaneFamilyFactory getInstance() {
+		return PlaneFamilyFactoryHolder.INSTANCE;
+	}
+
 	@Override
 	public AbstractMilitaryWeapon createWeapon(int x, int y, Dir dir, Group group) {
 		return new Plane(x,y,dir,group);

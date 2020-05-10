@@ -32,9 +32,6 @@ import com.yj.tank.model.GamersTank;
  *
  */
 public class TankFrame extends Frame{
-
-	GameModelManager modelManager=GameModelManager.getInstance();
-
 	/**
 	 * 窗口宽度
 	 */
@@ -103,10 +100,10 @@ public class TankFrame extends Frame{
 		/*graphics.drawString("子弹数量:"+modelManager.getBullets().size(),10,60);
 		graphics.drawString("敌军数量:"+modelManager.getEnemyTanks().size(),10,80);
 		graphics.drawString("生命数量:"+GameModelManager.gamersTanks.size(),10,100);*/
-		graphics.drawString("当前关数:"+GameModelManager.curLevelCount,10,120);
+		//graphics.drawString("当前关数:"+GameModelManager.curLevelCount,10,120);
 		graphics.setColor(color);
 		//AbstractMilitaryWeapon tank=modelManager.getTank();
-		TankTask tankTask =modelManager.getTankTask();
+		TankTask tankTask =GameModelManager.getInstance().getTankTask();
 		//List<AbstractMilitaryWeapon> tanks=modelManager.getEnemyTanks();
 		/*if (tank!= null) {
 			tank.paint(graphics);
@@ -214,7 +211,7 @@ public class TankFrame extends Frame{
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			GamersTank gamersTank=modelManager.getGamersTank();
+			GamersTank gamersTank=GameModelManager.getInstance().getGamersTank();
 			int keyCode=e.getKeyCode();
 			switch (keyCode) {
 				case KeyEvent.VK_LEFT:
@@ -248,7 +245,7 @@ public class TankFrame extends Frame{
 		 * 改变坦克方向
 		 */
 		private void changeMainTankDir() {
-			GamersTank tank=modelManager.getGamersTank();
+			GamersTank tank=GameModelManager.getInstance().getGamersTank();
 			if (tank != null) {
 				if (!kl && !kr && !kd && !ku) {
 					tank.setMoving(false);
@@ -290,7 +287,7 @@ public class TankFrame extends Frame{
 		gamePropsMap.values().stream().forEach(gameProp -> {
 			gamePropsMap.values().stream().forEach(gameProp1 -> {
 				if (gameProp!=gameProp1) {
-					modelManager.getColliderChain().collide(gameProp, gameProp1);
+					GameModelManager.getInstance().getColliderChain().collide(gameProp, gameProp1);
 				}
 				System.out.println("---------------");
 			});

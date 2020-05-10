@@ -9,6 +9,7 @@ import com.yj.tank.PlaneFireBulletStrategy;
 import com.yj.tank.ResourceManager;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
+import com.yj.tank.factory.PlaneFamilyFactory;
 import com.yj.tank.view.TankFrame;
 
 /**
@@ -119,7 +120,7 @@ public class Plane extends AbstractMilitaryWeapon {
 	@Override
 	public void fire() {
 		if (live) {
-			GameModelManager.getInstance().addGameProp(GameModelManager.getInstance().getAbstractWeaponFactory().createBullet(this.x,this.y,0,0,dir,1,this.group,null));
+			GameModelManager.getInstance().addGameProp(PlaneFamilyFactory.getInstance().createBullet(this.x,this.y,0,0,dir,1,this.group,null));
 		}
 	}
 
