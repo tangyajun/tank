@@ -172,7 +172,6 @@ public class TankFrame extends Frame{
 		}*/
 		// 绘制游戏道具图形
 		Map<String,GameProp> gamePropMap=GameModelManager.getGameModelMap();
-
 		for (Iterator<String> iter=gamePropMap.keySet().iterator();iter.hasNext();) {
 			String key=iter.next();
 			gamePropMap.get(key).paint(graphics);
@@ -290,7 +289,9 @@ public class TankFrame extends Frame{
 		}*/
 		gamePropsMap.values().stream().forEach(gameProp -> {
 			gamePropsMap.values().stream().forEach(gameProp1 -> {
-				modelManager.getColliderChain().collide(gameProp,gameProp1);
+				if (gameProp!=gameProp1) {
+					modelManager.getColliderChain().collide(gameProp, gameProp1);
+				}
 				System.out.println("---------------");
 			});
 		});

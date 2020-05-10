@@ -1,5 +1,6 @@
-package com.yj.tank;
+package com.yj.tank.collider;
 
+import com.yj.tank.collider.Collider;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GameProp;
@@ -12,6 +13,11 @@ import com.yj.tank.model.SmallTankBullet;
  *  @create 2020-05-08-9:00
  **/
 public class EnemyTankBulletCollider implements Collider {
+
+	public EnemyTankBulletCollider() {
+
+	}
+
 	@Override
 	public boolean collide(GameProp gameProp1, GameProp gameProp2) {
 		if (gameProp1 instanceof EnemyTank && gameProp2 instanceof SmallTankBullet) {

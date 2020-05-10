@@ -1,5 +1,6 @@
 package com.yj.tank;
 
+import com.yj.tank.collider.Collider;
 import com.yj.tank.constant.Group;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.SmallTank;

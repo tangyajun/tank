@@ -8,3 +8,10 @@ initEnemyTankNum=5
 
 # 初始生命数量
 initLifeNum=1
+
+#坦克碰撞碰撞检测器
+tank.colliders=com.yj.tank.collider.EnemyTankBulletCollider,com.yj.tank.collider.EnemyTankEnemyTankCollider,\
+com.yj.tank.collider.GamersTankBulletCollider,com.yj.tank.collider.GamersTankEnemyTankCollider,\
+com.yj.tank.collider.WallColliderChain
+#
+wall.colliders=com.yj.tank.collider.WallTankCollider

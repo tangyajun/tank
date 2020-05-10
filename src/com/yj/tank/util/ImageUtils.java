@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
  *  @author tangyajun
  *  @create 2020-05-02-19:07
  **/
-public class ImageUtils {
+public abstract class ImageUtils {
 
 	public static BufferedImage getImage(Path path) {
 		BufferedImage bufferedImage=null;

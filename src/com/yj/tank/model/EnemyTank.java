@@ -13,6 +13,7 @@ import com.yj.tank.constant.Group;
  *  @create 2020-05-06-16:12
  **/
 public class EnemyTank extends SmallTank {
+
 	/**
 	 * 坦克构造函数
 	 * @param x x坐标

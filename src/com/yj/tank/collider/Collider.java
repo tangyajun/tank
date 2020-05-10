@@ -1,4 +1,4 @@
-package com.yj.tank;
+package com.yj.tank.collider;
 
 import com.yj.tank.model.GameProp;
 
@@ -11,9 +11,9 @@ import com.yj.tank.model.GameProp;
 public interface Collider {
 	/**
 	 *  游戏道具碰撞
-	 * @param gameProp1
-	 * @param gameProp2
-	 * @return 有相应的碰撞检测器则返回true,否则返回false
+	 * @param gameProp1 游戏道具
+	 * @param gameProp2 游戏道具
+	 * @return 碰撞检测器成功返回true,碰撞检测失败返回false
 	 */
 	boolean collide(GameProp gameProp1,GameProp gameProp2);
 }

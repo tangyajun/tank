@@ -1,10 +1,13 @@
-package com.yj.tank;
+package com.yj.tank.collider;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.yj.tank.ConfigProperties;
 import com.yj.tank.model.GameProp;
+import com.yj.tank.util.ColliderLoadUtils;
 
 /**
  *
@@ -14,20 +17,10 @@ import com.yj.tank.model.GameProp;
  **/
 public class ColliderChain implements Collider {
 
-	private static ColliderChain INSTANCE=new ColliderChain();
-
 	private List<Collider> colliders=new LinkedList<>();
 
-	private ColliderChain() {
-		//colliders.add(new SmallTankBulletCollider());
-		colliders.add(new GamersTankBulletCollider());
-		colliders.add(new GamersTankEnemyTankCollider());
-		colliders.add(new GamersTankWindmillCollider());
-		colliders.add(new EnemyTankBulletCollider());
-	}
-
-	public static ColliderChain getInstance() {
-		return INSTANCE;
+	public ColliderChain() {
+		ColliderLoadUtils.initCollider(colliders,"tank.colliders");
 	}
 
 	public void addCollider(Collider collider) {
@@ -45,12 +38,20 @@ public class ColliderChain implements Collider {
 	@Override
 	public boolean collide(GameProp gameProp1,GameProp gameProp2) {
 		Iterator<Collider> colliderIterator=colliders.iterator();
+		boolean flag=false;
 		while(colliderIterator.hasNext()) {
 			Collider collider=colliderIterator.next();
-			if (collider.collide(gameProp1,gameProp2)){
+			flag=collider.collide(gameProp1,gameProp2);
+			if (flag){
 				break;
 			}
 		}
-		return true;
+		return flag;
+	}
+
+	public static void main(String[] args) {
+		ColliderChain colliderChain=new ColliderChain();
+
+		System.out.println("test");
 	}
 }

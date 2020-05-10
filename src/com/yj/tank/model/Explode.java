@@ -32,6 +32,5 @@ public class Explode extends AbstractExplode {
 			gameModelManager.removeGameProp(this);
 			this.live = false;
 		}
-
 	}
 }

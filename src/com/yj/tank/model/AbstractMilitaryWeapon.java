@@ -53,7 +53,7 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	protected boolean live=true;
 
 	/**
-	 * 所属分组 敌方 bad，我方 good
+	 * 所属分组 敌军 bad，玩家 good
 	 */
 	protected Group group=Group.BAD;
 
@@ -102,14 +102,6 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
 
 	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,GameModelManager gameModelManager,Group group,Fire fire) {
-		/*super(x,y,width,height);
-		this.group=group;
-		this.rectangle.x=this.x;
-		this.rectangle.y=this.y;
-		this.rectangle.width=width;
-		this.rectangle.height=height;
-		this.gameModelManager=gameModelManager;
-		this.fire=fire;*/
 		this(x,y,width,height,dir,gameModelManager,group,fire,null);
 	}
 

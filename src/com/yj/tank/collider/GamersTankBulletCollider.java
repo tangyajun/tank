@@ -1,7 +1,7 @@
-package com.yj.tank;
+package com.yj.tank.collider;
 
+import com.yj.tank.collider.Collider;
 import com.yj.tank.constant.Group;
-import com.yj.tank.model.AbstractBullet;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.GamersTank;
 import com.yj.tank.model.SmallTankBullet;

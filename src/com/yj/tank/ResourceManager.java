@@ -48,12 +48,14 @@ public class ResourceManager {
 	 */
 	public static BufferedImage goodPlaneLeftImage,goodPlaneRightImage,goodPlaneUpImage,goodPlaneDownImage;
 	public static BufferedImage badPlaneLeftImage,badPlaneRightImage,badPlaneUpImage,badPlaneDownImage;
-
+	// 爆炸效果
 	public static BufferedImage[] explodes=new BufferedImage[16];
 
 	public static BufferedImage[] smallTankExplodes=new BufferedImage[8];
 
 	public static BufferedImage windmillImage;
+	// 墙
+	public static BufferedImage[] wallImages=new BufferedImage[16];
 
 	static {
 		try {
@@ -146,8 +148,11 @@ public class ResourceManager {
 			}
 
 			for (int i=0;i<smallTankExplodes.length;i++) {
-				InputStream is;
 				smallTankExplodes[i]=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/small/blast_"+(i+1)+".gif"));
+			}
+
+			for (int i=0;i<wallImages.length;i++) {
+				wallImages[i]=ImageIO.read(ResourceManager.class.getClassLoader().getResourceAsStream("images/small/wall.gif"));
 			}
 		}
 		catch (IOException e) {

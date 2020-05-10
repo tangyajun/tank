@@ -19,6 +19,8 @@ import com.yj.tank.view.TankFrame;
  *  @create 2020-05-05-11:23
  **/
 public class SmallTank extends AbstractMilitaryWeapon {
+	private int preX;
+	private int preY;
 	/**
 	 * 坦克宽度
 	 */
@@ -111,6 +113,8 @@ public class SmallTank extends AbstractMilitaryWeapon {
 	 */
 	public void move() {
 		if (moving) {
+			this.preX=this.x;
+			this.preY=this.y;
 			switch (dir) {
 				case LEFT:
 					if (this.group==Group.BAD) {
@@ -231,4 +235,20 @@ public class SmallTank extends AbstractMilitaryWeapon {
 			}
 		}
 	}*/
+
+	public int getPreX() {
+		return preX;
+	}
+
+	public void setPreX(int preX) {
+		this.preX = preX;
+	}
+
+	public int getPreY() {
+		return preY;
+	}
+
+	public void setPreY(int preY) {
+		this.preY = preY;
+	}
 }

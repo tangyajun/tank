@@ -1,7 +1,6 @@
-package com.yj.tank;
+package com.yj.tank.collider;
 
-import java.util.Objects;
-
+import com.yj.tank.collider.Collider;
 import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.GamersTank;

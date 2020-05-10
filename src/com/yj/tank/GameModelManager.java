@@ -2,23 +2,23 @@ package com.yj.tank;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.yj.tank.collider.ColliderChain;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.factory.AbstractWeaponFactory;
 import com.yj.tank.factory.EnemySmallTankFactory;
 import com.yj.tank.factory.GamersSmallTankFactory;
 import com.yj.tank.factory.SmallTankFamilyFactory;
+import com.yj.tank.factory.WallFactory;
 import com.yj.tank.factory.WeaponFactory;
 import com.yj.tank.model.EnemyTank;
-import com.yj.tank.model.GameProp;
 import com.yj.tank.model.GamersTank;
+import com.yj.tank.model.Wall;
 
 /**
  *  游戏模型管理器
@@ -29,6 +29,7 @@ import com.yj.tank.model.GamersTank;
  **/
 public class GameModelManager {
 
+	public static final String GAME_PROP_CLASS_NAME_SEPARATOR="#";
 	public static final int ENEMY_TANK_DISTANCE=200;
 
 	private static GameModelManager INSTANCE=new GameModelManager();
@@ -55,7 +56,7 @@ public class GameModelManager {
 	 */
 	TankTask tankTask=new TankTask(INSTANCE,120);
 
-	ColliderChain colliderChain=ColliderChain.getInstance();
+	ColliderChain colliderChain=new ColliderChain();
 
 	AbstractWeaponFactory abstractWeaponFactory = SmallTankFamilyFactory.getInstance();
 
@@ -68,6 +69,8 @@ public class GameModelManager {
 	 * 玩家坦克工厂
 	 */
 	WeaponFactory<GamersTank> gamersWeaponFactory= GamersSmallTankFactory.getInstance();
+
+	WallFactory wallFactory=WallFactory.getInstance();
 
 	private AtomicLong gamePropNum=new AtomicLong(0);
 
@@ -84,7 +87,7 @@ public class GameModelManager {
 	public <T> void addGameProp(T gameProp) {
 		StringBuffer gamePropName=new StringBuffer();
 		gamePropName.append(gameProp.getClass().getName());
-		gamePropName.append("_");
+		gamePropName.append(GAME_PROP_CLASS_NAME_SEPARATOR);
 		gamePropName.append(gamePropNum.incrementAndGet());
 		gamePropsMap.put(gamePropName.toString(),gameProp);
 	}
@@ -94,7 +97,7 @@ public class GameModelManager {
 			collection.stream().forEach(gameProp -> {
 				StringBuffer gamePropName=new StringBuffer();
 				gamePropName.append(gameProp.getClass().getName());
-				gamePropName.append("_");
+				gamePropName.append(GAME_PROP_CLASS_NAME_SEPARATOR);
 				gamePropName.append(gamePropNum.incrementAndGet());
 				gamePropsMap.put(gamePropName.toString(),gameProp);
 			});
@@ -126,13 +129,29 @@ public class GameModelManager {
 	 */
 	public void init() {
 		// 初始化敌军坦克
-		addGameProps(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
-				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));
+		/*addGameProps(enemyWeaponFactory.createWeapons(GameModelManager.ENEMY_TANK_NUM,this,
+				Group.BAD,ENEMY_TANK_DISTANCE, Dir.DOWN));*/
+		addGameProp(enemyWeaponFactory.createWeapon(5,200,Dir.RIGHT,this,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(5,500,Dir.RIGHT,this,Group.BAD));
+
+		addGameProp(enemyWeaponFactory.createWeapon(500,20,Dir.DOWN,this,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(700,20,Dir.DOWN,this,Group.BAD));
+
+		addGameProp(enemyWeaponFactory.createWeapon(1300,220,Dir.LEFT,this,Group.BAD));
+		addGameProp(enemyWeaponFactory.createWeapon(1300,620,Dir.LEFT,this,Group.BAD));
+		//addGameProp(enemyWeaponFactory.createWeapon(810,80,Dir.DOWN,this,Group.BAD));
 		//  初始化玩家坦克
 		for (int i=0;i<LIFE_NUM;i++) {
 			addGameProp(gamersWeaponFactory.createWeapon(100,400,Dir.DOWN,this,Group.GOOD));
 		}
 		getGamersTank().setMoving(false);
+		// 初始化墙
+		//addGameProp(new Wall(5,39,this));
+		addGameProps(wallFactory.createWalls(5,39,this));
+		addGameProps(wallFactory.createWalls(810,39,this));
+
+		addGameProps(wallFactory.createWalls(810,730,this));
+		addGameProps(wallFactory.createWalls(5,730,this));
 	}
 
 	public GamersTank getGamersTank() {
