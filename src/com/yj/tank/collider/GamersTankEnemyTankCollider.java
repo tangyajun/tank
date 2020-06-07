@@ -1,5 +1,6 @@
 package com.yj.tank.collider;
 
+import com.yj.tank.SmallTankBlast;
 import com.yj.tank.model.EnemyTank;
 import com.yj.tank.model.GameProp;
 import com.yj.tank.model.GamersTank;
@@ -31,6 +32,11 @@ public class GamersTankEnemyTankCollider implements Collider {
 			// 坦克爆炸策略
 			if (enemyTank.getBlastStrategy()!= null) {
 				enemyTank.getBlastStrategy().execute(gamersTank, enemyTank);
+			}else {
+				enemyTank.setBlastStrategy(new SmallTankBlast(gamersTank,enemyTank));
+				enemyTank.setBlastStrategy(new SmallTankBlast(enemyTank,gamersTank));
+				enemyTank.getBlastStrategy().execute(gamersTank, enemyTank);
+				gamersTank.getBlastStrategy().execute(enemyTank, gamersTank);
 			}
 			enemyTank.die();
 			gamersTank.die();

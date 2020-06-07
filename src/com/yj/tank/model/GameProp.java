@@ -2,6 +2,7 @@ package com.yj.tank.model;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 /**
  * 游戏道具
@@ -9,7 +10,7 @@ import java.awt.Rectangle;
  *  @author tangyajun
  *  @create 2020-05-05-7:04
  **/
-public abstract class GameProp {
+public abstract class GameProp implements Serializable {
 	/**
 	 * 横坐标
 	 */

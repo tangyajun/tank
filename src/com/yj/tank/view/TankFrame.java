@@ -31,7 +31,7 @@ import com.yj.tank.model.GamersTank;
  * @author tangyajun
  *
  */
-public class TankFrame extends Frame{
+public class TankFrame extends Frame {
 	/**
 	 * 窗口宽度
 	 */
@@ -42,8 +42,8 @@ public class TankFrame extends Frame{
 	 */
 	public static final int GAME_WINDOW_HEIGHT=ConfigProperties.getInstance().getInteger("game_window_height");
 
-	Button play=new Button("PLAY");
-	Container playContainer=new ButtonContainer(300,400,play);
+	Button playButton=new Button("PLAY");
+	Container playContainer=new ButtonContainer(300,400,playButton);
 	GameStatus gameStatus= GameStatus.LOADING;
 	String next="NEXT";
 
@@ -62,10 +62,9 @@ public class TankFrame extends Frame{
 		 * 设置获取焦点(不过不设置，游戏运行时键盘事件失效)
 		 */
 		setFocusable(true);
-		setVisible(true);
+		add(playContainer);
 		setSize(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
 		setTitle("坦克大战");
-		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -73,8 +72,9 @@ public class TankFrame extends Frame{
 			}
 		});
 		addKeyListener(new TankPaintListener());
-		play.addMouseListener(new PlayListener(this));
-		add(playContainer);
+		playButton.addMouseListener(new PlayListener(this));
+		setVisible(true);
+		setResizable(false);
 	}
 
 	private Image offScreenImage=null;
@@ -289,7 +289,6 @@ public class TankFrame extends Frame{
 				if (gameProp!=gameProp1) {
 					GameModelManager.getInstance().getColliderChain().collide(gameProp, gameProp1);
 				}
-				System.out.println("---------------");
 			});
 		});
 	}
@@ -310,11 +309,4 @@ public class TankFrame extends Frame{
 		this.gameStatus = gameStatus;
 	}
 
-	public Button getPlay() {
-		return play;
-	}
-
-	public void setPlay(Button play) {
-		this.play = play;
-	}
 }
