@@ -8,6 +8,7 @@ import com.yj.tank.BlastStrategy;
 import com.yj.tank.Fire;
 import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.MoveBehavior;
+import com.yj.tank.constant.Constant;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 
@@ -20,7 +21,7 @@ import com.yj.tank.constant.Group;
 public abstract class AbstractMilitaryWeapon extends GameProp {
 
 	/**
-	 * 方向
+	 * 方向 默认朝下
 	 */
 	protected Dir dir=Dir.DOWN;
 
@@ -79,7 +80,7 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	/**
 	 * 子弹发射的频率
 	 */
-	protected int  bulletFrequency=95;
+	protected int  bulletFrequency= Constant.BULLET_FREQUENCY;
 
 	protected FireBulletStrategy fireBulletStrategy;
 
@@ -94,6 +95,7 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	protected Dir[] dirs1={Dir.RIGHT,Dir.LEFT,Dir.DOWN};
 	protected Dir[] dirs2={Dir.UP,Dir.DOWN,Dir.RIGHT};
 	protected Dir[] dirs3={Dir.UP,Dir.DOWN,Dir.LEFT};
+	protected Dir[] dirs4={Dir.RIGHT,Dir.UP,Dir.DOWN};
 
 	public AbstractMilitaryWeapon(int x,int y,int width,int height,Dir dir,Group group,Fire fire) {
 		this(x,y,width,height,dir,group,fire,null);
@@ -122,22 +124,40 @@ public abstract class AbstractMilitaryWeapon extends GameProp {
 	public abstract void fire();
 
 	/**
-	 * 随机改变方向
+	 * 随机改变坦克方向
 	 */
 	public void randomDir() {
+		/**
+		 * 当前方向朝左
+		 */
 		if (this.dir==Dir.LEFT) {
-			this.dir=dirs[random.nextInt(3)];
+			//this.dir=dirs4[random.nextInt(3)];
+			this.dir=Dir.RIGHT;
 		}
-		if(this.dir==Dir.RIGHT) {
-			this.dir=dirs3[random.nextInt(3)];
+		/**
+		 * 当前方向朝右
+		 */
+		else if(this.dir==Dir.RIGHT) {
+			//this.dir=dirs3[random.nextInt(3)];
+			this.dir=Dir.LEFT;
 		}
-		if (this.dir==Dir.UP) {
-			this.dir=dirs1[random.nextInt(3)];
+		/**
+		 * 当前方向朝上
+		 */
+		else if (this.dir==Dir.UP) {
+			//this.dir=dirs1[random.nextInt(3)];
+			this.dir=Dir.DOWN;
 		}
-		if (this.dir==Dir.DOWN) {
-			this.dir=dirs2[random.nextInt(3)];
+		/**
+		 * 当前方向朝下
+		 */
+		else if (this.dir==Dir.DOWN) {
+			//this.dir=dirs[random.nextInt(3)];
+			this.dir=Dir.UP;
 		}
-		this.dir=Dir.values()[random.nextInt(4)];
+		/*else {
+			this.dir = Dir.values()[random.nextInt(4)];
+		}*/
 	}
 
 	@Override

@@ -36,10 +36,13 @@ public abstract class AbstractGameLevel {
 	 */
 	public static final int ENEMY_TANK_LOOP_NUM=3;
 
+	/**
+	 * 开始执行
+	 */
 	public abstract void start();
 
 	/**
-	 * 是否过关
+	 * 是否过关 true表示过关，false表示未过关
 	 * @return
 	 */
 	public boolean isPass() {

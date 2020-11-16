@@ -28,19 +28,24 @@ public class GamersTankEnemyTankCollider implements Collider {
 	}
 
 	private boolean check(GamersTank gamersTank, EnemyTank enemyTank) {
-		if (gamersTank.getRectangle().intersects(enemyTank.getRectangle())) {
-			// 坦克爆炸策略
-			if (enemyTank.getBlastStrategy()!= null) {
-				enemyTank.getBlastStrategy().execute(gamersTank, enemyTank);
-			}else {
-				enemyTank.setBlastStrategy(new SmallTankBlast(gamersTank,enemyTank));
-				enemyTank.setBlastStrategy(new SmallTankBlast(enemyTank,gamersTank));
-				enemyTank.getBlastStrategy().execute(gamersTank, enemyTank);
-				gamersTank.getBlastStrategy().execute(enemyTank, gamersTank);
+		if (gamersTank!=null && enemyTank!=null) {
+			if (gamersTank.getRectangle().intersects(enemyTank.getRectangle())) {
+				// 坦克爆炸策略
+				if (enemyTank.getBlastStrategy() != null) {
+					enemyTank.getBlastStrategy().execute(gamersTank, enemyTank);
+				}
+				else {
+					enemyTank.setBlastStrategy(new SmallTankBlast(gamersTank, enemyTank));
+					enemyTank.setBlastStrategy(new SmallTankBlast(enemyTank, gamersTank));
+					enemyTank.getBlastStrategy().execute(gamersTank, enemyTank);
+					if (gamersTank.getBlastStrategy()!=null) {
+						gamersTank.getBlastStrategy().execute(enemyTank, gamersTank);
+					}
+				}
+				enemyTank.die();
+				gamersTank.die();
+				return true;
 			}
-			enemyTank.die();
-			gamersTank.die();
-			return true;
 		}
 		return false;
 	}

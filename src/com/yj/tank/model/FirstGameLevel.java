@@ -26,14 +26,19 @@ public class FirstGameLevel extends AbstractGameLevel {
 
 	@Override
 	public void start() {
-		// 初始化敌军坦克
+		/**
+		 * 初始化敌军坦克
+		 */
 		enemyTanks.addAll(EnemySmallTankFactory.getInstance().createWeapons(ENEMY_TANKS_NUM,
 				Group.BAD,GameModelManager.ENEMY_TANK_DISTANCE, Dir.DOWN));
 		GameModelManager.getInstance().addGameProps(enemyTanks);
-		//  初始化玩家坦克
+		/**
+		 * 初始化玩家坦克
+		 */
 		for (int i=0;i<GameModelManager.LIFE_NUM;i++) {
 			gamersTanks.add(GamersSmallTankFactory.getInstance().createWeapon(100,400,Dir.DOWN,Group.GOOD));
 		}
 		GameModelManager.getInstance().addGameProps(gamersTanks);
+		GameModelManager.getInstance().getGamersTank().setMoving(false);
 	}
 }

@@ -8,6 +8,7 @@ import com.yj.tank.Fire;
 import com.yj.tank.FireBulletStrategy;
 import com.yj.tank.GameModelManager;
 import com.yj.tank.ResourceManager;
+import com.yj.tank.constant.Constant;
 import com.yj.tank.constant.Dir;
 import com.yj.tank.constant.Group;
 import com.yj.tank.view.TankFrame;
@@ -149,16 +150,20 @@ public class SmallTank extends AbstractMilitaryWeapon {
 			}
 
 			/**
-			 * 子弹发射频率
+			 * 如果子弹发射频率大于95
 			 */
-			if (random.nextInt(100)>bulletFrequency) {
+			if (random.nextInt(Constant.BULLET_FREQUENCY_RANDOM_RANGE)>bulletFrequency) {
 				if (this.getGroup()==Group.BAD) {
 					fire();
 				}
 			}
-			if (this.y>200 && this.group==Group.BAD && random.nextInt(100)>95) {
-				randomDir();
+			/**
+			 * 如果坦克的y坐标大于200
+			 */
+			if (this.y>random.nextInt(800) && this.group==Group.BAD) {
+				//randomDir();
 			}
+			// 坦克边界检查
 			boundsCheck();
 			this.rectangle.x=this.x;
 			this.rectangle.y=this.y;
@@ -169,18 +174,24 @@ public class SmallTank extends AbstractMilitaryWeapon {
 	 * 边界检查
 	 */
 	public void boundsCheck() {
-		if (this.x<20){
-			x=20;
+		if (this.x<Constant.TANK_X_COORDINATE_MIN){
+			x=Constant.TANK_X_COORDINATE_MIN;
 			randomDir();
 		}
-		if (this.y<60) {
-			y=60;
+		if (this.y<Constant.TANK_Y_COORDINATE_MIN) {
+			y=Constant.TANK_Y_COORDINATE_MIN;
 			randomDir();
 		}
+		/**
+		 * 如果坦克的x坐标超出
+		 */
 		if (this.x> TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH) {
 			this.x=TankFrame.GAME_WINDOW_WIDTH-Tank.WIDTH-4;
 			randomDir();
 		}
+		/**
+		 * 如果坦克的y坐标超出
+		 */
 		if (this.y>TankFrame.GAME_WINDOW_HEIGHT-Tank.HEIGHT) {
 			this.y=TankFrame.GAME_WINDOW_HEIGHT-Tank.HEIGHT-4;
 			randomDir();
@@ -199,42 +210,6 @@ public class SmallTank extends AbstractMilitaryWeapon {
 			fire.fire(this);
 		}
 	}
-
-	/*@Override
-	public void enemyBoundCheck() {
-		List<AbstractMilitaryWeapon> enemyTanks=gameModelManager.getEnemyTanks();
-		for (int i=0;i<enemyTanks.size();i++) {
-			if (enemyTanks.get(i) != this) {
-				AbstractMilitaryWeapon weapon=enemyTanks.get(i);
-				if (this.x>weapon.getX()) {
-					if (this.x - weapon.getX() < 20) {
-						if (random.nextInt(100)>95) {
-							randomDir();
-						}
-					}
-				}else {
-					if (weapon.getX()-this.x < 20 ) {
-						if (random.nextInt(100)>95) {
-							randomDir();
-						}
-					}
-				}
-				if (this.y>weapon.getY()) {
-					if (this.y - weapon.getY() < 20) {
-						if (random.nextInt(100)>95) {
-							randomDir();
-						}
-					}
-				}else {
-					if (weapon.getY()-this.y< 20) {
-						if (random.nextInt(100)>95) {
-							randomDir();
-						}
-					}
-				}
-			}
-		}
-	}*/
 
 	public int getPreX() {
 		return preX;

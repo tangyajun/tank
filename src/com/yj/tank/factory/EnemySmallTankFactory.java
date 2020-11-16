@@ -60,6 +60,9 @@ public class EnemySmallTankFactory implements WeaponFactory<EnemyTank> {
 		int x=140;
 		int y=40;
 		for (int i=0;i<num;i++) {
+			if (i>1) {
+				y=180;
+			}
 			tanks.add(createWeapon(x,y,dir,group));
 			x+=distance;
 		}
